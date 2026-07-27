@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;overflow-x:hidden;}
+:root{
+  --navy:#0B1A2E;
+  --navy2:#0F2540;
+  --teal:#C77E10;
+  --teal2:#F59E0B;
+  --white:#FFFFFF;
+  --off:#F0F5FA;
+  --text:#0B1A2E;
+  --muted:#5A7A9A;
+  --border:rgba(11,26,46,0.1);
+  --gold:#F59E0B;
+}
+body{background:var(--white);color:var(--text);font-family:'Inter',sans-serif;cursor:none;}
+#cur{position:fixed;width:6px;height:6px;background:var(--teal);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s,height .3s,background .3s;}
+#cur.big{width:40px;height:40px;background:transparent;border:1px solid rgba(0,152,181,0.5);}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 64px;height:60px;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.nav-back{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--navy);}
+.nav-back svg{transition:transform .2s;}
+.nav-back:hover svg{transform:translateX(-3px);}
+.nav-logo{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:16px;letter-spacing:6px;color:var(--navy);}
+.nav-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);font-weight:500;}
+
+/* HERO */
+.hero{background:var(--navy);padding:140px 64px 80px;position:relative;overflow:hidden;}
+.hero-orb{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(0,152,181,.12) 0%,transparent 70%);top:-100px;right:-100px;animation:orb 10s ease-in-out infinite;}
+@keyframes orb{0%,100%{transform:translate(0,0);}50%{transform:translate(-30px,30px);}}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:80px 80px;pointer-events:none;}
+.hero-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:20px;}
+.hero-h1{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:clamp(52px,8vw,112px);line-height:.9;letter-spacing:-2px;color:#fff;margin-bottom:12px;}
+.hero-h1 em{font-style:italic;color:var(--teal2);}
+.hero-sub{font-size:16px;color:rgba(255,255,255,0.45);font-weight:300;line-height:1.75;max-width:520px;margin-top:28px;}
+.hero-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:40px;}
+.hero-tag{padding:6px 16px;border:1px solid rgba(0,200,224,0.25);border-radius:2px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.5);}
+
+/* INTRO STRIP */
+.intro{background:var(--teal);padding:32px 64px;display:flex;align-items:center;justify-content:space-between;gap:40px;}
+.intro-text{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:700;font-style:italic;color:#fff;max-width:600px;line-height:1.3;}
+.intro-badge{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.7);white-space:nowrap;}
+
+/* SECTIONS */
+.section{padding:88px 64px;}
+.s-label{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--teal);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+.s-label::before{content:'';width:20px;height:1px;background:var(--teal);}
+.s-h2{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:clamp(48px,6vw,80px);line-height:.95;letter-spacing:-1px;color:var(--navy);margin-bottom:48px;}
+
+/* SERVICE CARDS */
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);}
+.svc-card{background:var(--white);padding:44px 40px;transition:background .2s;}
+.svc-card:hover{background:var(--off);}
+.svc-icon{width:44px;height:44px;border-radius:8px;background:rgba(0,152,181,0.08);display:flex;align-items:center;justify-content:center;margin-bottom:28px;}
+.svc-icon svg{width:20px;height:20px;stroke:var(--teal);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
+.svc-num{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:12px;font-weight:500;}
+.svc-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:700;color:var(--navy);line-height:1;margin-bottom:8px;}
+.svc-subtitle{font-size:12px;color:var(--muted);font-style:italic;margin-bottom:20px;font-weight:300;}
+.svc-body{font-size:13px;color:var(--muted);line-height:1.8;font-weight:300;margin-bottom:24px;}
+.svc-list{list-style:none;display:flex;flex-direction:column;gap:0;}
+.svc-list li{font-size:12px;color:var(--text);padding:8px 0 8px 14px;border-bottom:1px solid var(--border);position:relative;font-weight:400;}
+.svc-list li::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:4px;height:4px;border-radius:50%;background:var(--teal);}
+.svc-outcome{margin-top:20px;padding:12px 16px;background:rgba(0,152,181,0.06);border-left:2px solid var(--teal);font-size:12px;color:var(--teal);font-weight:500;letter-spacing:.3px;}
+
+/* WHY SECTION */
+.why{background:var(--navy);padding:88px 64px;}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
+.why-left{}
+.why-h2{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:clamp(48px,6vw,80px);line-height:.95;letter-spacing:-1px;color:#fff;margin-bottom:8px;}
+.why-h2 em{font-style:italic;color:var(--teal2);}
+.why-sub{font-size:15px;color:rgba(255,255,255,0.45);font-weight:300;line-height:1.75;max-width:440px;margin-top:24px;}
+.why-list{display:flex;flex-direction:column;gap:0;border-top:1px solid rgba(255,255,255,0.08);}
+.why-item{padding:20px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:flex-start;gap:16px;}
+.why-check{width:20px;height:20px;flex-shrink:0;margin-top:2px;}
+.why-text{font-size:14px;color:rgba(255,255,255,0.65);font-weight:300;line-height:1.6;}
+
+/* VALUE PROP */
+.value{background:var(--off);padding:88px 64px;text-align:center;}
+.value-h2{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:clamp(48px,6vw,80px);line-height:.95;letter-spacing:-1px;color:var(--navy);margin-bottom:12px;}
+.value-h2 em{font-style:italic;color:var(--teal);}
+.value-sub{font-size:16px;color:var(--muted);font-weight:300;line-height:1.75;max-width:600px;margin:20px auto 40px;}
+.value-cta{display:inline-flex;align-items:center;gap:10px;padding:16px 36px;background:var(--navy);color:#fff;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:opacity .2s;}
+.value-cta:hover{opacity:.85;}
+
+/* FOOTER */
+footer{background:var(--navy);padding:24px 64px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,0.06);}
+.f-left{font-size:11px;color:rgba(255,255,255,0.3);}
+.f-right{font-size:11px;color:rgba(255,255,255,0.3);}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
+.rv.in{opacity:1;transform:none;}
+.rv2{opacity:0;transform:translateY(24px);transition:opacity .7s ease .15s,transform .7s ease .15s;}
+.rv2.in{opacity:1;transform:none;}
+
+@media(max-width:900px){
+  nav{padding:0 24px;}
+  .hero,.section,.why,.value{padding-left:24px;padding-right:24px;}
+  .intro{flex-direction:column;gap:16px;padding:24px;}
+  .services-grid{grid-template-columns:1fr;}
+  .why-grid{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:12px;text-align:center;padding:24px;}
+  body{cursor:auto;}#cur{display:none;}
+}
+</style>
+</head>
+<body>
+<div id="cur"></div>
+
+<nav>
+  <a class="nav-back" href="stac_website.html">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M13 7H1M6 2L1 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Back to S.T.A.C.
+  </a>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+    <div class="nav-logo">S.T.A.C.</div>
+    <div class="nav-tag">C — Consulting</div>
+  </div>
+  <div style="width:120px;"></div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-orb"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-label">C — Consulting · Marketing & Growth</div>
+  <h1 class="hero-h1">Seen by the<br/>Right People.<br/><em>Chosen by Them.</em></h1>
+  <p class="hero-sub">Strategy, content and channels built to put your business in front of the customers who actually convert.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">Brand Strategy</span>
+    <span class="hero-tag">Digital Marketing</span>
+    <span class="hero-tag">Social Media</span>
+    <span class="hero-tag">Campaign Management</span>
+    <span class="hero-tag">Content & Copy</span>
+    <span class="hero-tag">Growth Advisory</span>
+  </div>
+</div>
+
+<!-- INTRO STRIP -->
+<div class="intro">
+  <div class="intro-text">"If nobody knows you exist, nothing else matters."</div>
+  <div class="intro-badge">Strategy-Led · Full Channel Execution</div>
+</div>
+
+<!-- SERVICES -->
+<div class="section" style="background:#fff;padding-top:80px;padding-bottom:0;">
+  <div class="rv">
+    <div class="s-label">What we offer</div>
+    <h2 class="s-h2">Our Services</h2>
+  </div>
+</div>
+<div class="services-grid rv">
+
+  <!-- 1 Marketing Strategy & Planning -->
+  <div class="svc-card">
+    <div class="svc-num">01</div>
+    <div class="svc-title">Marketing Strategy & Planning</div>
+    <div class="svc-subtitle">A Plan Before the Posting Starts</div>
+    <p class="svc-body">We build the strategy first — who you're speaking to, what you're saying, and where — before a single piece of content goes out.</p>
+    <ul class="svc-list">
+      <li>Brand positioning</li>
+      <li>Marketing plans</li>
+      <li>Target audience research</li>
+      <li>Channel strategy</li>
+      <li>Competitive analysis</li>
+      <li>Campaign planning</li>
+      <li>Go-to-market strategy</li>
+    </ul>
+    <div class="svc-outcome">Marketing that has a direction, not just activity.</div>
+  </div>
+
+  <!-- 2 Social Media Management -->
+  <div class="svc-card">
+    <div class="svc-num">02</div>
+    <div class="svc-title">Social Media Management</div>
+    <div class="svc-subtitle">Consistent Presence, Managed End to End</div>
+    <p class="svc-body">We plan, create and post — so your channels stay active, on-brand and worth following, without eating your team's time.</p>
+    <ul class="svc-list">
+      <li>Content calendars</li>
+      <li>Post creation & scheduling</li>
+      <li>Community management</li>
+      <li>Platform strategy</li>
+      <li>Paid social campaigns</li>
+      <li>Performance reporting</li>
+      <li>Influencer coordination</li>
+    </ul>
+    <div class="svc-outcome">A presence that looks after itself, run by people who know it.</div>
+  </div>
+
+  <!-- 3 Direct & Campaign Marketing -->
+  <div class="svc-card">
+    <div class="svc-num">03</div>
+    <div class="svc-title">Direct & Campaign Marketing</div>
+    <div class="svc-subtitle">Mail, WhatsApp & Email That Actually Gets Opened</div>
+    <p class="svc-body">We design and run direct campaigns — the kind that reach people where they already are, with a message worth reading.</p>
+    <ul class="svc-list">
+      <li>Email marketing campaigns</li>
+      <li>WhatsApp business campaigns</li>
+      <li>Newsletter design & management</li>
+      <li>List building & segmentation</li>
+      <li>Campaign automation</li>
+      <li>A/B testing</li>
+      <li>Response tracking</li>
+    </ul>
+    <div class="svc-outcome">Direct lines to your customers that convert, not clutter.</div>
+  </div>
+
+  <!-- 4 Content & Copy -->
+  <div class="svc-card">
+    <div class="svc-num">04</div>
+    <div class="svc-title">Content & Copy</div>
+    <div class="svc-subtitle">Words and Visuals That Actually Say Something</div>
+    <p class="svc-body">We write, edit and design content that sounds like your business — not like a template with your logo pasted on it.</p>
+    <ul class="svc-list">
+      <li>Copywriting & editing</li>
+      <li>Website content</li>
+      <li>Brand voice development</li>
+      <li>Photography & video direction</li>
+      <li>Graphic design</li>
+      <li>Sales collateral</li>
+      <li>Case studies & testimonials</li>
+    </ul>
+    <div class="svc-outcome">Content people actually read, not scroll past.</div>
+  </div>
+
+  <!-- 5 Growth & Customer Acquisition -->
+  <div class="svc-card">
+    <div class="svc-num">05</div>
+    <div class="svc-title">Growth & Customer Acquisition</div>
+    <div class="svc-subtitle">Finding the Customers Worth Having</div>
+    <p class="svc-body">We build acquisition strategies focused on the right customers, not the most clicks — and track what's actually driving revenue.</p>
+    <ul class="svc-list">
+      <li>Lead generation strategy</li>
+      <li>Conversion rate optimization</li>
+      <li>Customer acquisition funnels</li>
+      <li>Marketing analytics</li>
+      <li>ROI tracking</li>
+      <li>Referral & partnership programs</li>
+      <li>Market expansion advice</li>
+    </ul>
+    <div class="svc-outcome">Growth you can trace back to a decision, not a guess.</div>
+  </div>
+
+  <!-- 6 Marketing Advisory -->
+  <div class="svc-card">
+    <div class="svc-num">06</div>
+    <div class="svc-title">Marketing Advisory</div>
+    <div class="svc-subtitle">A Second Set of Eyes on What You're Already Doing</div>
+    <p class="svc-body">Sometimes the fastest fix isn't a new campaign — it's an outside review of what's working, what isn't, and why.</p>
+    <ul class="svc-list">
+      <li>Marketing audits</li>
+      <li>Agency & vendor evaluation</li>
+      <li>Budget allocation advice</li>
+      <li>Brand consistency review</li>
+      <li>Marketing team structuring</li>
+      <li>Tool & platform selection</li>
+      <li>Performance benchmarking</li>
+    </ul>
+    <div class="svc-outcome">Clarity on what to keep, cut, or fix.</div>
+  </div>
+
+</div>
+
+<!-- WHY US -->
+<div class="why">
+  <div class="why-grid">
+    <div class="why-left rv">
+      <h2 class="why-h2">Why clients<br/>choose <em>us.</em></h2>
+      <p class="why-sub">We don't just post. We put you in front of the people who buy.</p>
+    </div>
+    <div class="why-list rv2">
+      <div class="why-item">
+        <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#F59E0B" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="why-text">Strategy comes first — execution follows a plan, not a trend</span>
+      </div>
+      <div class="why-item">
+        <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#F59E0B" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="why-text">Direct experience running campaigns across Curaçao and Europe</span>
+      </div>
+      <div class="why-item">
+        <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#F59E0B" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="why-text">One team for strategy, content and execution — no handoffs between agencies</span>
+      </div>
+      <div class="why-item">
+        <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#F59E0B" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="why-text">Campaigns measured on what changed, not what was posted</span>
+      </div>
+      <div class="why-item">
+        <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#F59E0B" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="why-text">Practical, honest advice — including when the answer is "don't run this campaign"</span>
+      </div>
+      <div class="why-item">
+        <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#F59E0B" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="why-text">Built to work alongside your existing team, not replace it</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VALUE PROP -->
+<div class="value rv">
+  <h2 class="value-h2">We don't just<br/><em>post.</em></h2>
+  <p class="value-sub">Our mission is to put your business in front of the people who are actually going to buy — with a strategy behind every campaign and a clear read on what's working.</p>
+  <a class="value-cta" href="stac_website.html#contact">
+    Get in touch
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</div>
+
+<footer>
+  <div class="f-left">S.T.A.C. B.V. — Marketing & Growth</div>
+  <div class="f-right">© 2026 S.T.A.C. B.V.</div>
+</footer>
+
+<script>
+const cur=document.getElementById('cur');
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';});
+document.querySelectorAll('a,.svc-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cur.classList.add('big'));
+  el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
+});
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.08});
+document.querySelectorAll('.rv,.rv2').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
