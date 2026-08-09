@@ -12,8 +12,8 @@ html,body{width:100%;overflow-x:hidden;}
 :root{
   --navy:#0B1A2E;
   --navy2:#0F2540;
-  --teal:#0091B8;
-  --teal2:#22D3EE;
+  --teal:#0C7A6E;
+  --teal2:#14D8B4;
   --white:#FFFFFF;
   --off:#F0F5FA;
   --text:#0B1A2E;
@@ -23,7 +23,7 @@ html,body{width:100%;overflow-x:hidden;}
 }
 body{background:var(--white);color:var(--text);font-family:'Inter',sans-serif;cursor:none;}
 #cur{position:fixed;width:6px;height:6px;background:var(--teal);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s,height .3s,background .3s;}
-#cur.big{width:40px;height:40px;background:transparent;border:1px solid rgba(0,152,181,0.5);}
+#cur.big{width:40px;height:40px;background:transparent;border:1px solid rgba(12,122,110,0.5);}
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 64px;height:60px;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
@@ -36,7 +36,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 
 /* HERO */
 .hero{background:var(--navy);padding:140px 64px 80px;position:relative;overflow:hidden;}
-.hero-orb{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(0,152,181,.12) 0%,transparent 70%);top:-100px;right:-100px;animation:orb 10s ease-in-out infinite;}
+.hero-orb{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(12,122,110,.12) 0%,transparent 70%);top:-100px;right:-100px;animation:orb 10s ease-in-out infinite;}
 @keyframes orb{0%,100%{transform:translate(0,0);}50%{transform:translate(-30px,30px);}}
 .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:80px 80px;pointer-events:none;}
 .hero-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:20px;}
@@ -44,7 +44,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .hero-h1 em{font-style:italic;color:var(--teal2);}
 .hero-sub{font-size:16px;color:rgba(255,255,255,0.45);font-weight:300;line-height:1.75;max-width:520px;margin-top:28px;}
 .hero-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:40px;}
-.hero-tag{padding:6px 16px;border:1px solid rgba(0,200,224,0.25);border-radius:2px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.5);}
+.hero-tag{padding:6px 16px;border:1px solid rgba(20,216,180,0.25);border-radius:2px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.5);}
 
 /* INTRO STRIP */
 .intro{background:var(--teal);padding:32px 64px;display:flex;align-items:center;justify-content:space-between;gap:40px;}
@@ -61,7 +61,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);}
 .svc-card{background:var(--white);padding:44px 40px;transition:background .2s;}
 .svc-card:hover{background:var(--off);}
-.svc-icon{width:44px;height:44px;border-radius:8px;background:rgba(0,152,181,0.08);display:flex;align-items:center;justify-content:center;margin-bottom:28px;}
+.svc-icon{width:44px;height:44px;border-radius:8px;background:rgba(12,122,110,0.08);display:flex;align-items:center;justify-content:center;margin-bottom:28px;}
 .svc-icon svg{width:20px;height:20px;stroke:var(--teal);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
 .svc-num{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:12px;font-weight:500;}
 .svc-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:700;color:var(--navy);line-height:1;margin-bottom:8px;}
@@ -70,7 +70,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .svc-list{list-style:none;display:flex;flex-direction:column;gap:0;}
 .svc-list li{font-size:12px;color:var(--text);padding:8px 0 8px 14px;border-bottom:1px solid var(--border);position:relative;font-weight:400;}
 .svc-list li::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:4px;height:4px;border-radius:50%;background:var(--teal);}
-.svc-outcome{margin-top:20px;padding:12px 16px;background:rgba(0,152,181,0.06);border-left:2px solid var(--teal);font-size:12px;color:var(--teal);font-weight:500;letter-spacing:.3px;}
+.svc-outcome{margin-top:20px;padding:12px 16px;background:rgba(12,122,110,0.06);border-left:2px solid var(--teal);font-size:12px;color:var(--teal);font-weight:500;letter-spacing:.3px;}
 
 /* WHY SECTION */
 .why{background:var(--navy);padding:88px 64px;}
@@ -565,27 +565,27 @@ footer{background:var(--navy);padding:24px 64px;display:flex;justify-content:spa
     </div>
     <div class="why-list rv2">
       <div class="why-item">
-        <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#22D3EE" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#22D3EE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#14D8B4" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#14D8B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <span class="why-text">Engineers who ship production systems, not just prototypes</span>
       </div>
       <div class="why-item">
-        <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#22D3EE" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#22D3EE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#14D8B4" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#14D8B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <span class="why-text">Practical AI, chosen for the problem, not the trend</span>
       </div>
       <div class="why-item">
-        <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#22D3EE" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#22D3EE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#14D8B4" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#14D8B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <span class="why-text">Full-stack capability: strategy, build and maintenance in one team</span>
       </div>
       <div class="why-item">
-        <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#22D3EE" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#22D3EE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#14D8B4" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#14D8B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <span class="why-text">Systems designed around how your team actually works</span>
       </div>
       <div class="why-item">
-        <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#22D3EE" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#22D3EE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#14D8B4" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#14D8B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <span class="why-text">Regional and international delivery experience across Curaçao and Europe</span>
       </div>
       <div class="why-item">
-        <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#22D3EE" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#22D3EE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#14D8B4" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#14D8B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <span class="why-text">Ongoing support after launch, not a one-time handoff</span>
       </div>
     </div>

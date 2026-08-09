@@ -149,7 +149,7 @@ section{padding:88px 64px;}
 .sarr{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:24px;color:#fff;font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;white-space:nowrap;transition:box-shadow .3s,transform .2s;}
 .sarr-ic{font-size:15px;line-height:1;transition:transform .2s;}
 .srow:nth-child(1) .sarr{background:linear-gradient(120deg,var(--indigo),var(--indigo2));}
-.srow:nth-child(2) .sarr{background:linear-gradient(120deg,var(--techdk),var(--cyan));color:#04231D;}
+.srow:nth-child(2) .sarr{background:linear-gradient(120deg,var(--techdk),var(--cyan));color:#fff;}
 .srow:nth-child(3) .sarr{background:linear-gradient(120deg,var(--violetdk),var(--violet));color:#fff;}
 .srow:nth-child(1):hover .sarr,.srow:nth-child(1):focus-visible .sarr{box-shadow:0 0 24px rgba(47,111,239,.6);}
 .srow:nth-child(2):hover .sarr,.srow:nth-child(2):focus-visible .sarr{box-shadow:0 0 24px rgba(20,216,180,.55);}
@@ -182,18 +182,87 @@ section{padding:88px 64px;}
 .pc-name{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:700;line-height:1;margin-bottom:16px;}
 .pc-body{font-size:13px;color:#5A7A9A;line-height:1.8;font-weight:300;margin-bottom:28px;}
 .pc-role{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#8BA7C0;padding-top:20px;border-top:1px solid rgba(11,26,46,0.08);}
+.pc.pt{cursor:none;}
+.pc-hint{display:flex;align-items:center;gap:6px;margin-top:12px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--techdk);animation:pcHintPulse 2.4s ease-in-out infinite;}
+.pc-hint-ic{font-size:13px;transition:transform .25s;}
+.pc.pt:hover .pc-hint{color:var(--cyan);}
+.pc.pt:hover .pc-hint-ic{transform:translate(3px,-3px);}
+@keyframes pcHintPulse{0%,100%{opacity:.65;}50%{opacity:1;}}
+@media(prefers-reduced-motion:reduce){.pc-hint{animation:none;}}
+
+/* FEATURED PROJECTS PREVIEW PANEL */
+.fp-panel{max-height:0;opacity:0;overflow:hidden;transition:max-height .6s cubic-bezier(.65,0,.35,1),opacity .5s ease;background:#F0F5FA;}
+.fp-panel.open{opacity:1;}
+.fp-panel-inner{padding:64px;position:relative;}
+.fp-panel-close{position:absolute;top:64px;right:64px;width:36px;height:36px;border-radius:50%;border:1px solid rgba(11,26,46,.14);background:#fff;color:#0B1A2E;font-size:18px;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s,color .2s,transform .2s;z-index:5;}
+.fp-panel-close:hover{background:#0B1A2E;color:#fff;transform:rotate(90deg);}
+.fp-panel-head{margin-bottom:28px;}
+.fp-panel-h{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:clamp(32px,4vw,52px);line-height:1;color:#0B1A2E;margin-top:8px;max-width:80%;}
+.fp-lede{font-size:14px;color:var(--muted);font-weight:300;line-height:1.8;max-width:640px;margin:12px 0 28px;}
+.fp-filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px;}
+.fp-filter-btn{padding:9px 20px;border-radius:24px;border:1.5px solid var(--border);background:#fff;color:#0B1A2E;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap;font-family:'Inter',sans-serif;}
+.fp-filter-btn:hover{border-color:var(--techdk);}
+.fp-filter-btn.active{background:#0B1A2E;border-color:#0B1A2E;color:#fff;}
+.fp-info-dot{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:6px;border-radius:50%;border:1px solid currentColor;font-family:'Inter',sans-serif;font-style:italic;font-size:9px;font-weight:700;line-height:1;opacity:.5;position:relative;cursor:help;vertical-align:2px;}
+.fp-info-dot:hover,.fp-info-dot:focus,.fp-info-dot.show{opacity:1;outline:none;}
+.fp-info-dot::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 9px);left:50%;transform:translateX(-50%);background:#0B1A2E;color:#fff;font-style:normal;font-size:11px;font-weight:500;letter-spacing:.2px;padding:7px 11px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s;box-shadow:0 10px 26px rgba(11,26,46,.28);z-index:20;}
+.fp-info-dot::before{content:'';position:absolute;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#0B1A2E;opacity:0;pointer-events:none;transition:opacity .15s;z-index:20;}
+.fp-info-dot:hover::after,.fp-info-dot:hover::before,.fp-info-dot:focus::after,.fp-info-dot:focus::before,.fp-info-dot.show::after,.fp-info-dot.show::before{opacity:1;}
+.fp-carousel3{position:relative;background:#fff;border-radius:20px;padding:20px 48px 40px;}
+.fp-viewport3{overflow:hidden;}
+.fp-track3{display:flex;transition:transform .6s cubic-bezier(.65,0,.35,1);padding:34px 4px 18px;}
+.fp-card3{flex:0 0 calc(33.333% - 25.33px);margin-right:38px;background:#F0F5FA;border-radius:16px;overflow:hidden;box-shadow:0 8px 24px rgba(11,26,46,.06);display:flex;flex-direction:column;transition:transform .4s ease,opacity .4s ease,box-shadow .4s ease;opacity:.65;}
+.fp-card3.is-center{opacity:1;transform:translateY(-16px) scale(1.07);box-shadow:0 32px 64px rgba(11,26,46,.26);z-index:2;position:relative;}
+.fp-card3-img{position:relative;aspect-ratio:16/10;overflow:hidden;background:#0B1A2E;}
+.fp-card3-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease;}
+.fp-card3:hover .fp-card3-img img{transform:scale(1.06);}
+.fp-card3-body{padding:18px 20px 22px;display:flex;flex-direction:column;flex:1;}
+.fp-card3-body h4{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;color:#0B1A2E;margin-bottom:8px;line-height:1.1;}
+.fp-card3-body p{font-size:12.5px;color:var(--muted);line-height:1.7;font-weight:300;margin-bottom:14px;flex:1;}
+.fp-tags3{display:flex;flex-wrap:wrap;gap:6px;}
+.fp-tags3 span{font-size:10px;padding:5px 11px;background:#fff;border-radius:14px;color:var(--techdk);letter-spacing:.3px;font-weight:500;}
+.fp-tags3 span.co{background:#0B1A2E;color:#fff;font-weight:600;}
+.fp-arrow3{position:absolute;top:calc(50% - 24px);transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--border);color:#0B1A2E;display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;cursor:pointer;box-shadow:0 8px 24px rgba(11,26,46,.16);z-index:5;transition:background .2s,color .2s;}
+.fp-arrow3:hover{background:#0B1A2E;color:#fff;}
+.fp-arrow3.prev{left:8px;}
+.fp-arrow3.next{right:8px;}
+.fp-panel-cta{display:inline-flex;align-items:center;gap:10px;margin-top:32px;padding:13px 28px;background:#0B4D3C;color:#fff;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:opacity .2s,transform .2s;cursor:none;}
+.fp-panel-cta:hover{opacity:.85;transform:translateY(-1px);}
+@media(max-width:960px){
+  .fp-panel-inner{padding:48px 24px;}
+  .fp-panel-close{top:48px;right:24px;}
+  .fp-card3{flex-basis:calc(50% - 14px);margin-right:28px;}
+  .fp-carousel3{padding:18px 44px 36px;}
+}
+@media(max-width:640px){
+  .fp-card3{flex-basis:100%;margin-right:0;}
+  .fp-carousel3{padding:16px 40px 32px;}
+  .fp-arrow3.prev{left:2px;}
+  .fp-arrow3.next{right:2px;}
+}
 
 /* CONTACT */
-#contact{background:#0B1A2E;padding:120px 64px;}
-.cttop{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end;margin-bottom:80px;border-bottom:1px solid var(--border);padding-bottom:80px;}
-.cth{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:clamp(64px,9vw,132px);line-height:.88;color:#F0F2FF;letter-spacing:-2px;}
+#contact{background:#0B1A2E;padding:72px 64px;position:relative;overflow:hidden;}
+.ct-orb{position:absolute;width:560px;height:560px;border-radius:50%;top:-220px;right:-160px;background:conic-gradient(from 0deg,var(--indigo2),var(--cyan),var(--violet),var(--indigo2));filter:blur(90px);opacity:.16;animation:ctOrbSpin 24s linear infinite,ctOrbPulse 9s ease-in-out infinite;pointer-events:none;z-index:0;}
+@keyframes ctOrbSpin{to{transform:rotate(360deg);}}
+@keyframes ctOrbPulse{0%,100%{opacity:.12;}50%{opacity:.24;}}
+@media(prefers-reduced-motion:reduce){.ct-orb{animation:none;}}
+.cttop{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;margin-bottom:44px;border-bottom:1px solid var(--border);padding-bottom:44px;position:relative;z-index:1;}
+.cth{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:clamp(56px,7.5vw,108px);line-height:.88;color:#F0F2FF;letter-spacing:-2px;}
 .cth em{font-style:italic;background:linear-gradient(135deg,#0098B5,#00C8E0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.ctsub{font-size:15px;color:var(--muted);font-weight:300;line-height:1.8;margin-bottom:36px;}
-.ctg{display:grid;grid-template-columns:1fr 1.5fr;gap:80px;}
+.ctsub{font-size:15px;color:var(--muted);font-weight:300;line-height:1.8;}
+.ctg{display:grid;grid-template-columns:1fr 1.5fr;gap:56px;position:relative;z-index:1;}
 .cinfo{border-top:1px solid var(--border);}
-.cirow{padding:20px 0;border-bottom:1px solid var(--border);}
+.cirow{padding:16px 0;border-bottom:1px solid var(--border);}
 .cil{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#6B8FAA;margin-bottom:6px;}
 .civ{font-size:14px;color:rgba(240,242,255,.6);}
+.civ-pulse{display:flex;align-items:center;gap:9px;}
+.pulse-dot{width:8px;height:8px;border-radius:50%;background:var(--indigo2);flex-shrink:0;animation:dotColor 6s ease-in-out infinite,dotPing 2s ease-in-out infinite;}
+@keyframes dotColor{0%,100%{background:var(--indigo2);}33%{background:var(--cyan);}66%{background:var(--violet);}}
+@keyframes dotPing{0%,100%{box-shadow:0 0 0 0 rgba(47,111,239,.45);}50%{box-shadow:0 0 0 6px rgba(47,111,239,0);}}
+@media(prefers-reduced-motion:reduce){.pulse-dot{animation:none;}}
+.cimail{color:inherit;text-decoration:none;transition:color .2s;}
+.cimail:hover{color:var(--indigo2);text-decoration:underline;}
 .ctform{display:flex;flex-direction:column;gap:16px;}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
 .fg{display:flex;flex-direction:column;gap:8px;}
@@ -201,6 +270,8 @@ section{padding:88px 64px;}
 .fi{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:2px;padding:14px 16px;color:#F0F2FF;font-family:'Inter',sans-serif;font-size:14px;font-weight:300;outline:none;transition:border-color .2s,background .2s;}
 .fi::placeholder{color:#6B8FAA;}
 .fi:focus{border-color:var(--indigo);background:rgba(99,102,241,.04);}
+select.fi{cursor:pointer;}
+select.fi option{background:#0F2036;color:#F0F2FF;}
 textarea.fi{resize:vertical;min-height:100px;}
 .bsub{padding:14px 32px;background:#0098B5;color:#fff;border:none;font-weight:600;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:none;border-radius:2px;font-family:'Inter',sans-serif;align-self:flex-start;transition:opacity .2s,transform .2s;}
 .bsub:hover{opacity:.85;transform:translateY(-1px);}
@@ -317,17 +388,6 @@ footer{background:#0B1A2E;padding:24px 64px;border-top:1px solid rgba(255,255,25
   </div>
 </section>
 
-<!-- MARQUEE -->
-<div class="mq">
-  <div class="mqt">
-    <span>Strategy</span><span class="ac">·</span><span>Technology</span><span class="ac">·</span><span>Analytics</span><span class="ac">·</span><span>Consulting</span><span class="ac">·</span><span>S.T.A.C.</span><span class="ac">·</span>
-    <span>Strategy</span><span class="ac">·</span><span>Technology</span><span class="ac">·</span><span>Analytics</span><span class="ac">·</span><span>Consulting</span><span class="ac">·</span><span>S.T.A.C.</span><span class="ac">·</span>
-    <span>Strategy</span><span class="ac">·</span><span>Technology</span><span class="ac">·</span><span>Analytics</span><span class="ac">·</span><span>Consulting</span><span class="ac">·</span><span>S.T.A.C.</span><span class="ac">·</span>
-    <span>Strategy</span><span class="ac">·</span><span>Technology</span><span class="ac">·</span><span>Analytics</span><span class="ac">·</span><span>Consulting</span><span class="ac">·</span><span>S.T.A.C.</span><span class="ac">·</span>
-  </div>
-</div>
-
-
 <!-- ACRONYM -->
 <section id="acronym">
   <div class="acro-row rv">
@@ -419,7 +479,7 @@ footer{background:#0B1A2E;padding:24px 64px;border-top:1px solid rgba(255,255,25
   <div class="abtop">
     <div style="flex:1">
       <div class="slabel rv">{02} · Who we are</div>
-      <p class="abq rv" id="abq">"Financial strategy, AI, and marketing, built to work together."</p>
+      <p class="abq rv" id="abq">"Come with the chaos. Leave with the clarity."</p>
     </div>
     <div class="avs rv2">
       <div class="av"><div class="avl" id="vl1">Equal pillars</div><div class="avt" id="vt1">Financial advisory, AI & technology, and marketing are three co-equal disciplines. No pillar is support for another.</div></div>
@@ -435,12 +495,13 @@ footer{background:#0B1A2E;padding:24px 64px;border-top:1px solid rgba(255,255,25
       <p class="pc-body" id="p1b">For businesses that need real strategic financial thinking, not just someone to sign off on the books. We handle the decisions that actually shape your company.</p>
       <div class="pc-role" id="p1r">Financial Advisory</div>
     </div>
-    <div class="pc pt rv">
+    <div class="pc pt rv" id="pcTech" role="button" tabindex="0" aria-expanded="false" aria-controls="fpPanel">
       <div class="pc-glow"></div>
       <div class="pc-tag tt">T.A · Technology</div>
       <div class="pc-name" id="p2n">AI &amp; Technology</div>
-      <p class="pc-body" id="p2b">We build things that work: real AI products, not just strategies. Dashboards, automations, and tools your team actually uses on Monday morning.</p>
+      <p class="pc-body" id="p2b">We build what gets used: dashboards, automations, tools that earn a spot in your daily routine.</p>
       <div class="pc-role" id="p2r">AI &amp; Technology Director</div>
+      <div class="pc-hint"><span id="pcHintTxt">View featured projects</span><span class="pc-hint-ic">↗</span></div>
     </div>
     <div class="pc pm rv">
       <div class="pc-glow"></div>
@@ -452,8 +513,154 @@ footer{background:#0B1A2E;padding:24px 64px;border-top:1px solid rgba(255,255,25
   </div>
 </section>
 
+<!-- FEATURED PROJECTS PREVIEW -->
+<div class="fp-panel" id="fpPanel">
+  <div class="fp-panel-inner">
+    <button class="fp-panel-close" id="fpPanelClose" aria-label="Close">&times;</button>
+    <div class="fp-panel-head">
+      <div class="slabel">T.A · Technology</div>
+      <h3 class="fp-panel-h">Featured AI &amp; Technology projects.</h3>
+      <p class="fp-lede">A sample of the AI systems, dashboards, and models we've shipped, from predictive maintenance to generative AI.</p>
+    </div>
+    <div class="fp-filters" id="fpFilters">
+      <button class="fp-filter-btn active" data-filter="all">All</button>
+      <button class="fp-filter-btn" data-filter="ml">ML<span class="fp-info-dot" tabindex="0" data-tip="Machine Learning" aria-label="Machine Learning">i</span></button>
+      <button class="fp-filter-btn" data-filter="genai">GenAI<span class="fp-info-dot" tabindex="0" data-tip="Generative AI" aria-label="Generative AI">i</span></button>
+      <button class="fp-filter-btn" data-filter="analytics">Analytics/BI<span class="fp-info-dot" tabindex="0" data-tip="Analytics & Business Intelligence" aria-label="Analytics and Business Intelligence">i</span></button>
+      <button class="fp-filter-btn" data-filter="xai">XAI<span class="fp-info-dot" tabindex="0" data-tip="Explainable AI" aria-label="Explainable AI">i</span></button>
+      <button class="fp-filter-btn" data-filter="nlp">NLP<span class="fp-info-dot" tabindex="0" data-tip="Natural Language Processing" aria-label="Natural Language Processing">i</span></button>
+      <button class="fp-filter-btn" data-filter="timeseries">Time-Series</button>
+      <button class="fp-filter-btn" data-filter="sports">Sports</button>
+      <button class="fp-filter-btn" data-filter="cv">CV<span class="fp-info-dot" tabindex="0" data-tip="Computer Vision" aria-label="Computer Vision">i</span></button>
+      <button class="fp-filter-btn" data-filter="rl">RL<span class="fp-info-dot" tabindex="0" data-tip="Reinforcement Learning" aria-label="Reinforcement Learning">i</span></button>
+      <button class="fp-filter-btn" data-filter="robotics">Robotics</button>
+      <button class="fp-filter-btn" data-filter="research">Research</button>
+      <button class="fp-filter-btn" data-filter="app">App</button>
+    </div>
+    <div class="fp-carousel3" id="fpCarousel3">
+      <div class="fp-viewport3" id="fp3Viewport">
+        <div class="fp-track3" id="fpTrack3">
+          <div class="fp-card3" data-tags="analytics,app">
+            <div class="fp-card3-img"><img src="images/savings_impact_analyzer.png" alt="Savings Impact Analyzer" loading="lazy"/></div>
+            <div class="fp-card3-body">
+              <h4>Savings Impact Analyzer</h4>
+              <p>A tool built for ASML that standardizes how savings from parts, labor, and overhead initiatives are estimated, replacing ad hoc spreadsheet calculations with one consistent, configurable workflow.</p>
+              <div class="fp-tags3"><span class="co">ASML</span><span>Python</span><span>Analytics</span></div>
+            </div>
+          </div>
+          <div class="fp-card3" data-tags="ml,timeseries">
+            <div class="fp-card3-img"><img src="images/predictive_truck_maintinance.png" alt="Predictive Truck Maintenance System" loading="lazy"/></div>
+            <div class="fp-card3-body">
+              <h4>Predictive Truck Maintenance System</h4>
+              <p>Built for the largest DAF dealer in the Netherlands, combining 20+ years of workshop history with live telemetry from 691 vehicles to flag trucks headed for trouble, catching 95% of failures an average of 14 days early, using data they already had.</p>
+              <div class="fp-tags3"><span>ETL</span><span>ML</span><span>Forecasting</span></div>
+            </div>
+          </div>
+          <div class="fp-card3" data-tags="cv,rl,robotics">
+            <div class="fp-card3-img"><img src="images/root_segmentation.png" alt="Root Segmentation &amp; RL Control of OT-2 Robot" loading="lazy"/></div>
+            <div class="fp-card3-body">
+              <h4>Root Segmentation &amp; RL Control of OT-2 Robot</h4>
+              <p>From pixels to motion: a U-Net segments plant roots, skeletonization quantifies growth, and a PPO-trained policy guides an OT-2 lab robot to the growth point automatically.</p>
+              <div class="fp-tags3"><span>CV</span><span>RL</span><span>Robotics</span></div>
+            </div>
+          </div>
+          <div class="fp-card3" data-tags="nlp,ml,app">
+            <div class="fp-card3-img"><img src="images/sense_ai.png" alt="SenseAI" loading="lazy"/></div>
+            <div class="fp-card3-body">
+              <h4>SenseAI</h4>
+              <p>A speech-to-emotion pipeline that transcribes, segments, and classifies audio, surfacing the exact frustrated or excited moments in a call or interview.</p>
+              <div class="fp-tags3"><span>NLP</span><span>Speech AI</span><span>FastAPI</span></div>
+            </div>
+          </div>
+          <div class="fp-card3" data-tags="cv,xai">
+            <div class="fp-card3-img"><img src="images/arboreal.png" alt="Arboreal" loading="lazy"/></div>
+            <div class="fp-card3-body">
+              <h4>Arboreal</h4>
+              <p>A CNN trained on urban tree species with Grad-CAM overlays, so every prediction shows what the model actually used to decide, built for conservation and inventory review.</p>
+              <div class="fp-tags3"><span>CV</span><span>Deep Learning</span><span>XAI</span></div>
+            </div>
+          </div>
+          <div class="fp-card3" data-tags="analytics">
+            <div class="fp-card3-img"><img src="images/sdg_6_powerbi.png" alt="SDG-6 Water &amp; Sanitation" loading="lazy"/></div>
+            <div class="fp-card3-body">
+              <h4>SDG-6 Water &amp; Sanitation</h4>
+              <p>A multi-page Power BI report modeling WASH data with KPI tiles, correlation toggles, maps, and narrative bookmarks, built for policy framing.</p>
+              <div class="fp-tags3"><span>Power BI</span><span>DAX</span><span>Storytelling</span></div>
+            </div>
+          </div>
+          <div class="fp-card3" data-tags="sports,analytics">
+            <div class="fp-card3-img"><img src="images/nac_breda.png" alt="NAC Breda Player Insights" loading="lazy"/></div>
+            <div class="fp-card3-body">
+              <h4>NAC Breda Player Insights</h4>
+              <p>Cleaned and repaired scouting tables, then analyzed goal-contribution signals such as shots per 90, shot-on-target percentage, assists, and duels by position and age to produce a concise shortlist.</p>
+              <div class="fp-tags3"><span>Python</span><span>Sports Analytics</span><span>EDA</span></div>
+            </div>
+          </div>
+          <div class="fp-card3" data-tags="genai,nlp,app">
+            <div class="fp-card3-img"><img src="images/marbet.png" alt="Marbet Trip Assistant" loading="lazy"/></div>
+            <div class="fp-card3-body">
+              <h4>Marbet Trip Assistant</h4>
+              <p>A Streamlit chatbot grounded on curated trip data (itinerary, Wi-Fi, spa, packing, visa) using a Chroma vector database and a local Llama 3 model through Ollama.</p>
+              <div class="fp-tags3"><span>GenAI</span><span>RAG</span><span>Streamlit</span></div>
+            </div>
+          </div>
+          <div class="fp-card3" data-tags="ml,sports,analytics">
+            <div class="fp-card3-img"><img src="images/epl_analytics.png" alt="EPL Match &amp; Player Analytics" loading="lazy"/></div>
+            <div class="fp-card3-body">
+              <h4>EPL Match &amp; Player Analytics</h4>
+              <p>Match-outcome and player-value models comparing classical and gradient-boosted approaches on league performance data.</p>
+              <div class="fp-tags3"><span>ML</span><span>Sports Analytics</span><span>XGBoost</span></div>
+            </div>
+          </div>
+          <div class="fp-card3" data-tags="genai">
+            <div class="fp-card3-img"><img src="images/gen_ai.png" alt="Gen-AI Storyboards" loading="lazy"/></div>
+            <div class="fp-card3-body">
+              <h4>Gen-AI Storyboards</h4>
+              <p>Compared ComfyUI against Automatic1111 and WebUI, enforcing character consistency across frames with fixed seeds and anchor phrasing for fast, coherent visual narratives.</p>
+              <div class="fp-tags3"><span>GenAI</span><span>Prompt Engineering</span><span>ComfyUI</span></div>
+            </div>
+          </div>
+          <div class="fp-card3" data-tags="ml,timeseries,app">
+            <div class="fp-card3-img"><img src="images/road_accident_pred.png" alt="Road Accident Risk Predictor" loading="lazy"/></div>
+            <div class="fp-card3-body">
+              <h4>Road Accident Risk Predictor</h4>
+              <p>A street-level risk-forecasting app combining historical incident, traffic, and weather data into a live risk map.</p>
+              <div class="fp-tags3"><span>ML</span><span>Geospatial</span><span>Risk Modeling</span></div>
+            </div>
+          </div>
+          <div class="fp-card3" data-tags="research,genai">
+            <div class="fp-card3-img"><img src="images/sme_genai_willingness.png" alt="SME GenAI Willingness Study" loading="lazy"/></div>
+            <div class="fp-card3-body">
+              <h4>SME GenAI Willingness Study</h4>
+              <p>Finds that willingness to learn GenAI is broadly distributed across education levels, while sector and organizational support shape how quickly that willingness turns into practice.</p>
+              <div class="fp-tags3"><span>Research</span><span>GenAI</span><span>Policy</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="fp-arrow3 prev" id="fp3Prev" aria-label="Previous project">&#8249;</button>
+      <button class="fp-arrow3 next" id="fp3Next" aria-label="Next project">&#8250;</button>
+    </div>
+    <a class="fp-panel-cta" href="ai-technology.html">
+      <span>Our services</span>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</div>
+
+<!-- MARQUEE -->
+<div class="mq">
+  <div class="mqt">
+    <span>Strategy</span><span class="ac">·</span><span>Technology</span><span class="ac">·</span><span>Analytics</span><span class="ac">·</span><span>Consulting</span><span class="ac">·</span><span>S.T.A.C.</span><span class="ac">·</span>
+    <span>Strategy</span><span class="ac">·</span><span>Technology</span><span class="ac">·</span><span>Analytics</span><span class="ac">·</span><span>Consulting</span><span class="ac">·</span><span>S.T.A.C.</span><span class="ac">·</span>
+    <span>Strategy</span><span class="ac">·</span><span>Technology</span><span class="ac">·</span><span>Analytics</span><span class="ac">·</span><span>Consulting</span><span class="ac">·</span><span>S.T.A.C.</span><span class="ac">·</span>
+    <span>Strategy</span><span class="ac">·</span><span>Technology</span><span class="ac">·</span><span>Analytics</span><span class="ac">·</span><span>Consulting</span><span class="ac">·</span><span>S.T.A.C.</span><span class="ac">·</span>
+  </div>
+</div>
+
 <!-- CONTACT -->
 <section id="contact">
+  <div class="ct-orb" aria-hidden="true"></div>
   <div class="cttop">
     <div>
       <div class="slabel slabel-on-dark">{03} · Get in touch</div>
@@ -461,17 +668,13 @@ footer{background:#0B1A2E;padding:24px 64px;border-top:1px solid rgba(255,255,25
     </div>
     <div class="rv2">
       <p class="ctsub" id="csub">No forms that go nowhere. We read every message and get back to you within 24 hours.</p>
-      <a class="btn" href="mailto:info@stacinternational.com" id="cbtn">
-        <span>Send us a message</span>
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
     </div>
   </div>
   <div class="ctg">
     <div class="cinfo rv">
-      <div class="cirow"><div class="cil" id="cll">Based in</div><div class="civ">Curaçao, Dutch Caribbean</div></div>
-      <div class="cirow"><div class="cil">Email</div><div class="civ">info@stacinternational.com</div></div>
-      <div class="cirow"><div class="cil" id="cla">Also active in</div><div class="civ" id="cav">Europe</div></div>
+      <div class="cirow"><div class="cil">Email</div><div class="civ"><a class="cimail" href="mailto:info@stacinternational.com">info@stacinternational.com</a></div></div>
+      <div class="cirow"><div class="cil" id="cll">Based in</div><div class="civ">Curaçao</div></div>
+      <div class="cirow"><div class="cil" id="cla">Also active in</div><div class="civ civ-pulse"><span class="pulse-dot" aria-hidden="true"></span><span id="cav">Internationally</span></div></div>
     </div>
     <form class="ctform rv2" id="ctform-el">
       <div class="frow">
@@ -502,7 +705,7 @@ footer{background:#0B1A2E;padding:24px 64px;border-top:1px solid rgba(255,255,25
 // CURSOR
 const cur=document.getElementById('cur');
 document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';});
-document.querySelectorAll('a,button,.srow,.pc,.stat').forEach(el=>{
+document.querySelectorAll('a,button,.srow,.pc,.stat,.fp-card3').forEach(el=>{
   el.addEventListener('mouseenter',()=>cur.classList.add('big'));
   el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
 });
@@ -542,8 +745,8 @@ document.querySelectorAll('.rv,.rv2').forEach(el=>obs.observe(el));
 
 // TRANSLATIONS
 const T={
-en:{ns:'Services',na:'About',nc:'Contact',hs1:'We deliver',hs2:'that moves businesses forward.',cy:['Financial Advisory','AI & Technology','Marketing & Growth'],hdesc:'One firm. Three disciplines. Established in Curaçao, active internationally.',hgeo:'Curaçao · Sint Maarten · Aruba · Bonaire · Europe',hcta:'Our Services',aw:['Strategy','Technology','Analytics','Consulting'],sl:[],stitle:'What we do.',sdesc:'Three disciplines, each fully independent. Engage one or all three.',slearn:'Learn more',fin:{tag:'S · Strategy',name:'Financial Advisory',body:"Serious financial thinking for businesses that have outgrown their accountant. We handle the real work: due diligence, structure, compliance, cashflow, not just tax returns.",l:['Financial due diligence','Cash flow management','Risk & compliance advisory','Cross-border structuring','CFO-as-a-service']},tech:{tag:'T.A · Technology',name:'AI & Technology',body:"We build AI tools that run in your business, not in a slide deck. Dashboards, automations, analytics: the things that save you time tomorrow, not in six months.",l:['AI dashboards & reporting','Predictive analytics','Workflow automation','Website development','AI strategy consulting']},mkt:{tag:'C · Consulting',name:'Marketing & Growth',body:"If nobody knows you exist, nothing else matters. We build the strategy, run the channels, and make sure the right people find you.",l:['Marketing plans & strategy','Social media management','Mail & WhatsApp campaigns','Content editing','Marketing advice']},abq:'"Financial strategy, AI, and marketing, built to work together."',v:[['Three equal disciplines','Financial advisory, AI & technology, and marketing each stand on their own. No discipline is secondary to another.'],['Results, not reports','Every engagement has a clear deliverable. We measure success by what actually changes in your business.'],["Based in Curaçao","We operate locally and understand the market from the inside. That matters when the advice gets specific."]],pillars:[{n:'Financial Advisory',b:'For businesses that need real strategic financial thinking, not just someone to sign off on the books. We handle the decisions that actually shape your company.',r:'Financial Advisory'},{n:'AI & Technology',b:"We build things that work: real AI products, not just strategies. Dashboards, automations, and tools your team actually uses on Monday morning.",r:'AI & Technology'},{n:'Marketing & Growth',b:'The kind of marketing that makes the right people find you and the wrong ones self-select out. Strategy first, execution always.',r:'Marketing & Growth'}],cth1:'Talk',cth2:'to us.',csub:"No forms that go nowhere. We read every message and get back to you within 24 hours.",cbtn:'Send us a message',cll:'Based in',cla:'Also active in',cav:'Europe',fn:'Name',fe:'Email',fi2:'What do you need?',fm:'Message',fsb:'Send it',opts:["Select a service",'Financial Advisory','AI & Technology','Marketing & Growth',"All three"],ta:"Tell us what's going on in your business...",fcp:'© 2026 S.T.A.C. B.V.'},
-nl:{ns:'Diensten',na:'Over ons',nc:'Contact',hs1:'Wij leveren',hs2:'dat bedrijven vooruit helpt.',cy:['Financieel Advies','AI & Technologie','Marketing & Groei'],hdesc:'Één firma. Drie gelijkwaardige disciplines. Strategie, technologie en consulting, opgericht in Curaçao, actief internationaal.',hgeo:'Curaçao · Sint Maarten · Aruba · Bonaire · Europa',hcta:'Onze Diensten',aw:['Strategie','Technologie','Analyse','Consulting'],sl:[],stitle:'Wat wij doen.',sdesc:'Drie disciplines, elk volledig zelfstandig. Kies één of alle drie.',slearn:'Meer weten',fin:{tag:'S · Strategie',name:'Financieel Advies',body:'Onafhankelijke financiële strategie voor groeiende bedrijven, familiebedrijven en regionale instellingen. Scherp advies, geen standaardaanpak.',l:['Financiële due diligence','Cashflowbeheer','Risico- & compliance advies','Grensoverschrijdende structurering','CFO-as-a-service']},tech:{tag:'T.A · Technologie',name:'AI & Technologie',body:'Werkende AI-tools, live dashboards en geautomatiseerde systemen. Geen AI als concept, AI als product dat uw bedrijf daadwerkelijk gebruikt.',l:['AI dashboards & rapportages','Voorspellende analyses','Procesautomatisering','Websiteontwikkeling','AI strategie consulting']},mkt:{tag:'C · Consulting',name:'Marketing & Groei',body:'Merkstrategie, digitale marketing en klantacquisitie voor bedrijven die doelgericht willen groeien, niet alleen zichtbaar zijn.',l:['Marketingplannen & strategie','Socialmediabeheer','Mail & WhatsApp campagnes','Content editing','Marketingadvies']},abq:'"Drie disciplines. Één firma. Geen hiërarchie, gewoon expertise die bij elkaar hoort."',v:[['Gelijke pijlers','Financiën, AI & technologie en marketing zijn drie gelijkwaardige disciplines. Geen pijler is ondersteunend aan een andere.'],['Resultaten boven rapporten','Klanten betalen voor resultaten, niet voor rapporten. Elk traject wordt gemeten aan wat er daadwerkelijk verandert.'],['Caribbean-first','Gebouwd in Curaçao, actief in Europa. We kennen de markt van binnenuit.']],pillars:[{n:'Financieel Advies',b:'Risicobeheer, compliance, grensoverschrijdende structurering en financiële strategie voor bedrijven die meer nodig hebben dan een boekhouder.',r:'Financieel Advies'},{n:'AI & Technologie',b:'Maatwerk AI-tools, geautomatiseerde rapportages, voorspellende analyses en websiteontwikkeling. Systemen die werken in productie, niet alleen in demo\'s.',r:'AI & Technologie'},{n:'Marketing & Groei',b:'Merkstrategie, digitale aanwezigheid en klantacquisitie. Voor bedrijven die de juiste mensen willen bereiken en daadwerkelijk converteren.',r:'Marketing & Groei'}],cth1:'Laten we',cth2:'samenwerken.',csub:'Of u nu financieel advies, een AI-product of een marketingstrategie nodig heeft, of alle drie, wij horen graag van u.',cbtn:'Stuur ons een e-mail',cll:'Locatie',cla:'Actief in',cav:'Curaçao · Europa',fn:'Naam',fe:'E-mail',fi2:'Ik ben geïnteresseerd in',fm:'Bericht',fsb:'Verstuur',opts:['Selecteer een dienst','Financieel Advies','AI & Technologie','Marketing & Groei','Alle drie'],ta:'Vertel ons wat u bouwt...',fcp:'© 2026 S.T.A.C. B.V. Alle rechten voorbehouden.'}
+en:{ns:'Services',na:'About',nc:'Contact',hs1:'We deliver',hs2:'that moves businesses forward.',cy:['Financial Advisory','AI & Technology','Marketing & Growth'],hdesc:'One firm. Three disciplines. Established in Curaçao, active internationally.',hgeo:'Curaçao · Sint Maarten · Aruba · Bonaire · Europe',hcta:'Our Services',aw:['Strategy','Technology','Analytics','Consulting'],sl:[],stitle:'What we do.',sdesc:'Three disciplines, each fully independent. Engage one or all three.',slearn:'Learn more',fin:{tag:'S · Strategy',name:'Financial Advisory',body:"Serious financial thinking for businesses that have outgrown their accountant. We handle the real work: due diligence, structure, compliance, cashflow, not just tax returns.",l:['Financial due diligence','Cash flow management','Risk & compliance advisory','Cross-border structuring','CFO-as-a-service']},tech:{tag:'T.A · Technology',name:'AI & Technology',body:"We build AI tools that run in your business, not in a slide deck. Dashboards, automations, analytics: the things that save you time tomorrow, not in six months.",l:['AI dashboards & reporting','Predictive analytics','Workflow automation','Website development','AI strategy consulting']},mkt:{tag:'C · Consulting',name:'Marketing & Growth',body:"If nobody knows you exist, nothing else matters. We build the strategy, run the channels, and make sure the right people find you.",l:['Marketing plans & strategy','Social media management','Mail & WhatsApp campaigns','Content editing','Marketing advice']},abq:'"Come with the chaos. Leave with the clarity."',v:[['Three equal disciplines','Financial advisory, AI & technology, and marketing each stand on their own. No discipline is secondary to another.'],['Results, not reports','Every engagement has a clear deliverable. We measure success by what actually changes in your business.'],["Based in Curaçao","We operate locally and understand the market from the inside. That matters when the advice gets specific."]],pillars:[{n:'Financial Advisory',b:'For businesses that need real strategic financial thinking, not just someone to sign off on the books. We handle the decisions that actually shape your company.',r:'Financial Advisory'},{n:'AI & Technology',b:"We build what gets used: dashboards, automations, tools that earn a spot in your daily routine.",r:'AI & Technology'},{n:'Marketing & Growth',b:'The kind of marketing that makes the right people find you and the wrong ones self-select out. Strategy first, execution always.',r:'Marketing & Growth'}],cth1:'Talk',cth2:'to us.',csub:"No forms that go nowhere. We read every message and get back to you within 24 hours.",cll:'Based in',cla:'Also active in',cav:'Internationally',fn:'Name',fe:'Email',fi2:'What do you need?',fm:'Message',fsb:'Send it',opts:["Select a service",'Financial Advisory','AI & Technology','Marketing & Growth',"All three"],ta:"Tell us what's going on in your business...",fcp:'© 2026 S.T.A.C. B.V.'},
+nl:{ns:'Diensten',na:'Over ons',nc:'Contact',hs1:'Wij leveren',hs2:'dat bedrijven vooruit helpt.',cy:['Financieel Advies','AI & Technologie','Marketing & Groei'],hdesc:'Één firma. Drie gelijkwaardige disciplines. Strategie, technologie en consulting, opgericht in Curaçao, actief internationaal.',hgeo:'Curaçao · Sint Maarten · Aruba · Bonaire · Europa',hcta:'Onze Diensten',aw:['Strategie','Technologie','Analyse','Consulting'],sl:[],stitle:'Wat wij doen.',sdesc:'Drie disciplines, elk volledig zelfstandig. Kies één of alle drie.',slearn:'Meer weten',fin:{tag:'S · Strategie',name:'Financieel Advies',body:'Onafhankelijke financiële strategie voor groeiende bedrijven, familiebedrijven en regionale instellingen. Scherp advies, geen standaardaanpak.',l:['Financiële due diligence','Cashflowbeheer','Risico- & compliance advies','Grensoverschrijdende structurering','CFO-as-a-service']},tech:{tag:'T.A · Technologie',name:'AI & Technologie',body:'Werkende AI-tools, live dashboards en geautomatiseerde systemen. Geen AI als concept, AI als product dat uw bedrijf daadwerkelijk gebruikt.',l:['AI dashboards & rapportages','Voorspellende analyses','Procesautomatisering','Websiteontwikkeling','AI strategie consulting']},mkt:{tag:'C · Consulting',name:'Marketing & Groei',body:'Merkstrategie, digitale marketing en klantacquisitie voor bedrijven die doelgericht willen groeien, niet alleen zichtbaar zijn.',l:['Marketingplannen & strategie','Socialmediabeheer','Mail & WhatsApp campagnes','Content editing','Marketingadvies']},abq:'"Kom met de chaos. Vertrek met de duidelijkheid."',v:[['Gelijke pijlers','Financiën, AI & technologie en marketing zijn drie gelijkwaardige disciplines. Geen pijler is ondersteunend aan een andere.'],['Resultaten boven rapporten','Klanten betalen voor resultaten, niet voor rapporten. Elk traject wordt gemeten aan wat er daadwerkelijk verandert.'],['Caribbean-first','Gebouwd in Curaçao, actief in Europa. We kennen de markt van binnenuit.']],pillars:[{n:'Financieel Advies',b:'Risicobeheer, compliance, grensoverschrijdende structurering en financiële strategie voor bedrijven die meer nodig hebben dan een boekhouder.',r:'Financieel Advies'},{n:'AI & Technologie',b:'We bouwen wat daadwerkelijk gebruikt wordt: dashboards, automatiseringen en tools die een vaste plek krijgen in uw dagelijkse routine.',r:'AI & Technologie'},{n:'Marketing & Groei',b:'Merkstrategie, digitale aanwezigheid en klantacquisitie. Voor bedrijven die de juiste mensen willen bereiken en daadwerkelijk converteren.',r:'Marketing & Groei'}],cth1:'Laten we',cth2:'samenwerken.',csub:'Of u nu financieel advies, een AI-product of een marketingstrategie nodig heeft, of alle drie, wij horen graag van u.',cll:'Locatie',cla:'Actief in',cav:'Internationaal',fn:'Naam',fe:'E-mail',fi2:'Ik ben geïnteresseerd in',fm:'Bericht',fsb:'Verstuur',opts:['Selecteer een dienst','Financieel Advies','AI & Technologie','Marketing & Groei','Alle drie'],ta:'Vertel ons wat u bouwt...',fcp:'© 2026 S.T.A.C. B.V. Alle rechten voorbehouden.'}
 };
 function L(l){
   const c=T[l];
@@ -570,7 +773,6 @@ function L(l){
   [1,2,3].forEach(i=>{document.getElementById('p'+i+'n').textContent=c.pillars[i-1].n;document.getElementById('p'+i+'b').textContent=c.pillars[i-1].b;document.getElementById('p'+i+'r').textContent=c.pillars[i-1].r;});
   document.getElementById('cth1').textContent=c.cth1;document.getElementById('cth2').textContent=c.cth2;
   document.getElementById('csub').textContent=c.csub;
-  document.getElementById('cbtn').querySelector('span').textContent=c.cbtn;
   document.getElementById('cll').textContent=c.cll;document.getElementById('cla').textContent=c.cla;document.getElementById('cav').innerHTML=c.cav;
   document.getElementById('fn').textContent=c.fn;document.getElementById('fe').textContent=c.fe;document.getElementById('fi2').textContent=c.fi2;document.getElementById('fm').textContent=c.fm;document.getElementById('fsb').textContent=c.fsb;
   document.getElementById('ta').placeholder=c.ta;
@@ -598,6 +800,132 @@ if(ctformEl){
     window.location.href='mailto:info@stacinternational.com?subject='+subject+'&body='+body;
   });
 }
+
+// FEATURED PROJECTS PANEL (AI & Technology pillar)
+(function(){
+  var card=document.getElementById('pcTech');
+  var panel=document.getElementById('fpPanel');
+  var closeBtn=document.getElementById('fpPanelClose');
+  var hintTxt=document.getElementById('pcHintTxt');
+  if(!card||!panel) return;
+  function setPanelHeight(){
+    if(panel.classList.contains('open')) panel.style.maxHeight=panel.scrollHeight+'px';
+  }
+  function openPanel(){
+    panel.classList.add('open');
+    panel.style.maxHeight=panel.scrollHeight+'px';
+    card.setAttribute('aria-expanded','true');
+    if(hintTxt) hintTxt.textContent='Close projects';
+    setTimeout(function(){ panel.scrollIntoView({behavior:'smooth',block:'start'}); },150);
+  }
+  function closePanel(){
+    panel.style.maxHeight=panel.scrollHeight+'px';
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        panel.classList.remove('open');
+        panel.style.maxHeight='0px';
+      });
+    });
+    card.setAttribute('aria-expanded','false');
+    if(hintTxt) hintTxt.textContent='View featured projects';
+  }
+  function togglePanel(){
+    if(panel.classList.contains('open')) closePanel();
+    else openPanel();
+  }
+  card.addEventListener('click',togglePanel);
+  card.addEventListener('keydown',function(e){
+    if(e.key==='Enter'||e.key===' '){ e.preventDefault(); togglePanel(); }
+  });
+  if(closeBtn) closeBtn.addEventListener('click',function(e){ e.stopPropagation(); closePanel(); });
+  window.addEventListener('resize',setPanelHeight);
+})();
+
+// FEATURED PROJECTS CAROUSEL (ported from ai-technology.html)
+(function(){
+  var viewport=document.getElementById('fp3Viewport');
+  var track=document.getElementById('fpTrack3');
+  var allCards=Array.prototype.slice.call(document.querySelectorAll('#fpTrack3 .fp-card3'));
+  var wrap=document.getElementById('fpCarousel3');
+  var prevBtn=document.getElementById('fp3Prev');
+  var nextBtn=document.getElementById('fp3Next');
+  var filterBtns=document.querySelectorAll('#fpFilters .fp-filter-btn');
+  if(!track||!wrap||!viewport||!allCards.length) return;
+  var idx=0,timer;
+  function visibleCards(){ return allCards.filter(function(c){ return c.style.display!=='none'; }); }
+  function cardStep(){
+    var vc=visibleCards();
+    if(!vc.length) return 0;
+    var r=vc[0].getBoundingClientRect();
+    var style=getComputedStyle(vc[0]);
+    return r.width+parseFloat(style.marginRight||0);
+  }
+  function visibleCount(){
+    var s=cardStep();
+    return s?Math.max(1,Math.round(viewport.clientWidth/s)):1;
+  }
+  function render(){
+    var vc=visibleCards();
+    allCards.forEach(function(c){ c.classList.remove('is-center'); });
+    if(!vc.length) return;
+    var vcount=visibleCount();
+    var half=Math.floor(vcount/2);
+    var maxStart=Math.max(0,vc.length-vcount);
+    var start=Math.max(0,Math.min(idx-half,maxStart));
+    track.style.transform='translateX(-'+(start*cardStep())+'px)';
+    if(vcount>=3&&vc[idx]) vc[idx].classList.add('is-center');
+    var panel=document.getElementById('fpPanel');
+    if(panel&&panel.classList.contains('open')) panel.style.maxHeight=panel.scrollHeight+'px';
+  }
+  function go(n){
+    var vc=visibleCards();
+    var mx=vc.length-1;
+    if(mx<0) return;
+    if(n>mx) n=0;
+    if(n<0) n=mx;
+    idx=n;
+    render();
+  }
+  function next(){ go(idx+1); }
+  function prev(){ go(idx-1); }
+  function restart(){ clearInterval(timer); timer=setInterval(next,5000); }
+  function applyFilter(tag){
+    allCards.forEach(function(c){
+      var tags=(c.getAttribute('data-tags')||'').split(',');
+      var show=(tag==='all')||tags.indexOf(tag)!==-1;
+      c.style.display=show?'':'none';
+    });
+    idx=0;
+    render();
+    restart();
+  }
+  filterBtns.forEach(function(btn){
+    btn.addEventListener('click',function(){
+      filterBtns.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      applyFilter(btn.getAttribute('data-filter'));
+    });
+  });
+  document.querySelectorAll('#fpPanel .fp-info-dot').forEach(function(dot){
+    dot.addEventListener('click',function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      var wasOpen=dot.classList.contains('show');
+      document.querySelectorAll('#fpPanel .fp-info-dot.show').forEach(function(d){ d.classList.remove('show'); });
+      if(!wasOpen) dot.classList.add('show');
+    });
+  });
+  document.addEventListener('click',function(){
+    document.querySelectorAll('#fpPanel .fp-info-dot.show').forEach(function(d){ d.classList.remove('show'); });
+  });
+  if(nextBtn) nextBtn.addEventListener('click',function(){ next(); restart(); });
+  if(prevBtn) prevBtn.addEventListener('click',function(){ prev(); restart(); });
+  wrap.addEventListener('mouseenter',function(){ clearInterval(timer); });
+  wrap.addEventListener('mouseleave',restart);
+  window.addEventListener('resize',render);
+  render();
+  restart();
+})();
 </script>
 </body>
 </html>
