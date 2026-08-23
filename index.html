@@ -63,7 +63,7 @@ nav.solid{background:rgba(255,255,255,0.96);backdrop-filter:blur(16px);border-bo
 @keyframes heroIconIn{from{opacity:0;}to{opacity:1;}}
 .hero-icon-glow{position:absolute;top:2%;right:6%;width:32%;height:32%;border-radius:50%;background:radial-gradient(circle,rgba(58,224,163,.55) 0%,rgba(58,224,163,0) 72%);filter:blur(40px);animation:heroArrowGlow 3.6s ease-in-out .5s infinite;pointer-events:none;}
 @keyframes heroArrowGlow{0%,100%{opacity:.35;}50%{opacity:.85;}}
-@media(max-width:900px){.hero-icon-wrap{display:none;}}
+@media(max-width:900px){.hero-icon-wrap{width:clamp(200px,68vw,340px);top:4%;right:-14%;}}
 @media(prefers-reduced-motion:reduce){.hero-icon-wrap{animation:heroIconIn .01s linear forwards;}.hero-icon-glow{animation:none;}}
 .h-eye{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#6B8FAA;margin-bottom:48px;opacity:0;animation:fadeup .8s ease .2s forwards;}
 .h-big{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:clamp(30px,11vw,152px);line-height:.88;letter-spacing:-2px;color:#FFFFFF;opacity:0;animation:fadeup .8s ease .35s forwards;}
