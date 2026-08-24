@@ -158,6 +158,25 @@ section{padding:88px 64px;}
 .srow:nth-child(3):hover .sarr,.srow:nth-child(3):focus-visible .sarr{box-shadow:0 0 24px rgba(168,85,247,.55);}
 .srow:hover .sarr-ic,.srow:focus-visible .sarr-ic{transform:translate(3px,-3px);}
 
+/* START HERE / ASSESSMENTS */
+#starthere{background:#F0F5FA;padding-top:72px;padding-bottom:80px;}
+.sh-head{max-width:640px;margin-bottom:44px;}
+.sh-title{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:clamp(26px,3vw,40px);line-height:1.05;letter-spacing:-.5px;color:#0B1A2E;margin-top:4px;}
+.sh-sub{font-size:14px;color:var(--muted);font-weight:300;line-height:1.7;margin-top:12px;max-width:520px;}
+.sh-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:40px;}
+.sh-card{background:#FFFFFF;border:1px solid rgba(11,26,46,0.08);border-radius:12px;padding:28px 26px;position:relative;overflow:hidden;}
+.sh-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.sh-f::before{background:linear-gradient(90deg,var(--indigo),var(--indigo2));}
+.sh-t::before{background:linear-gradient(90deg,var(--techdk),var(--cyan));}
+.sh-m::before{background:linear-gradient(90deg,var(--violetdk),var(--violet));}
+.sh-card-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;font-weight:600;}
+.sh-card-name{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;line-height:1.1;color:#0B1A2E;margin-bottom:10px;}
+.sh-card-body{font-size:13px;color:var(--muted);line-height:1.7;font-weight:300;}
+.sh-foot{border-top:1px solid rgba(11,26,46,0.08);padding-top:32px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;}
+.sh-foot p{font-size:13px;color:var(--muted);font-weight:300;font-style:italic;max-width:460px;}
+.sh-btn{background:#0B1A2E;flex-shrink:0;}
+.sh-btn:hover{opacity:.85;}
+
 /* ABOUT */
 #about{background:#F0F5FA;}
 .abtop{display:flex;justify-content:space-between;align-items:flex-start;gap:80px;margin-bottom:80px;}
@@ -338,6 +357,10 @@ html.js .rv2.in{opacity:1;transform:none;}
   .hbot{flex-direction:column;align-items:flex-start;gap:28px;margin-top:32px;padding-top:24px;}
   .hr{align-items:flex-start;}
   .hgeo{text-align:left;}
+  #starthere{padding-top:56px;padding-bottom:56px;}
+  .sh-grid{grid-template-columns:1fr;gap:16px;}
+  .sh-foot{flex-direction:column;align-items:flex-start;gap:20px;}
+  .sh-btn{width:100%;justify-content:center;}
 }
 @media(max-width:480px){
   .acro-row{padding:8px 0;}
@@ -482,6 +505,39 @@ html.js .rv2.in{opacity:1;transform:none;}
         </ul>
       </div>
       <div class="sarr"><span id="slearn3">Learn more</span></div>
+    </a>
+  </div>
+</section>
+
+<!-- START HERE / ASSESSMENTS -->
+<section id="starthere">
+  <div class="sh-head">
+    <div class="slabel rv" id="shLabel">{01a} · Not ready for the full package?</div>
+    <h3 class="sh-title rv" id="shTitle">Start with an assessment.</h3>
+    <p class="sh-sub rv2" id="shSub">A smaller, standalone deliverable if you don't need the full engagement yet.</p>
+  </div>
+  <div class="sh-grid">
+    <div class="sh-card rv sh-f">
+      <div class="sh-card-tag tf" id="sh1t">S · Strategy</div>
+      <div class="sh-card-name" id="sh1n">Financial Health Check</div>
+      <p class="sh-card-body" id="sh1b">One-time review of your books, cashflow, and risk exposure — what's solid, what's exposed, and what we'd fix first. No retainer required.</p>
+    </div>
+    <div class="sh-card rv sh-t">
+      <div class="sh-card-tag tt" id="sh2t">T.A · Technology</div>
+      <div class="sh-card-name" id="sh2n">AI &amp; Tech Readiness Assessment</div>
+      <p class="sh-card-body" id="sh2b">A straight read on where your current tools and workflows are costing you time, and where automation would actually pay off. Not a sales pitch, an honest map.</p>
+    </div>
+    <div class="sh-card rv sh-m">
+      <div class="sh-card-tag tm" id="sh3t">C · Consulting</div>
+      <div class="sh-card-name" id="sh3n">Marketing Assessment</div>
+      <p class="sh-card-body" id="sh3b">What's working, what's not, and what we'd change. A standalone report, no commitment to a bigger engagement required.</p>
+    </div>
+  </div>
+  <div class="sh-foot rv2">
+    <p id="shFoot">Scope and turnaround vary by project — reach out and we'll map it out together.</p>
+    <a class="btn sh-btn" href="#contact">
+      <span id="shCta">Get in Touch</span>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
   </div>
 </section>
@@ -757,8 +813,8 @@ document.querySelectorAll('.rv,.rv2').forEach(el=>obs.observe(el));
 
 // TRANSLATIONS
 const T={
-en:{ns:'Services',na:'About',nc:'Contact',hs1:'We deliver',hs2:'that moves businesses forward.',cy:['Financial Advisory','AI & Technology','Marketing & Growth'],hdesc:'One firm. Three disciplines. Established in Curaçao, active internationally.',hgeo:'Curaçao · Sint Maarten · Aruba · Bonaire · Europe',hcta:'Our Services',aw:['Strategy','Technology','Analytics','Consulting'],sl:[],stitle:'What we do.',sdesc:'Three disciplines, each fully independent. Engage one or all three.',slearn:'Learn more',fin:{tag:'S · Strategy',name:'Financial Advisory',body:"Serious financial thinking for businesses that have outgrown their accountant. We handle the real work: due diligence, structure, compliance, cashflow, not just tax returns.",l:['Financial due diligence','Cash flow management','Risk & compliance advisory','Cross-border structuring','CFO-as-a-service']},tech:{tag:'T.A · Technology',name:'AI & Technology',body:"We build AI tools that run in your business, not in a slide deck. Dashboards, automations, analytics: the things that save you time tomorrow, not in six months.",l:['AI dashboards & reporting','Predictive analytics','Workflow automation','Website development','AI strategy consulting']},mkt:{tag:'C · Consulting',name:'Marketing & Growth',body:"If nobody knows you exist, nothing else matters. We build the strategy, run the channels, and make sure the right people find you.",l:['Marketing plans & strategy','Social media management','Mail & WhatsApp campaigns','Content editing','Marketing advice']},abq:'"Come with the chaos. Leave with the clarity."',v:[['Three equal disciplines','Financial advisory, AI & technology, and marketing each stand on their own. No discipline is secondary to another.'],['Results, not reports','Every engagement has a clear deliverable. We measure success by what actually changes in your business.'],["Based in Curaçao","We operate locally and understand the market from the inside. That matters when the advice gets specific."]],pillars:[{n:'Financial Advisory',b:'For businesses that need real strategic financial thinking, not just someone to sign off on the books. We handle the decisions that actually shape your company.',r:'Financial Advisory'},{n:'AI & Technology',b:"We build what gets used: dashboards, automations, tools that earn a spot in your daily routine.",r:'AI & Technology'},{n:'Marketing & Growth',b:'The kind of marketing that makes the right people find you and the wrong ones self-select out. Strategy first, execution always.',r:'Marketing & Growth'}],cth1:'Talk',cth2:'to us.',csub:"No forms that go nowhere. We read every message and get back to you within 24 hours.",cll:'Based in',cla:'Also active in',cav:'Internationally',fn:'Name',fe:'Email',fi2:'What do you need?',fm:'Message',fsb:'Send it',opts:["Select a service",'Financial Advisory','AI & Technology','Marketing & Growth',"All three"],ta:"Tell us what's going on in your business...",fcp:'© 2026 S.T.A.C. B.V.'},
-nl:{ns:'Diensten',na:'Over ons',nc:'Contact',hs1:'Wij leveren',hs2:'dat bedrijven vooruit helpt.',cy:['Financieel Advies','AI & Technologie','Marketing & Groei'],hdesc:'Één firma. Drie gelijkwaardige disciplines. Strategie, technologie en consulting, opgericht in Curaçao, actief internationaal.',hgeo:'Curaçao · Sint Maarten · Aruba · Bonaire · Europa',hcta:'Onze Diensten',aw:['Strategie','Technologie','Analyse','Consulting'],sl:[],stitle:'Wat wij doen.',sdesc:'Drie disciplines, elk volledig zelfstandig. Kies één of alle drie.',slearn:'Meer weten',fin:{tag:'S · Strategie',name:'Financieel Advies',body:'Onafhankelijke financiële strategie voor groeiende bedrijven, familiebedrijven en regionale instellingen. Scherp advies, geen standaardaanpak.',l:['Financiële due diligence','Cashflowbeheer','Risico- & compliance advies','Grensoverschrijdende structurering','CFO-as-a-service']},tech:{tag:'T.A · Technologie',name:'AI & Technologie',body:'Werkende AI-tools, live dashboards en geautomatiseerde systemen. Geen AI als concept, AI als product dat uw bedrijf daadwerkelijk gebruikt.',l:['AI dashboards & rapportages','Voorspellende analyses','Procesautomatisering','Websiteontwikkeling','AI strategie consulting']},mkt:{tag:'C · Consulting',name:'Marketing & Groei',body:'Merkstrategie, digitale marketing en klantacquisitie voor bedrijven die doelgericht willen groeien, niet alleen zichtbaar zijn.',l:['Marketingplannen & strategie','Socialmediabeheer','Mail & WhatsApp campagnes','Content editing','Marketingadvies']},abq:'"Kom met de chaos. Vertrek met de duidelijkheid."',v:[['Gelijke pijlers','Financiën, AI & technologie en marketing zijn drie gelijkwaardige disciplines. Geen pijler is ondersteunend aan een andere.'],['Resultaten boven rapporten','Klanten betalen voor resultaten, niet voor rapporten. Elk traject wordt gemeten aan wat er daadwerkelijk verandert.'],['Caribbean-first','Gebouwd in Curaçao, actief in Europa. We kennen de markt van binnenuit.']],pillars:[{n:'Financieel Advies',b:'Risicobeheer, compliance, grensoverschrijdende structurering en financiële strategie voor bedrijven die meer nodig hebben dan een boekhouder.',r:'Financieel Advies'},{n:'AI & Technologie',b:'We bouwen wat daadwerkelijk gebruikt wordt: dashboards, automatiseringen en tools die een vaste plek krijgen in uw dagelijkse routine.',r:'AI & Technologie'},{n:'Marketing & Groei',b:'Merkstrategie, digitale aanwezigheid en klantacquisitie. Voor bedrijven die de juiste mensen willen bereiken en daadwerkelijk converteren.',r:'Marketing & Groei'}],cth1:'Laten we',cth2:'samenwerken.',csub:'Of u nu financieel advies, een AI-product of een marketingstrategie nodig heeft, of alle drie, wij horen graag van u.',cll:'Locatie',cla:'Actief in',cav:'Internationaal',fn:'Naam',fe:'E-mail',fi2:'Ik ben geïnteresseerd in',fm:'Bericht',fsb:'Verstuur',opts:['Selecteer een dienst','Financieel Advies','AI & Technologie','Marketing & Groei','Alle drie'],ta:'Vertel ons wat u bouwt...',fcp:'© 2026 S.T.A.C. B.V. Alle rechten voorbehouden.'}
+en:{ns:'Services',na:'About',nc:'Contact',hs1:'We deliver',hs2:'that moves businesses forward.',cy:['Financial Advisory','AI & Technology','Marketing & Growth'],hdesc:'One firm. Three disciplines. Established in Curaçao, active internationally.',hgeo:'Curaçao · Sint Maarten · Aruba · Bonaire · Europe',hcta:'Our Services',aw:['Strategy','Technology','Analytics','Consulting'],sl:[],stitle:'What we do.',sdesc:'Three disciplines, each fully independent. Engage one or all three.',slearn:'Learn more',fin:{tag:'S · Strategy',name:'Financial Advisory',body:"Serious financial thinking for businesses that have outgrown their accountant. We handle the real work: due diligence, structure, compliance, cashflow, not just tax returns.",l:['Financial due diligence','Cash flow management','Risk & compliance advisory','Cross-border structuring','CFO-as-a-service']},tech:{tag:'T.A · Technology',name:'AI & Technology',body:"We build AI tools that run in your business, not in a slide deck. Dashboards, automations, analytics: the things that save you time tomorrow, not in six months.",l:['AI dashboards & reporting','Predictive analytics','Workflow automation','Website development','AI strategy consulting']},mkt:{tag:'C · Consulting',name:'Marketing & Growth',body:"If nobody knows you exist, nothing else matters. We build the strategy, run the channels, and make sure the right people find you.",l:['Marketing plans & strategy','Social media management','Mail & WhatsApp campaigns','Content editing','Marketing advice']},abq:'"Come with the chaos. Leave with the clarity."',v:[['Three equal disciplines','Financial advisory, AI & technology, and marketing each stand on their own. No discipline is secondary to another.'],['Results, not reports','Every engagement has a clear deliverable. We measure success by what actually changes in your business.'],["Based in Curaçao","We operate locally and understand the market from the inside. That matters when the advice gets specific."]],pillars:[{n:'Financial Advisory',b:'For businesses that need real strategic financial thinking, not just someone to sign off on the books. We handle the decisions that actually shape your company.',r:'Financial Advisory'},{n:'AI & Technology',b:"We build what gets used: dashboards, automations, tools that earn a spot in your daily routine.",r:'AI & Technology'},{n:'Marketing & Growth',b:'The kind of marketing that makes the right people find you and the wrong ones self-select out. Strategy first, execution always.',r:'Marketing & Growth'}],cth1:'Talk',cth2:'to us.',csub:"No forms that go nowhere. We read every message and get back to you within 24 hours.",cll:'Based in',cla:'Also active in',cav:'Internationally',fn:'Name',fe:'Email',fi2:'What do you need?',fm:'Message',fsb:'Send it',opts:["Select a service",'Financial Advisory','AI & Technology','Marketing & Growth',"All three"],ta:"Tell us what's going on in your business...",fcp:'© 2026 S.T.A.C. B.V.',sh:{label:'{01a} · Not ready for the full package?',title:'Start with an assessment.',sub:"A smaller, standalone deliverable if you don't need the full engagement yet.",cards:[{tag:'S · Strategy',name:'Financial Health Check',body:"One-time review of your books, cashflow, and risk exposure — what's solid, what's exposed, and what we'd fix first. No retainer required."},{tag:'T.A · Technology',name:'AI & Tech Readiness Assessment',body:"A straight read on where your current tools and workflows are costing you time, and where automation would actually pay off. Not a sales pitch, an honest map."},{tag:'C · Consulting',name:'Marketing Assessment',body:"What's working, what's not, and what we'd change. A standalone report, no commitment to a bigger engagement required."}],foot:"Scope and turnaround vary by project — reach out and we'll map it out together.",cta:'Get in Touch'}},
+nl:{ns:'Diensten',na:'Over ons',nc:'Contact',hs1:'Wij leveren',hs2:'dat bedrijven vooruit helpt.',cy:['Financieel Advies','AI & Technologie','Marketing & Groei'],hdesc:'Één firma. Drie gelijkwaardige disciplines. Strategie, technologie en consulting, opgericht in Curaçao, actief internationaal.',hgeo:'Curaçao · Sint Maarten · Aruba · Bonaire · Europa',hcta:'Onze Diensten',aw:['Strategie','Technologie','Analyse','Consulting'],sl:[],stitle:'Wat wij doen.',sdesc:'Drie disciplines, elk volledig zelfstandig. Kies één of alle drie.',slearn:'Meer weten',fin:{tag:'S · Strategie',name:'Financieel Advies',body:'Onafhankelijke financiële strategie voor groeiende bedrijven, familiebedrijven en regionale instellingen. Scherp advies, geen standaardaanpak.',l:['Financiële due diligence','Cashflowbeheer','Risico- & compliance advies','Grensoverschrijdende structurering','CFO-as-a-service']},tech:{tag:'T.A · Technologie',name:'AI & Technologie',body:'Werkende AI-tools, live dashboards en geautomatiseerde systemen. Geen AI als concept, AI als product dat uw bedrijf daadwerkelijk gebruikt.',l:['AI dashboards & rapportages','Voorspellende analyses','Procesautomatisering','Websiteontwikkeling','AI strategie consulting']},mkt:{tag:'C · Consulting',name:'Marketing & Groei',body:'Merkstrategie, digitale marketing en klantacquisitie voor bedrijven die doelgericht willen groeien, niet alleen zichtbaar zijn.',l:['Marketingplannen & strategie','Socialmediabeheer','Mail & WhatsApp campagnes','Content editing','Marketingadvies']},abq:'"Kom met de chaos. Vertrek met de duidelijkheid."',v:[['Gelijke pijlers','Financiën, AI & technologie en marketing zijn drie gelijkwaardige disciplines. Geen pijler is ondersteunend aan een andere.'],['Resultaten boven rapporten','Klanten betalen voor resultaten, niet voor rapporten. Elk traject wordt gemeten aan wat er daadwerkelijk verandert.'],['Caribbean-first','Gebouwd in Curaçao, actief in Europa. We kennen de markt van binnenuit.']],pillars:[{n:'Financieel Advies',b:'Risicobeheer, compliance, grensoverschrijdende structurering en financiële strategie voor bedrijven die meer nodig hebben dan een boekhouder.',r:'Financieel Advies'},{n:'AI & Technologie',b:'We bouwen wat daadwerkelijk gebruikt wordt: dashboards, automatiseringen en tools die een vaste plek krijgen in uw dagelijkse routine.',r:'AI & Technologie'},{n:'Marketing & Groei',b:'Merkstrategie, digitale aanwezigheid en klantacquisitie. Voor bedrijven die de juiste mensen willen bereiken en daadwerkelijk converteren.',r:'Marketing & Groei'}],cth1:'Laten we',cth2:'samenwerken.',csub:'Of u nu financieel advies, een AI-product of een marketingstrategie nodig heeft, of alle drie, wij horen graag van u.',cll:'Locatie',cla:'Actief in',cav:'Internationaal',fn:'Naam',fe:'E-mail',fi2:'Ik ben geïnteresseerd in',fm:'Bericht',fsb:'Verstuur',opts:['Selecteer een dienst','Financieel Advies','AI & Technologie','Marketing & Groei','Alle drie'],ta:'Vertel ons wat u bouwt...',fcp:'© 2026 S.T.A.C. B.V. Alle rechten voorbehouden.',sh:{label:'{01a} · Nog niet toe aan het volledige pakket?',title:'Begin met een assessment.',sub:'Een kleinere, losstaande dienst als u het volledige traject nog niet nodig heeft.',cards:[{tag:'S · Strategie',name:'Financiële Gezondheidscheck',body:'Eenmalige beoordeling van uw boekhouding, cashflow en risico\'s — wat goed staat, waar de risico\'s zitten en wat wij als eerste zouden aanpakken. Geen abonnement vereist.'},{tag:'T.A · Technologie',name:'AI & Tech Assessment',body:'Een eerlijke analyse van waar uw huidige tools en processen tijd kosten, en waar automatisering daadwerkelijk loont. Geen verkooppraatje, een heldere kaart.'},{tag:'C · Consulting',name:'Marketingassessment',body:'Wat werkt, wat niet, en wat wij zouden aanpassen. Een losstaand rapport, zonder verplichting tot een groter traject.'}],foot:'Omvang en doorlooptijd verschillen per project — neem contact op en we bepalen het samen.',cta:'Neem contact op'}}
 };
 function L(l){
   const c=T[l];
@@ -790,6 +846,18 @@ function L(l){
   document.getElementById('ta').placeholder=c.ta;
   [0,1,2,3,4].forEach(i=>document.getElementById('o'+i).textContent=c.opts[i]);
   document.getElementById('fcp').textContent=c.fcp;
+  if(c.sh){
+    document.getElementById('shLabel').textContent=c.sh.label;
+    document.getElementById('shTitle').textContent=c.sh.title;
+    document.getElementById('shSub').textContent=c.sh.sub;
+    ['sh1','sh2','sh3'].forEach((k,i)=>{
+      document.getElementById(k+'t').textContent=c.sh.cards[i].tag;
+      document.getElementById(k+'n').textContent=c.sh.cards[i].name;
+      document.getElementById(k+'b').textContent=c.sh.cards[i].body;
+    });
+    document.getElementById('shFoot').textContent=c.sh.foot;
+    document.getElementById('shCta').textContent=c.sh.cta;
+  }
 }
 L('en');
 
