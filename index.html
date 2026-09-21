@@ -189,13 +189,68 @@ section{padding:88px 64px;}
 .pc-name{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:700;line-height:1;margin-bottom:16px;}
 .pc-body{font-size:13px;color:#5A7A9A;line-height:1.8;font-weight:300;margin-bottom:28px;}
 .pc-body strong{color:#0B1A2E;font-weight:600;}
-.pc.pt{cursor:none;}
+.pc.pt,.pc.pf,.pc.pm{cursor:none;}
 .pc-hint{display:flex;align-items:center;gap:6px;margin-top:12px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--techdk);animation:pcHintPulse 2.4s ease-in-out infinite;}
 .pc-hint-ic{font-size:13px;transition:transform .25s;}
 .pc.pt:hover .pc-hint{color:var(--cyan);}
 .pc.pt:hover .pc-hint-ic{transform:translate(3px,-3px);}
+.pc.pf .pc-hint{color:var(--indigo);}
+.pc.pf:hover .pc-hint{color:var(--indigo2);}
+.pc.pf:hover .pc-hint-ic{transform:translate(3px,-3px);}
+.pc.pm .pc-hint{color:var(--violetdk);}
+.pc.pm:hover .pc-hint{color:var(--violet);}
+.pc.pm:hover .pc-hint-ic{transform:translate(3px,-3px);}
 @keyframes pcHintPulse{0%,100%{opacity:.65;}50%{opacity:1;}}
 @media(prefers-reduced-motion:reduce){.pc-hint{animation:none;}}
+
+/* PROCESS */
+#process{background:#FFFFFF;}
+.proc-lede{font-size:15px;color:var(--muted);font-weight:300;line-height:1.8;max-width:640px;margin-top:-24px;margin-bottom:64px;}
+
+/* scroll-driven signal path */
+.proc-road{position:relative;margin-bottom:56px;--progress:0;}
+.proc-road-track{position:absolute;top:31px;left:12.5%;right:12.5%;height:2px;background:rgba(11,26,46,.1);border-radius:2px;}
+.proc-road-fill{position:absolute;top:0;left:0;height:100%;width:calc(var(--progress) * 100%);background:linear-gradient(90deg,var(--indigo),var(--indigo2));border-radius:2px;}
+.proc-road-dot{position:absolute;top:31px;left:calc(12.5% + var(--progress) * 75%);width:10px;height:10px;margin-top:-4px;margin-left:-5px;border-radius:50%;background:var(--navy);box-shadow:0 0 0 3px #fff,0 2px 6px rgba(11,26,46,.3);z-index:3;opacity:0;transition:opacity .3s ease;}
+.proc-road.live .proc-road-dot{opacity:1;}
+.proc-nodes{display:flex;justify-content:space-between;position:relative;z-index:2;}
+.proc-node{display:flex;flex-direction:column;align-items:center;gap:12px;width:64px;cursor:default;}
+.proc-node-dot{width:64px;height:64px;border-radius:50%;background:#fff;border:2px solid rgba(11,26,46,.12);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;color:var(--muted2);transition:border-color .4s ease,color .4s ease,background .4s ease,transform .4s cubic-bezier(.34,1.56,.64,1),box-shadow .4s ease;}
+.proc-node-name{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;color:var(--muted2);transition:color .4s ease;white-space:nowrap;}
+.proc-node.active .proc-node-dot{border-color:var(--c);color:var(--c);background:color-mix(in srgb,var(--c) 8%,#fff);transform:scale(1.1);box-shadow:0 6px 16px -8px rgba(11,26,46,.35);}
+.proc-node.active .proc-node-name{color:#0B1A2E;}
+.proc-node:nth-child(1){--c:var(--indigo);}
+.proc-node:nth-child(2){--c:var(--indigo);}
+.proc-node:nth-child(3){--c:var(--indigo);}
+.proc-node:nth-child(4){--c:var(--indigo);}
+
+/* content cards, keyed to the same active state */
+.proc-timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;}
+.proc-step{background:#FFFFFF;border:1px solid rgba(11,26,46,0.08);padding:32px 26px;position:relative;transition:border-color .35s ease,box-shadow .35s ease,opacity .6s cubic-bezier(.65,0,.35,1),transform .6s cubic-bezier(.65,0,.35,1);opacity:0;transform:translateY(24px);}
+.proc-timeline.in .proc-step{opacity:1;transform:none;}
+.proc-step:nth-child(1){--c:var(--indigo);}
+.proc-step:nth-child(2){--c:var(--indigo);transition-delay:.1s;}
+.proc-step:nth-child(3){--c:var(--indigo);transition-delay:.2s;}
+.proc-step:nth-child(4){--c:var(--indigo);transition-delay:.3s;}
+.proc-step.active{border-color:var(--c);box-shadow:0 16px 32px -20px rgba(11,26,46,.25);}
+.proc-num{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--c);font-weight:600;margin-bottom:16px;transition:opacity .3s ease;opacity:.55;}
+.proc-step.active .proc-num{opacity:1;}
+.proc-name{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:26px;color:#0B1A2E;line-height:1;margin-bottom:10px;}
+.proc-desc{font-size:13px;color:var(--muted);font-weight:300;font-style:italic;line-height:1.6;margin-bottom:18px;}
+.proc-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.proc-list li{font-size:12.5px;color:var(--muted);line-height:1.65;font-weight:300;padding-left:14px;position:relative;}
+.proc-list li::before{content:'';position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--c);}
+.proc-list strong{color:#0B1A2E;font-weight:600;}
+@media(max-width:960px){
+  .proc-road{padding-left:8px;}
+  .proc-road-track{top:0;bottom:0;left:31px;right:auto;width:2px;height:auto;}
+  .proc-road-fill{width:100%;height:calc(var(--progress) * 100%);}
+  .proc-road-dot{top:calc(var(--progress) * 100%);left:31px;}
+  .proc-nodes{flex-direction:column;align-items:flex-start;gap:36px;}
+  .proc-node{flex-direction:row;width:auto;gap:16px;}
+  .proc-node-dot{width:48px;height:48px;font-size:15px;flex-shrink:0;}
+  .proc-timeline{grid-template-columns:1fr;gap:24px;margin-top:40px;}
+}
 
 /* FEATURED PROJECTS PREVIEW PANEL */
 .fp-panel{max-height:0;opacity:0;overflow:hidden;transition:max-height .6s cubic-bezier(.65,0,.35,1),opacity .5s ease;background:#F0F5FA;}
@@ -221,6 +276,7 @@ section{padding:88px 64px;}
 .fp-card3{flex:0 0 calc(33.333% - 25.33px);margin-right:38px;background:#F0F5FA;border-radius:16px;overflow:hidden;box-shadow:0 8px 24px rgba(11,26,46,.06);display:flex;flex-direction:column;transition:transform .4s ease,opacity .4s ease,box-shadow .4s ease;opacity:.65;}
 .fp-card3.is-center{opacity:1;transform:translateY(-16px) scale(1.07);box-shadow:0 32px 64px rgba(11,26,46,.26);z-index:2;position:relative;}
 .fp-card3-img{position:relative;aspect-ratio:16/10;overflow:hidden;background:#0B1A2E;}
+#fpPanelFin .fp-card3-img,#fpPanelMkt .fp-card3-img{aspect-ratio:16/9;}
 .fp-card3-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease;}
 .fp-card3:hover .fp-card3-img img{transform:scale(1.06);}
 .fp-card3-body{padding:18px 20px 22px;display:flex;flex-direction:column;flex:1;}
@@ -228,13 +284,19 @@ section{padding:88px 64px;}
 .fp-card3-body p{font-size:12.5px;color:var(--muted);line-height:1.7;font-weight:300;margin-bottom:14px;flex:1;}
 .fp-tags3{display:flex;flex-wrap:wrap;gap:6px;}
 .fp-tags3 span{font-size:10px;padding:5px 11px;background:#fff;border-radius:14px;color:var(--techdk);letter-spacing:.3px;font-weight:500;}
-.fp-tags3 span.co{background:#0B1A2E;color:#fff;font-weight:600;}
+.fp-tags3 span.co{font-weight:700;}
 .fp-arrow3{position:absolute;top:calc(50% - 24px);transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--border);color:#0B1A2E;display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;cursor:pointer;box-shadow:0 8px 24px rgba(11,26,46,.16);z-index:5;transition:background .2s,color .2s;}
 .fp-arrow3:hover{background:#0B1A2E;color:#fff;}
 .fp-arrow3.prev{left:8px;}
 .fp-arrow3.next{right:8px;}
 .fp-panel-cta{display:inline-flex;align-items:center;gap:10px;margin-top:32px;padding:13px 28px;background:#0B4D3C;color:#fff;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:opacity .2s,transform .2s;cursor:none;}
 .fp-panel-cta:hover{opacity:.85;transform:translateY(-1px);}
+#fpPanelFin .fp-filter-btn:hover{border-color:var(--indigo2);}
+#fpPanelFin .fp-tags3 span{color:var(--indigo);}
+#fpPanelFin .fp-panel-cta{background:var(--indigo);}
+#fpPanelMkt .fp-filter-btn:hover{border-color:var(--violet);}
+#fpPanelMkt .fp-tags3 span{color:var(--violetdk);}
+#fpPanelMkt .fp-panel-cta{background:var(--violetdk);}
 @media(max-width:960px){
   .fp-panel-inner{padding:48px 24px;}
   .fp-panel-close{top:48px;right:24px;}
@@ -508,11 +570,12 @@ html.js .rv2.in{opacity:1;transform:none;}
     </div>
   </div>
   <div class="pillars">
-    <div class="pc pf rv">
+    <div class="pc pf rv" id="pcFin" role="button" tabindex="0" aria-expanded="false" aria-controls="fpPanelFin">
       <div class="pc-glow"></div>
       <div class="pc-tag tf">S · Strategy</div>
       <div class="pc-name" id="p1n">Financial Advisory</div>
       <p class="pc-body" id="p1b"><strong>Start with a Financial Health Check</strong>: a close look at your books, cashflow, and risk exposure, no ongoing commitment needed. Ready for more? We also handle the full picture, due diligence, structure, compliance, and the decisions that actually shape your company.</p>
+      <div class="pc-hint"><span id="pcHintTxtFin">View featured projects</span></div>
     </div>
     <div class="pc pt rv" id="pcTech" role="button" tabindex="0" aria-expanded="false" aria-controls="fpPanel">
       <div class="pc-glow"></div>
@@ -521,11 +584,12 @@ html.js .rv2.in{opacity:1;transform:none;}
       <p class="pc-body" id="p2b"><strong>Start with an AI &amp; Tech Readiness Assessment</strong>: a clear read on where automation would actually pay off. Ready for more? We build what gets used, dashboards, automations, and tools that earn a spot in your daily routine.</p>
       <div class="pc-hint"><span id="pcHintTxt">View featured projects</span></div>
     </div>
-    <div class="pc pm rv">
+    <div class="pc pm rv" id="pcMkt" role="button" tabindex="0" aria-expanded="false" aria-controls="fpPanelMkt">
       <div class="pc-glow"></div>
       <div class="pc-tag tm">C · Consulting</div>
       <div class="pc-name" id="p3n">Marketing &amp; Growth</div>
       <p class="pc-body" id="p3b"><strong>Start with a Marketing Assessment</strong>: a standalone report on what's working and what's not. Ready for more? We build the strategy, run the channels, and make sure the right people find you.</p>
+      <div class="pc-hint"><span id="pcHintTxtMkt">View featured projects</span></div>
     </div>
   </div>
   <p class="ab-note rv2"><span id="abNoteText">Every project is different, so timing and scope depend on what you need. </span><a href="#contact" id="abNoteLink">Reach out and we'll figure it out together.</a></p>
@@ -537,7 +601,7 @@ html.js .rv2.in{opacity:1;transform:none;}
     <button class="fp-panel-close" id="fpPanelClose" aria-label="Close">&times;</button>
     <div class="fp-panel-head">
       <div class="slabel">T.A · Technology</div>
-      <h3 class="fp-panel-h">Featured AI &amp; Technology projects.</h3>
+      <h3 class="fp-panel-h">Featured AI &amp; Technology Work.</h3>
       <p class="fp-lede">Real AI and data science work, the kind of expertise that's still rare to find in Curaçao, from predictive maintenance to generative AI.</p>
     </div>
     <div class="fp-filters" id="fpFilters">
@@ -666,6 +730,229 @@ html.js .rv2.in{opacity:1;transform:none;}
   </div>
 </div>
 
+<!-- FEATURED PROJECTS PREVIEW (Financial Advisory) -->
+<div class="fp-panel" id="fpPanelFin">
+  <div class="fp-panel-inner">
+    <button class="fp-panel-close" id="fpPanelCloseFin" aria-label="Close">&times;</button>
+    <div class="fp-panel-head">
+      <div class="slabel">S · Strategy</div>
+      <h3 class="fp-panel-h">Featured Financial Advisory Work.</h3>
+      <p class="fp-lede">A closer look at how each engagement takes shape, from the decision frameworks we build to the dashboards leadership actually opens.</p>
+    </div>
+    <div class="fp-filters" id="fpFiltersFin">
+      <button class="fp-filter-btn active" data-filter="all">All</button>
+      <button class="fp-filter-btn" data-filter="advisory">Advisory</button>
+      <button class="fp-filter-btn" data-filter="cfo">Virtual CFO</button>
+      <button class="fp-filter-btn" data-filter="risk">Risk &amp; Governance</button>
+      <button class="fp-filter-btn" data-filter="compliance">Compliance</button>
+      <button class="fp-filter-btn" data-filter="transformation">Transformation</button>
+      <button class="fp-filter-btn" data-filter="analytics">Analytics</button>
+    </div>
+    <div class="fp-carousel3" id="fpCarouselFin">
+      <div class="fp-viewport3" id="fp3ViewportFin">
+        <div class="fp-track3" id="fpTrackFin">
+          <div class="fp-card3" data-tags="advisory">
+            <div class="fp-card3-img"><img src="images/FA_strategic_finance_advisory.png" alt="Strategic financial advisory decision framework" loading="lazy"/></div>
+            <div class="fp-card3-body">
+              <h4>Strategic Financial Advisory</h4>
+              <p>A five-step decision framework, analyze the financial position, model the options, evaluate the trade-offs, plan the direction, and decide with confidence, that turns raw numbers into a call leadership can stand behind.</p>
+              <div class="fp-tags3"><span class="co tag-advisory">Advisory</span><span>Financial Modeling</span><span>Decision Support</span></div>
+            </div>
+          </div>
+          <div class="fp-card3" data-tags="cfo">
+            <div class="fp-card3-img"><img src="images/FA_virtual_cfo.png" alt="Virtual CFO executive finance command center" loading="lazy"/></div>
+            <div class="fp-card3-body">
+              <h4>Virtual CFO Services</h4>
+              <p>A single command center for financial oversight, strategic planning, board reporting, performance management, and capital allocation, senior CFO-level leadership without the full-time hire.</p>
+              <div class="fp-tags3"><span class="co tag-cfo">Virtual CFO</span><span>Board Reporting</span><span>Capital Allocation</span></div>
+            </div>
+          </div>
+          <div class="fp-card3" data-tags="risk">
+            <div class="fp-card3-img"><img src="images/FA_risk_gov.png" alt="Enterprise risk overview and heat map" loading="lazy"/></div>
+            <div class="fp-card3-body">
+              <h4>Risk Management &amp; Governance</h4>
+              <p>An enterprise risk overview built to identify, assess, and strengthen, mapping inherent versus residual risk across strategic, operational, financial, and compliance categories, with a heat map that shows exactly where to focus.</p>
+              <div class="fp-tags3"><span class="co tag-risk">Risk &amp; Governance</span><span>Risk Heat Map</span><span>Controls</span></div>
+            </div>
+          </div>
+          <div class="fp-card3" data-tags="compliance">
+            <div class="fp-card3-img"><img src="images/FA_regulotory_compliance.png" alt="Regulatory compliance tracker and readiness score" loading="lazy"/></div>
+            <div class="fp-card3-body">
+              <h4>Regulatory Compliance Advisory</h4>
+              <p>A regulatory compliance tracker covering IFRS, AML/CFT, GDPR, and CSRD requirements, with a readiness score and key dates that keep gap assessments and action plans on schedule instead of buried in email.</p>
+              <div class="fp-tags3"><span class="co tag-compliance">Compliance</span><span>Gap Assessment</span><span>Readiness Tracking</span></div>
+            </div>
+          </div>
+          <div class="fp-card3" data-tags="transformation">
+            <div class="fp-card3-img"><img src="images/FA_transformation_roadkmap.png" alt="Business transformation roadmap" loading="lazy"/></div>
+            <div class="fp-card3-body">
+              <h4>Business Transformation</h4>
+              <p>A transformation roadmap that moves an organization from manual, fragmented processes to integrated systems and real-time insight, planned workstream by workstream against a clear people, process, and technology timeline.</p>
+              <div class="fp-tags3"><span class="co tag-transformation">Transformation</span><span>Operating Model</span><span>Change Management</span></div>
+            </div>
+          </div>
+          <div class="fp-card3" data-tags="analytics">
+            <div class="fp-card3-img"><img src="images/FA_performance_inteligence.png" alt="Executive performance intelligence report" loading="lazy"/></div>
+            <div class="fp-card3-body">
+              <h4>Data Analytics &amp; Performance Intelligence</h4>
+              <p>An executive performance report built from group financials, P&amp;L, cash flow, and KPIs by business unit, turned into the kind of dashboard leadership actually opens, not a file that sits in a folder.</p>
+              <div class="fp-tags3"><span class="co tag-analytics">Analytics</span><span>KPI Dashboards</span><span>Executive Reporting</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="fp-arrow3 prev" id="fp3PrevFin" aria-label="Previous service">&#8249;</button>
+      <button class="fp-arrow3 next" id="fp3NextFin" aria-label="Next service">&#8250;</button>
+    </div>
+    <a class="fp-panel-cta" href="financial-advisory.html">
+      <span>Our services</span>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</div>
+
+<!-- FEATURED PROJECTS PREVIEW (Marketing & Growth) -->
+<div class="fp-panel" id="fpPanelMkt">
+  <div class="fp-panel-inner">
+    <button class="fp-panel-close" id="fpPanelCloseMkt" aria-label="Close">&times;</button>
+    <div class="fp-panel-head">
+      <div class="slabel">C · Consulting</div>
+      <h3 class="fp-panel-h">Featured Marketing &amp; Growth Work.</h3>
+      <p class="fp-lede">A look at client work across different types of businesses, from daily content and community management to the calendars that keep it all on schedule. Full weekly breakdowns and reporting are shared during a consultation.</p>
+    </div>
+    <div class="fp-filters" id="fpFiltersMkt">
+      <button class="fp-filter-btn active" data-filter="all">All</button>
+      <button class="fp-filter-btn" data-filter="smm">Social Media Management</button>
+      <button class="fp-filter-btn" data-filter="community">Community Management</button>
+      <button class="fp-filter-btn" data-filter="planning">Content Planning</button>
+      <button class="fp-filter-btn" data-filter="video">Video Content</button>
+    </div>
+    <div class="fp-carousel3" id="fpCarouselMkt">
+      <div class="fp-viewport3" id="fp3ViewportMkt">
+        <div class="fp-track3" id="fpTrackMkt">
+          <div class="fp-card3" data-tags="smm,planning,video">
+            <div class="fp-card3-img"><img src="images/MG_bakery.png" alt="Bakery social media management" loading="lazy"/></div>
+            <div class="fp-card3-body">
+              <h4>Bakery</h4>
+              <p>A weekly rhythm of new menu items, fresh pastries, seasonal products, and customer favourites, each post designed to make the food impossible to scroll past. Kept the bakery active online with its products front of mind, giving followers a reason to check the page each week.</p>
+              <div class="fp-tags3"><span class="co">Bakery</span><span class="tag-smm">Social Media Management</span><span class="tag-planning">Content Planning</span><span class="tag-video">Video Content</span></div>
+            </div>
+          </div>
+          <div class="fp-card3" data-tags="smm,planning,video">
+            <div class="fp-card3-img"><img src="images/MG_genral_store.png" alt="General store social media management" loading="lazy"/></div>
+            <div class="fp-card3-body">
+              <h4>General Store</h4>
+              <p>A consistent layout for every product post made a huge, varied catalog easy to recognize at a glance. Built around a repeating weekly rhythm, a start-of-week video, spotlight posts on new stock, and stories placed for reach, driving consistent daily engagement and follower growth over months managed.</p>
+              <div class="fp-tags3"><span class="co">General Store</span><span class="tag-smm">Social Media Management</span><span class="tag-planning">Content Planning</span><span class="tag-video">Video Content</span></div>
+            </div>
+          </div>
+          <div class="fp-card3" data-tags="smm,video">
+            <div class="fp-card3-img"><img src="images/MG_italian_place.png" alt="Italian restaurant social media management" loading="lazy"/></div>
+            <div class="fp-card3-body">
+              <h4>Italian Restaurant</h4>
+              <p>Gave every part of the menu, pizza, pasta, salads, its own moment, paired with fun, relatable TikTok videos that pulled in a younger audience and showed off the food and atmosphere. Increased online attention, brought more customers into the restaurant, and even helped attract new staff. A Linktree ties every location and platform together.</p>
+              <div class="fp-tags3"><span class="co">Restaurant</span><span class="tag-video">Video Content</span><span class="tag-smm">Social Media Management</span></div>
+            </div>
+          </div>
+          <div class="fp-card3" data-tags="smm,planning,video">
+            <div class="fp-card3-img"><img src="images/MG_massage_studio.png" alt="Massage studio social media management" loading="lazy"/></div>
+            <div class="fp-card3-body">
+              <h4>Massage Studio</h4>
+              <p>A calmer, more consistent way to show services and bring clients back to the page. Built around treatment highlights, relaxing visual stories, availability reminders, and educational content that makes the experience easy to understand before booking, delivering more consistent visibility and engagement through a structured content rhythm.</p>
+              <div class="fp-tags3"><span class="co">Massage Studio</span><span class="tag-smm">Social Media Management</span><span class="tag-planning">Content Planning</span><span class="tag-video">Video Content</span></div>
+            </div>
+          </div>
+          <div class="fp-card3" data-tags="community">
+            <div class="fp-card3-img"><img src="images/MG_client_exchange.png" alt="Client conversations across WhatsApp and Instagram" loading="lazy"/></div>
+            <div class="fp-card3-body">
+              <h4>Client Exchange</h4>
+              <p>Real conversations, handled daily: booking questions, menu inquiries, and stock checks answered across WhatsApp, Email, and Instagram in each client's own voice, keeping every account responsive without slowing down the rest of the work.</p>
+              <div class="fp-tags3"><span class="co tag-community">Community Management</span><span>WhatsApp</span><span>Email</span><span>Client Support</span></div>
+            </div>
+          </div>
+          <div class="fp-card3" data-tags="planning">
+            <div class="fp-card3-img"><img src="images/MG_content_planning.png" alt="Content planning calendar and process" loading="lazy"/></div>
+            <div class="fp-card3-body">
+              <h4>Content Planning</h4>
+              <p>Every account runs on a shared content calendar, planned by date, platform, format, and status, so nothing goes out without a plan behind it, and nothing gets missed.</p>
+              <div class="fp-tags3"><span class="co tag-planning">Content Planning</span><span>Content Calendar</span><span>Process</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="fp-arrow3 prev" id="fp3PrevMkt" aria-label="Previous case study">&#8249;</button>
+      <button class="fp-arrow3 next" id="fp3NextMkt" aria-label="Next case study">&#8250;</button>
+    </div>
+    <a class="fp-panel-cta" href="marketing-growth.html">
+      <span>Our services</span>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="svch rv">
+    <div class="slabel">{03} · Process</div>
+    <h2 class="sh2">How we work.</h2>
+  </div>
+  <p class="proc-lede rv">One process, three disciplines. Whichever pillar an engagement starts in, financial advisory, AI &amp; technology, or marketing, it moves through the same four stages. Scroll to trace it.</p>
+
+  <div class="proc-road rv2" id="procRoad">
+    <div class="proc-road-track"><div class="proc-road-fill"></div></div>
+    <div class="proc-road-dot"></div>
+    <div class="proc-nodes">
+      <div class="proc-node"><div class="proc-node-dot">01</div><div class="proc-node-name">Discovery</div></div>
+      <div class="proc-node"><div class="proc-node-dot">02</div><div class="proc-node-name">Strategy</div></div>
+      <div class="proc-node"><div class="proc-node-dot">03</div><div class="proc-node-name">Execution</div></div>
+      <div class="proc-node"><div class="proc-node-dot">04</div><div class="proc-node-name">Delivery</div></div>
+    </div>
+  </div>
+
+  <div class="proc-timeline rv2" id="procTimeline">
+    <div class="proc-step">
+      <div class="proc-num">01</div>
+      <div class="proc-name">Discovery</div>
+      <p class="proc-desc">We define direction, goals and scope.</p>
+      <ul class="proc-list">
+        <li><strong>Initial Consultation</strong> — Understand the client's situation, goals, and priorities.</li>
+        <li><strong>Research &amp; Assessment</strong> — Analyze the current state, data, and relevant benchmarks.</li>
+        <li><strong>Define Scope</strong> — Set objectives, deliverables, and timelines.</li>
+      </ul>
+    </div>
+    <div class="proc-step">
+      <div class="proc-num">02</div>
+      <div class="proc-name">Strategy</div>
+      <p class="proc-desc">We build the plan and the approach.</p>
+      <ul class="proc-list">
+        <li><strong>Framework Design</strong> — Shape the methodology, model, or system that fits the goal.</li>
+        <li><strong>Roadmap Creation</strong> — Map milestones, resources, and dependencies.</li>
+        <li><strong>Stakeholder Alignment</strong> — Review the plan with the client before committing.</li>
+      </ul>
+    </div>
+    <div class="proc-step">
+      <div class="proc-num">03</div>
+      <div class="proc-name">Execution</div>
+      <p class="proc-desc">We build and implement the work.</p>
+      <ul class="proc-list">
+        <li><strong>Implementation</strong> — Build the models, systems, campaigns, or frameworks.</li>
+        <li><strong>Integration</strong> — Fold the work into existing tools, teams, and processes.</li>
+        <li><strong>Quality Review</strong> — Test, validate, and refine before anything goes live.</li>
+      </ul>
+    </div>
+    <div class="proc-step">
+      <div class="proc-num">04</div>
+      <div class="proc-name">Delivery</div>
+      <p class="proc-desc">We launch, review and support.</p>
+      <ul class="proc-list">
+        <li><strong>Client Review</strong> — Present the work and walk through what it means.</li>
+        <li><strong>Revisions</strong> — Adjust based on feedback before final handover.</li>
+        <li><strong>Launch &amp; Support</strong> — Go live, and stay available for what comes after.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <!-- MARQUEE -->
 <div class="mq">
   <div class="mqt">
@@ -681,7 +968,7 @@ html.js .rv2.in{opacity:1;transform:none;}
   <div class="ct-orb" aria-hidden="true"></div>
   <div class="cttop">
     <div>
-      <div class="slabel slabel-on-dark">{03} · Get in touch</div>
+      <div class="slabel slabel-on-dark">{04} · Get in touch</div>
       <h2 class="cth rv"><span id="cth1">Talk</span><br/><em id="cth2">to us.</em></h2>
     </div>
     <div class="rv2">
@@ -692,7 +979,7 @@ html.js .rv2.in{opacity:1;transform:none;}
     <div class="cinfo rv">
       <div class="cirow"><div class="cil">Email</div><div class="civ"><a class="cimail" href="mailto:info@stacinternational.com">info@stacinternational.com</a></div></div>
       <div class="cirow"><div class="cil" id="cll">Based in</div><div class="civ">Curaçao</div></div>
-      <div class="cirow"><div class="cil" id="cla">Also active in</div><div class="civ civ-pulse"><span class="pulse-dot" aria-hidden="true"></span><span id="cav">Internationally</span></div></div>
+      <div class="cirow"><div class="cil" id="cla">Also active in</div><div class="civ civ-pulse"><span class="pulse-dot" aria-hidden="true"></span><span id="cav">Europe</span></div></div>
     </div>
     <form class="ctform rv2" id="ctform-el">
       <div class="frow">
@@ -761,13 +1048,49 @@ setInterval(cycle,2600);
 const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.08});
 document.querySelectorAll('.rv,.rv2').forEach(el=>obs.observe(el));
 
+// PROCESS ROAD — scroll-driven progress path
+(function(){
+  var road=document.getElementById('procRoad');
+  var timeline=document.getElementById('procTimeline');
+  if(!road||!timeline) return;
+  var nodes=Array.prototype.slice.call(road.querySelectorAll('.proc-node'));
+  var steps=Array.prototype.slice.call(timeline.querySelectorAll('.proc-step'));
+  var ticking=false;
+  function update(){
+    ticking=false;
+    var r=road.getBoundingClientRect();
+    var vh=window.innerHeight||document.documentElement.clientHeight;
+    var start=vh*0.82;
+    var end=vh*0.28;
+    var raw=(start-r.top)/(start-end);
+    var progress=Math.max(0,Math.min(1,raw));
+    road.style.setProperty('--progress',progress);
+    road.classList.toggle('live',progress>0.01&&progress<0.999);
+    nodes.forEach(function(n,i){
+      var thresh=i/(nodes.length-1);
+      n.classList.toggle('active',progress>=thresh-0.02);
+    });
+    steps.forEach(function(s,i){
+      var thresh=i/(steps.length-1);
+      s.classList.toggle('active',progress>=thresh-0.02);
+    });
+  }
+  function onScroll(){
+    if(!ticking){ requestAnimationFrame(update); ticking=true; }
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll);
+  update();
+})();
+
 // TRANSLATIONS
 const T={
-en:{ns:'Services',na:'About',nc:'Contact',hs1:'We deliver',hs2:'that moves businesses forward.',cy:['Financial Advisory','AI & Technology','Marketing & Growth'],hdesc:'One firm. Three disciplines. Established in Curaçao, active internationally.',hgeo:'Curaçao · Sint Maarten · Aruba · Bonaire · Europe',hcta:'Our Services',aw:['Strategy','Technology','Analytics','Consulting'],sl:[],stitle:'What we do.',sdesc:'Three disciplines, each fully independent. Engage one or all three.',slearn:'Learn more',fin:{tag:'S · Strategy',name:'Financial Advisory',body:"Serious financial thinking for growing businesses that need more than basic bookkeeping. We handle the real work: due diligence, structure, compliance, cashflow, not just tax returns.",l:['Financial due diligence','Cash flow management','Risk & compliance advisory','Cross-border structuring','CFO-as-a-service']},tech:{tag:'T.A · Technology',name:'AI & Technology',body:"We build AI tools that run in your business, not in a slide deck. Dashboards, automations, analytics: the things that save you time tomorrow, not in six months.",l:['AI dashboards & reporting','Predictive analytics','Workflow automation','Website development','AI strategy consulting']},mkt:{tag:'C · Consulting',name:'Marketing & Growth',body:"If nobody knows you exist, nothing else matters. We build the strategy, run the channels, and make sure the right people find you.",l:['Marketing plans & strategy','Social media management','Mail & WhatsApp campaigns','Content editing','Marketing advice']},abq:'"Come with the chaos. Leave with the clarity."',v:[['Three equal disciplines','Financial advisory, AI & technology, and marketing each stand on their own. No discipline is secondary to another.'],['Results, not reports','Every engagement has a clear deliverable. We measure success by what actually changes in your business.'],["Based in Curaçao","We operate locally and understand the market from the inside. That matters when the advice gets specific."]],pillars:[{n:'Financial Advisory',b:"<strong>Start with a Financial Health Check</strong>: a close look at your books, cashflow, and risk exposure, no ongoing commitment needed. Ready for more? We also handle the full picture, due diligence, structure, compliance, and the decisions that actually shape your company."},{n:'AI & Technology',b:"<strong>Start with an AI &amp; Tech Readiness Assessment</strong>: a clear read on where automation would actually pay off. Ready for more? We build what gets used, dashboards, automations, and tools that earn a spot in your daily routine."},{n:'Marketing & Growth',b:"<strong>Start with a Marketing Assessment</strong>: a standalone report on what's working and what's not. Ready for more? We build the strategy, run the channels, and make sure the right people find you."}],cth1:'Talk',cth2:'to us.',csub:"No forms that go nowhere. We read every message and get back to you within 24 hours.",cll:'Based in',cla:'Also active in',cav:'Internationally',fn:'Name',fe:'Email',fi2:'What do you need?',fm:'Message',fsb:'Send it',opts:["Select a service",'Financial Advisory','AI & Technology','Marketing & Growth',"All three"],ta:"Tell us what's going on in your business...",fcp:'© 2026 S.T.A.C. B.V.',abNoteText:'Every project is different, so timing and scope depend on what you need. ',abNoteLink:"Reach out and we'll figure it out together."},
-nl:{ns:'Diensten',na:'Over ons',nc:'Contact',hs1:'Wij leveren',hs2:'dat bedrijven vooruit helpt.',cy:['Financieel Advies','AI & Technologie','Marketing & Groei'],hdesc:'Één firma. Drie gelijkwaardige disciplines. Strategie, technologie en consulting, opgericht in Curaçao, actief internationaal.',hgeo:'Curaçao · Sint Maarten · Aruba · Bonaire · Europa',hcta:'Onze Diensten',aw:['Strategie','Technologie','Analyse','Consulting'],sl:[],stitle:'Wat wij doen.',sdesc:'Drie disciplines, elk volledig zelfstandig. Kies één of alle drie.',slearn:'Meer weten',fin:{tag:'S · Strategie',name:'Financieel Advies',body:'Onafhankelijke financiële strategie voor groeiende bedrijven, familiebedrijven en regionale instellingen. Scherp advies, geen standaardaanpak.',l:['Financiële due diligence','Cashflowbeheer','Risico- & compliance advies','Grensoverschrijdende structurering','CFO-as-a-service']},tech:{tag:'T.A · Technologie',name:'AI & Technologie',body:'Werkende AI-tools, live dashboards en geautomatiseerde systemen. Geen AI als concept, AI als product dat uw bedrijf daadwerkelijk gebruikt.',l:['AI dashboards & rapportages','Voorspellende analyses','Procesautomatisering','Websiteontwikkeling','AI strategie consulting']},mkt:{tag:'C · Consulting',name:'Marketing & Groei',body:'Merkstrategie, digitale marketing en klantacquisitie voor bedrijven die doelgericht willen groeien, niet alleen zichtbaar zijn.',l:['Marketingplannen & strategie','Socialmediabeheer','Mail & WhatsApp campagnes','Content editing','Marketingadvies']},abq:'"Kom met de chaos. Vertrek met de duidelijkheid."',v:[['Gelijke pijlers','Financiën, AI & technologie en marketing zijn drie gelijkwaardige disciplines. Geen pijler is ondersteunend aan een andere.'],['Resultaten boven rapporten','Klanten betalen voor resultaten, niet voor rapporten. Elk traject wordt gemeten aan wat er daadwerkelijk verandert.'],['Caribbean-first','Gebouwd in Curaçao, actief in Europa. We kennen de markt van binnenuit.']],pillars:[{n:'Financieel Advies',b:"<strong>Begin met een Financiële Gezondheidscheck</strong>: een kritische blik op uw boekhouding, cashflow en risico's, zonder vervolgverplichting. Wilt u verder? Wij regelen ook het volledige plaatje: due diligence, structurering, compliance en de beslissingen die uw bedrijf echt vormgeven."},{n:'AI & Technologie',b:"<strong>Begin met een AI &amp; Tech Assessment</strong>: een heldere analyse van waar automatisering daadwerkelijk loont. Wilt u verder? Wij bouwen wat daadwerkelijk gebruikt wordt: dashboards, automatiseringen en tools die een vaste plek krijgen in uw dagelijkse routine."},{n:'Marketing & Groei',b:"<strong>Begin met een Marketingassessment</strong>: een losstaand rapport over wat werkt en wat niet. Wilt u verder? Wij bouwen de strategie, beheren de kanalen en zorgen dat de juiste mensen u vinden."}],cth1:'Laten we',cth2:'samenwerken.',csub:'Of u nu financieel advies, een AI-product of een marketingstrategie nodig heeft, of alle drie, wij horen graag van u.',cll:'Locatie',cla:'Actief in',cav:'Internationaal',fn:'Naam',fe:'E-mail',fi2:'Ik ben geïnteresseerd in',fm:'Bericht',fsb:'Verstuur',opts:['Selecteer een dienst','Financieel Advies','AI & Technologie','Marketing & Groei','Alle drie'],ta:'Vertel ons wat u bouwt...',fcp:'© 2026 S.T.A.C. B.V. Alle rechten voorbehouden.',abNoteText:'Elk project is anders, dus de tijdlijn en omvang hangen af van wat u nodig heeft. ',abNoteLink:'Neem contact op en we zoeken het samen uit.'}
+en:{ns:'Services',na:'About',nc:'Contact',hs1:'We deliver',hs2:'that moves businesses forward.',cy:['Financial Advisory','AI & Technology','Marketing & Growth'],hdesc:'One firm. Three disciplines. Established in Curaçao, active internationally.',hgeo:'Curaçao · Europe',hcta:'Our Services',aw:['Strategy','Technology','Analytics','Consulting'],sl:[],stitle:'What we do.',sdesc:'Three disciplines, each fully independent. Engage one or all three.',slearn:'Learn more',fin:{tag:'S · Strategy',name:'Financial Advisory',body:"Serious financial thinking for growing businesses that need more than basic bookkeeping. We handle the real work: due diligence, structure, compliance, cashflow, not just tax returns.",l:['Financial due diligence','Cash flow management','Risk & compliance advisory','Cross-border structuring','CFO-as-a-service']},tech:{tag:'T.A · Technology',name:'AI & Technology',body:"We build AI tools that run in your business, not in a slide deck. Dashboards, automations, analytics: the things that save you time tomorrow, not in six months.",l:['AI dashboards & reporting','Predictive analytics','Workflow automation','Website development','AI strategy consulting']},mkt:{tag:'C · Consulting',name:'Marketing & Growth',body:"If nobody knows you exist, nothing else matters. We build the strategy, run the channels, and make sure the right people find you.",l:['Marketing plans & strategy','Social media management','Mail & WhatsApp campaigns','Content editing','Marketing advice']},abq:'"Come with the chaos. Leave with the clarity."',v:[['Three equal disciplines','Financial advisory, AI & technology, and marketing each stand on their own. No discipline is secondary to another.'],['Results, not reports','Every engagement has a clear deliverable. We measure success by what actually changes in your business.'],["Based in Curaçao","We operate locally and understand the market from the inside. That matters when the advice gets specific."]],pillars:[{n:'Financial Advisory',b:"<strong>Start with a Financial Health Check</strong>: a close look at your books, cashflow, and risk exposure, no ongoing commitment needed. Ready for more? We also handle the full picture, due diligence, structure, compliance, and the decisions that actually shape your company."},{n:'AI & Technology',b:"<strong>Start with an AI &amp; Tech Readiness Assessment</strong>: a clear read on where automation would actually pay off. Ready for more? We build what gets used, dashboards, automations, and tools that earn a spot in your daily routine."},{n:'Marketing & Growth',b:"<strong>Start with a Marketing Assessment</strong>: a standalone report on what's working and what's not. Ready for more? We build the strategy, run the channels, and make sure the right people find you."}],cth1:'Talk',cth2:'to us.',csub:"No forms that go nowhere. We read every message and get back to you within 24 hours.",cll:'Based in',cla:'Also active in',cav:'Europe',fn:'Name',fe:'Email',fi2:'What do you need?',fm:'Message',fsb:'Send it',opts:["Select a service",'Financial Advisory','AI & Technology','Marketing & Growth',"All three"],ta:"Tell us what's going on in your business...",fcp:'© 2026 S.T.A.C. B.V.',abNoteText:'Every project is different, so timing and scope depend on what you need. ',abNoteLink:"Reach out and we'll figure it out together.",fp:{hintView:'View featured projects',hintClose:'Close projects',cta:'Our services',fin:{h:'Featured Financial Advisory Work.',lede:'A closer look at how each engagement takes shape, from the decision frameworks we build to the dashboards leadership actually opens.',filters:['All','Advisory','Virtual CFO','Risk & Governance','Compliance','Transformation','Analytics'],cards:[{t:'Strategic Financial Advisory',b:'A five-step decision framework, analyze the financial position, model the options, evaluate the trade-offs, plan the direction, and decide with confidence, that turns raw numbers into a call leadership can stand behind.',tags:['Advisory','Financial Modeling','Decision Support']},{t:'Virtual CFO Services',b:'A single command center for financial oversight, strategic planning, board reporting, performance management, and capital allocation, senior CFO-level leadership without the full-time hire.',tags:['Virtual CFO','Board Reporting','Capital Allocation']},{t:'Risk Management & Governance',b:'An enterprise risk overview built to identify, assess, and strengthen, mapping inherent versus residual risk across strategic, operational, financial, and compliance categories, with a heat map that shows exactly where to focus.',tags:['Risk & Governance','Risk Heat Map','Controls']},{t:'Regulatory Compliance Advisory',b:'A regulatory compliance tracker covering IFRS, AML/CFT, GDPR, and CSRD requirements, with a readiness score and key dates that keep gap assessments and action plans on schedule instead of buried in email.',tags:['Compliance','Gap Assessment','Readiness Tracking']},{t:'Business Transformation',b:'A transformation roadmap that moves an organization from manual, fragmented processes to integrated systems and real-time insight, planned workstream by workstream against a clear people, process, and technology timeline.',tags:['Transformation','Operating Model','Change Management']},{t:'Data Analytics & Performance Intelligence',b:'An executive performance report built from group financials, P&L, cash flow, and KPIs by business unit, turned into the kind of dashboard leadership actually opens, not a file that sits in a folder.',tags:['Analytics','KPI Dashboards','Executive Reporting']}]},mkt:{h:'Featured Marketing & Growth Work.',lede:'A look at client work across different types of businesses, from daily content and community management to the calendars that keep it all on schedule. Full weekly breakdowns and reporting are shared during a consultation.',filters:['All','Social Media Management','Community Management','Content Planning','Video Content'],cards:[{t:'Bakery',b:'A weekly rhythm of new menu items, fresh pastries, seasonal products, and customer favourites, each post designed to make the food impossible to scroll past. Kept the bakery active online with its products front of mind, giving followers a reason to check the page each week.',tags:['Bakery','Social Media Management','Content Planning','Video Content']},{t:'General Store',b:'A consistent layout for every product post made a huge, varied catalog easy to recognize at a glance. Built around a repeating weekly rhythm, a start-of-week video, spotlight posts on new stock, and stories placed for reach, driving consistent daily engagement and follower growth over months managed.',tags:['General Store','Social Media Management','Content Planning','Video Content']},{t:'Italian Restaurant',b:'Gave every part of the menu, pizza, pasta, salads, its own moment, paired with fun, relatable TikTok videos that pulled in a younger audience and showed off the food and atmosphere. Increased online attention, brought more customers into the restaurant, and even helped attract new staff. A Linktree ties every location and platform together.',tags:['Restaurant','Video Content','Social Media Management']},{t:'Massage Studio',b:'A calmer, more consistent way to show services and bring clients back to the page. Built around treatment highlights, relaxing visual stories, availability reminders, and educational content that makes the experience easy to understand before booking, delivering more consistent visibility and engagement through a structured content rhythm.',tags:['Massage Studio','Social Media Management','Content Planning','Video Content']},{t:'Client Exchange',b:"Real conversations, handled daily: booking questions, menu inquiries, and stock checks answered across WhatsApp, Email, and Instagram in each client's own voice, keeping every account responsive without slowing down the rest of the work.",tags:['Community Management','WhatsApp','Email','Client Support']},{t:'Content Planning',b:'Every account runs on a shared content calendar, planned by date, platform, format, and status, so nothing goes out without a plan behind it, and nothing gets missed.',tags:['Content Planning','Content Calendar','Process']}]}}},
+nl:{ns:'Diensten',na:'Over ons',nc:'Contact',hs1:'Wij leveren',hs2:'dat bedrijven vooruit helpt.',cy:['Financieel Advies','AI & Technologie','Marketing & Groei'],hdesc:'Één firma. Drie gelijkwaardige disciplines. Strategie, technologie en consulting, opgericht in Curaçao, actief internationaal.',hgeo:'Curaçao · Europa',hcta:'Onze Diensten',aw:['Strategie','Technologie','Analyse','Consulting'],sl:[],stitle:'Wat wij doen.',sdesc:'Drie disciplines, elk volledig zelfstandig. Kies één of alle drie.',slearn:'Meer weten',fin:{tag:'S · Strategie',name:'Financieel Advies',body:'Onafhankelijke financiële strategie voor groeiende bedrijven, familiebedrijven en regionale instellingen. Scherp advies, geen standaardaanpak.',l:['Financiële due diligence','Cashflowbeheer','Risico- & compliance advies','Grensoverschrijdende structurering','CFO-as-a-service']},tech:{tag:'T.A · Technologie',name:'AI & Technologie',body:'Werkende AI-tools, live dashboards en geautomatiseerde systemen. Geen AI als concept, AI als product dat uw bedrijf daadwerkelijk gebruikt.',l:['AI dashboards & rapportages','Voorspellende analyses','Procesautomatisering','Websiteontwikkeling','AI strategie consulting']},mkt:{tag:'C · Consulting',name:'Marketing & Groei',body:'Merkstrategie, digitale marketing en klantacquisitie voor bedrijven die doelgericht willen groeien, niet alleen zichtbaar zijn.',l:['Marketingplannen & strategie','Socialmediabeheer','Mail & WhatsApp campagnes','Content editing','Marketingadvies']},abq:'"Kom met de chaos. Vertrek met de duidelijkheid."',v:[['Gelijke pijlers','Financiën, AI & technologie en marketing zijn drie gelijkwaardige disciplines. Geen pijler is ondersteunend aan een andere.'],['Resultaten boven rapporten','Klanten betalen voor resultaten, niet voor rapporten. Elk traject wordt gemeten aan wat er daadwerkelijk verandert.'],['Caribbean-first','Gebouwd in Curaçao, actief in Europa. We kennen de markt van binnenuit.']],pillars:[{n:'Financieel Advies',b:"<strong>Begin met een Financiële Gezondheidscheck</strong>: een kritische blik op uw boekhouding, cashflow en risico's, zonder vervolgverplichting. Wilt u verder? Wij regelen ook het volledige plaatje: due diligence, structurering, compliance en de beslissingen die uw bedrijf echt vormgeven."},{n:'AI & Technologie',b:"<strong>Begin met een AI &amp; Tech Assessment</strong>: een heldere analyse van waar automatisering daadwerkelijk loont. Wilt u verder? Wij bouwen wat daadwerkelijk gebruikt wordt: dashboards, automatiseringen en tools die een vaste plek krijgen in uw dagelijkse routine."},{n:'Marketing & Groei',b:"<strong>Begin met een Marketingassessment</strong>: een losstaand rapport over wat werkt en wat niet. Wilt u verder? Wij bouwen de strategie, beheren de kanalen en zorgen dat de juiste mensen u vinden."}],cth1:'Laten we',cth2:'samenwerken.',csub:'Of u nu financieel advies, een AI-product of een marketingstrategie nodig heeft, of alle drie, wij horen graag van u.',cll:'Locatie',cla:'Actief in',cav:'Europa',fn:'Naam',fe:'E-mail',fi2:'Ik ben geïnteresseerd in',fm:'Bericht',fsb:'Verstuur',opts:['Selecteer een dienst','Financieel Advies','AI & Technologie','Marketing & Groei','Alle drie'],ta:'Vertel ons wat u bouwt...',fcp:'© 2026 S.T.A.C. B.V. Alle rechten voorbehouden.',abNoteText:'Elk project is anders, dus de tijdlijn en omvang hangen af van wat u nodig heeft. ',abNoteLink:'Neem contact op en we zoeken het samen uit.',fp:{hintView:'Bekijk uitgelichte projecten',hintClose:'Sluit projecten',cta:'Onze diensten',fin:{h:'Uitgelicht werk: Financieel Advies.',lede:'Een nadere blik op hoe elk traject vorm krijgt, van de beslissingskaders die we bouwen tot de dashboards die het management daadwerkelijk opent.',filters:['Alle','Advies','Virtuele CFO','Risico & Governance','Compliance','Transformatie','Analytics'],cards:[{t:'Strategisch Financieel Advies',b:'Een besluitvormingskader in vijf stappen: analyseer de financiële positie, model de opties, weeg de afwegingen, bepaal de richting en beslis met vertrouwen, zodat ruwe cijfers uitgroeien tot een besluit waar het management achter kan staan.',tags:['Advies','Financiële Modellering','Besluitvormingsondersteuning']},{t:'Virtuele CFO-diensten',b:'Eén centraal overzicht voor financieel toezicht, strategische planning, bestuursrapportage, prestatiemanagement en kapitaalallocatie: CFO-niveau leiderschap zonder de fulltime aanstelling.',tags:['Virtuele CFO','Bestuursrapportage','Kapitaalallocatie']},{t:'Risicobeheer & Governance',b:'Een bedrijfsbreed risico-overzicht gericht op identificeren, beoordelen en versterken, met een vergelijking van inherent versus restrisico binnen strategische, operationele, financiële en compliancecategorieën, en een heatmap die precies laat zien waar de focus moet liggen.',tags:['Risico & Governance','Risico-heatmap','Beheersmaatregelen']},{t:'Advies Regelgeving & Compliance',b:'Een compliancetracker voor IFRS-, AML/CFT-, AVG- en CSRD-vereisten, met een gereedheidsscore en belangrijke data die gap-analyses en actieplannen op schema houden in plaats van weggestopt in e-mail.',tags:['Compliance','Hiaatanalyse','Voortgangsbewaking']},{t:'Bedrijfstransformatie',b:'Een transformatieroadmap die een organisatie van handmatige, versnipperde processen naar geïntegreerde systemen en realtime inzicht brengt, workstream voor workstream gepland volgens een duidelijke tijdlijn voor mensen, processen en technologie.',tags:['Transformatie','Operationeel Model','Verandermanagement']},{t:'Data-analyse & Performance Intelligence',b:"Een managementrapportage opgebouwd uit groepsfinanciën, winst- en verliesrekening, cashflow en KPI's per bedrijfsonderdeel, omgezet in het soort dashboard dat het management daadwerkelijk opent, geen bestand dat in een map blijft liggen.",tags:['Analytics','KPI-dashboards','Managementrapportage']}]},mkt:{h:'Uitgelicht werk: Marketing & Groei.',lede:'Een kijkje in klantwerk bij uiteenlopende soorten bedrijven, van dagelijkse content en community management tot de kalenders die alles op schema houden. Volledige weekoverzichten en rapportages worden gedeeld tijdens een kennismakingsgesprek.',filters:['Alle','Social Media Management','Community Management','Contentplanning','Videocontent'],cards:[{t:'Bakkerij',b:'Een wekelijks ritme van nieuwe menu-items, verse gebakjes, seizoensproducten en klantfavorieten, elke post ontworpen om het eten onmogelijk te laten voorbijscrollen. Hield de bakkerij actief online met de producten top of mind, zodat volgers elke week een reden hadden om de pagina te checken.',tags:['Bakkerij','Social Media Management','Contentplanning','Videocontent']},{t:'Buurtwinkel',b:'Een consistente lay-out voor elke productpost maakte een enorm, gevarieerd assortiment in één oogopslag herkenbaar. Opgebouwd rond een terugkerend weekritme: een video aan het begin van de week, spotlightposts over nieuwe voorraad en stories voor bereik, wat zorgde voor gestage dagelijkse betrokkenheid en volgersgroei gedurende de maanden dat het account werd beheerd.',tags:['Buurtwinkel','Social Media Management','Contentplanning','Videocontent']},{t:'Italiaans Restaurant',b:"Gaf elk onderdeel van de kaart, pizza, pasta, salades, een eigen moment, gecombineerd met leuke, herkenbare TikTok-video's die een jonger publiek aantrokken en het eten en de sfeer lieten zien. Zorgde voor meer online aandacht, meer klanten in het restaurant en hielp zelfs bij het aantrekken van nieuw personeel. Een Linktree verbindt elke locatie en elk platform.",tags:['Restaurant','Videocontent','Social Media Management']},{t:'Massagestudio',b:'Een rustigere, consistentere manier om diensten te tonen en klanten terug te laten komen naar de pagina. Opgebouwd rond behandelhighlights, ontspannende visuele stories, beschikbaarheidsherinneringen en educatieve content die de ervaring makkelijk te begrijpen maakt vóór het boeken, wat zorgde voor meer consistente zichtbaarheid en betrokkenheid via een gestructureerd contentritme.',tags:['Massagestudio','Social Media Management','Contentplanning','Videocontent']},{t:'Klantcontact',b:'Echte gesprekken, dagelijks afgehandeld: boekingsvragen, menuvragen en voorraadchecks beantwoord via WhatsApp, e-mail en Instagram, elk in de eigen stem van de klant, zodat elk account responsief blijft zonder de rest van het werk te vertragen.',tags:['Community Management','WhatsApp','E-mail','Klantondersteuning']},{t:'Contentplanning',b:'Elk account draait op een gedeelde contentkalender, gepland op datum, platform, format en status, zodat niets naar buiten gaat zonder plan erachter, en niets wordt gemist.',tags:['Contentplanning','Contentkalender','Proces']}]}}}
 };
 function L(l){
   const c=T[l];
+  try{localStorage.setItem('stac_lang',l);}catch(e){}
   document.getElementById('ben').className='lb'+(l==='en'?' on':'');
   document.getElementById('bnl').className='lb'+(l==='nl'?' on':'');
   document.getElementById('ns').textContent=c.ns;document.getElementById('na').textContent=c.na;document.getElementById('nc').textContent=c.nc;
@@ -798,8 +1121,38 @@ function L(l){
   document.getElementById('fcp').textContent=c.fcp;
   document.getElementById('abNoteText').textContent=c.abNoteText;
   document.getElementById('abNoteLink').textContent=c.abNoteLink;
+  window.__curLang=l;
+  if(c.fp){
+    document.querySelectorAll('.pc-hint span').forEach(function(span){
+      var pc=span.closest('.pc');
+      var panelId=pc&&pc.getAttribute('aria-controls');
+      var panelEl=panelId&&document.getElementById(panelId);
+      var isOpen=panelEl&&panelEl.classList.contains('open');
+      span.textContent=isOpen?c.fp.hintClose:c.fp.hintView;
+    });
+    [['fpPanelFin','fpFiltersFin','fpTrackFin','fin'],['fpPanelMkt','fpFiltersMkt','fpTrackMkt','mkt']].forEach(function(row){
+      var panelId=row[0],filtersId=row[1],trackId=row[2],key=row[3];
+      var data=c.fp[key];
+      var panel=document.getElementById(panelId);
+      if(!data||!panel) return;
+      var h=panel.querySelector('.fp-panel-h'); if(h) h.textContent=data.h;
+      var lede=panel.querySelector('.fp-lede'); if(lede) lede.textContent=data.lede;
+      document.querySelectorAll('#'+filtersId+' .fp-filter-btn').forEach(function(btn,i){
+        if(data.filters[i]!==undefined) btn.textContent=data.filters[i];
+      });
+      document.querySelectorAll('#'+trackId+' .fp-card3').forEach(function(card,i){
+        var cd=data.cards[i]; if(!cd) return;
+        var h4=card.querySelector('h4'); if(h4) h4.textContent=cd.t;
+        var p=card.querySelector('.fp-card3-body p'); if(p) p.textContent=cd.b;
+        card.querySelectorAll('.fp-tags3 span').forEach(function(sp,j){
+          if(cd.tags[j]!==undefined) sp.textContent=cd.tags[j];
+        });
+      });
+      var cta=panel.querySelector('.fp-panel-cta span'); if(cta) cta.textContent=c.fp.cta;
+    });
+  }
 }
-L('en');
+(function(){var saved='en';try{saved=localStorage.getItem('stac_lang')||'en';}catch(e){}L(saved);})();
 
 // CONTACT FORM
 const ctformEl=document.getElementById('ctform-el');
@@ -821,44 +1174,56 @@ if(ctformEl){
   });
 }
 
-// FEATURED PROJECTS PANEL (AI & Technology pillar)
+// FEATURED PROJECTS PANELS (all three pillars, mutually exclusive)
 (function(){
-  var card=document.getElementById('pcTech');
-  var panel=document.getElementById('fpPanel');
-  var closeBtn=document.getElementById('fpPanelClose');
-  var hintTxt=document.getElementById('pcHintTxt');
-  if(!card||!panel) return;
-  function setPanelHeight(){
-    if(panel.classList.contains('open')) panel.style.maxHeight=panel.scrollHeight+'px';
-  }
-  function openPanel(){
-    panel.classList.add('open');
-    panel.style.maxHeight=panel.scrollHeight+'px';
-    card.setAttribute('aria-expanded','true');
-    if(hintTxt) hintTxt.textContent='Close projects';
-    setTimeout(function(){ panel.scrollIntoView({behavior:'smooth',block:'start'}); },150);
-  }
-  function closePanel(){
-    panel.style.maxHeight=panel.scrollHeight+'px';
-    requestAnimationFrame(function(){
+  var instances=[];
+  function setup(cardId,panelId,closeId,hintId){
+    var card=document.getElementById(cardId);
+    var panel=document.getElementById(panelId);
+    var closeBtn=document.getElementById(closeId);
+    var hintTxt=document.getElementById(hintId);
+    if(!card||!panel) return null;
+    var inst={card:card,panel:panel,hintTxt:hintTxt};
+    function setPanelHeight(){
+      if(panel.classList.contains('open')) panel.style.maxHeight=panel.scrollHeight+'px';
+    }
+    function openPanel(){
+      instances.forEach(function(o){ if(o!==inst && o.panel.classList.contains('open')) o.close(); });
+      panel.classList.add('open');
+      panel.style.maxHeight=panel.scrollHeight+'px';
+      card.setAttribute('aria-expanded','true');
+      if(hintTxt) hintTxt.textContent=(T[window.__curLang||'en'].fp||{}).hintClose||'Close projects';
+      setTimeout(function(){ panel.scrollIntoView({behavior:'smooth',block:'start'}); },150);
+    }
+    function closePanel(){
+      panel.style.maxHeight=panel.scrollHeight+'px';
       requestAnimationFrame(function(){
-        panel.classList.remove('open');
-        panel.style.maxHeight='0px';
+        requestAnimationFrame(function(){
+          panel.classList.remove('open');
+          panel.style.maxHeight='0px';
+        });
       });
+      card.setAttribute('aria-expanded','false');
+      if(hintTxt) hintTxt.textContent=(T[window.__curLang||'en'].fp||{}).hintView||'View featured projects';
+    }
+    function togglePanel(){
+      if(panel.classList.contains('open')) closePanel();
+      else openPanel();
+    }
+    inst.close=closePanel;
+    card.addEventListener('click',togglePanel);
+    card.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); togglePanel(); }
     });
-    card.setAttribute('aria-expanded','false');
-    if(hintTxt) hintTxt.textContent='View featured projects';
+    if(closeBtn) closeBtn.addEventListener('click',function(e){ e.stopPropagation(); closePanel(); });
+    window.addEventListener('resize',setPanelHeight);
+    return inst;
   }
-  function togglePanel(){
-    if(panel.classList.contains('open')) closePanel();
-    else openPanel();
-  }
-  card.addEventListener('click',togglePanel);
-  card.addEventListener('keydown',function(e){
-    if(e.key==='Enter'||e.key===' '){ e.preventDefault(); togglePanel(); }
-  });
-  if(closeBtn) closeBtn.addEventListener('click',function(e){ e.stopPropagation(); closePanel(); });
-  window.addEventListener('resize',setPanelHeight);
+  [
+    setup('pcTech','fpPanel','fpPanelClose','pcHintTxt'),
+    setup('pcFin','fpPanelFin','fpPanelCloseFin','pcHintTxtFin'),
+    setup('pcMkt','fpPanelMkt','fpPanelCloseMkt','pcHintTxtMkt')
+  ].forEach(function(i){ if(i) instances.push(i); });
 })();
 
 // FEATURED PROJECTS CAROUSEL (ported from ai-technology.html)
@@ -946,6 +1311,84 @@ if(ctformEl){
   render();
   restart();
 })();
+</script>
+
+<script>
+// FEATURED PROJECTS CAROUSELS (Financial Advisory & Marketing & Growth panels)
+function initFpCarousel(opts){
+  var viewport=document.getElementById(opts.viewport);
+  var track=document.getElementById(opts.track);
+  var allCards=Array.prototype.slice.call(document.querySelectorAll('#'+opts.track+' .fp-card3'));
+  var wrap=document.getElementById(opts.wrap);
+  var prevBtn=document.getElementById(opts.prev);
+  var nextBtn=document.getElementById(opts.next);
+  var filterBtns=document.querySelectorAll('#'+opts.filters+' .fp-filter-btn');
+  if(!track||!wrap||!viewport||!allCards.length) return;
+  var idx=0,timer;
+  function visibleCards(){ return allCards.filter(function(c){ return c.style.display!=='none'; }); }
+  function cardStep(){
+    var vc=visibleCards();
+    if(!vc.length) return 0;
+    var r=vc[0].getBoundingClientRect();
+    var style=getComputedStyle(vc[0]);
+    return r.width+parseFloat(style.marginRight||0);
+  }
+  function visibleCount(){
+    var s=cardStep();
+    return s?Math.max(1,Math.round(viewport.clientWidth/s)):1;
+  }
+  function render(){
+    var vc=visibleCards();
+    allCards.forEach(function(c){ c.classList.remove('is-center'); });
+    if(!vc.length) return;
+    var vcount=visibleCount();
+    var half=Math.floor(vcount/2);
+    var maxStart=Math.max(0,vc.length-vcount);
+    var start=Math.max(0,Math.min(idx-half,maxStart));
+    track.style.transform='translateX(-'+(start*cardStep())+'px)';
+    if(vcount>=3&&vc[idx]) vc[idx].classList.add('is-center');
+    var panel=wrap.closest('.fp-panel');
+    if(panel&&panel.classList.contains('open')) panel.style.maxHeight=panel.scrollHeight+'px';
+  }
+  function go(n){
+    var vc=visibleCards();
+    var mx=vc.length-1;
+    if(mx<0) return;
+    if(n>mx) n=0;
+    if(n<0) n=mx;
+    idx=n;
+    render();
+  }
+  function next(){ go(idx+1); }
+  function prev(){ go(idx-1); }
+  function restart(){ clearInterval(timer); timer=setInterval(next,5000); }
+  function applyFilter(tag){
+    allCards.forEach(function(c){
+      var tags=(c.getAttribute('data-tags')||'').split(',');
+      var show=(tag==='all')||tags.indexOf(tag)!==-1;
+      c.style.display=show?'':'none';
+    });
+    idx=0;
+    render();
+    restart();
+  }
+  filterBtns.forEach(function(btn){
+    btn.addEventListener('click',function(){
+      filterBtns.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      applyFilter(btn.getAttribute('data-filter'));
+    });
+  });
+  if(nextBtn) nextBtn.addEventListener('click',function(){ next(); restart(); });
+  if(prevBtn) prevBtn.addEventListener('click',function(){ prev(); restart(); });
+  wrap.addEventListener('mouseenter',function(){ clearInterval(timer); });
+  wrap.addEventListener('mouseleave',restart);
+  window.addEventListener('resize',render);
+  render();
+  restart();
+}
+initFpCarousel({viewport:'fp3ViewportFin',track:'fpTrackFin',wrap:'fpCarouselFin',prev:'fp3PrevFin',next:'fp3NextFin',filters:'fpFiltersFin'});
+initFpCarousel({viewport:'fp3ViewportMkt',track:'fpTrackMkt',wrap:'fpCarouselMkt',prev:'fp3PrevMkt',next:'fp3NextMkt',filters:'fpFiltersMkt'});
 </script>
 </body>
 </html>

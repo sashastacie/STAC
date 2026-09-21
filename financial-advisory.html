@@ -35,7 +35,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .nav-logo{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:16px;letter-spacing:6px;color:var(--navy);}
 .nav-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);font-weight:500;}
 .nav-center{display:flex;flex-direction:column;align-items:center;gap:2px;}
-.nav-spacer{width:120px;}
+.nav-spacer{width:120px;display:flex;justify-content:flex-end;}
+.lang-toggle{display:flex;gap:4px;}
+.lb{padding:5px 9px;font-size:10px;font-weight:700;letter-spacing:.5px;border:1px solid var(--border);border-radius:3px;background:transparent;color:var(--muted);cursor:pointer;font-family:'Inter',sans-serif;transition:background .2s,color .2s;}
+.lb.on{background:var(--navy);border-color:var(--navy);color:#fff;}
 
 /* HERO */
 .hero{background:var(--navy);padding:140px 64px 80px;position:relative;overflow:hidden;}
@@ -75,6 +78,41 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .svc-list li::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:4px;height:4px;border-radius:50%;background:var(--teal);}
 .svc-outcome{margin-top:20px;padding:12px 16px;background:rgba(20,50,158,0.06);border-left:2px solid var(--teal);font-size:12px;color:var(--teal);font-weight:500;letter-spacing:.3px;}
 
+/* SERVICES IN FOCUS CAROUSEL */
+.fp-lede{font-size:15px;color:var(--muted);font-weight:300;line-height:1.8;max-width:640px;margin-top:-30px;margin-bottom:48px;}
+.fp-filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px;}
+.fp-filter-btn{padding:9px 20px;border-radius:24px;border:1.5px solid var(--border);background:#fff;color:var(--navy);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap;font-family:'Inter',sans-serif;}
+.fp-filter-btn:hover{border-color:var(--teal);}
+.fp-filter-btn.active{background:var(--navy);border-color:var(--navy);color:#fff;}
+.fp-carousel3{position:relative;background:var(--off);border-radius:20px;padding:20px 48px 40px;}
+.fp-viewport3{overflow:hidden;}
+.fp-track3{display:flex;transition:transform .6s cubic-bezier(.65,0,.35,1);padding:34px 4px 18px;}
+.fp-card3{flex:0 0 calc(33.333% - 25.33px);margin-right:38px;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 24px rgba(11,26,46,.06);display:flex;flex-direction:column;transition:transform .4s ease,opacity .4s ease,box-shadow .4s ease;opacity:.65;}
+.fp-card3-img{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--navy);}
+.fp-card3-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease;}
+.fp-card3:hover .fp-card3-img img{transform:scale(1.06);}
+.fp-card3-body{padding:18px 20px 22px;display:flex;flex-direction:column;flex:1;}
+.fp-card3-body h4{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;color:var(--navy);margin-bottom:8px;line-height:1.1;}
+.fp-card3-body p{font-size:12.5px;color:var(--muted);line-height:1.7;font-weight:300;margin-bottom:14px;flex:1;}
+.fp-tags3{display:flex;flex-wrap:wrap;gap:6px;}
+.fp-tags3 span{font-size:10px;padding:5px 11px;background:var(--off);border-radius:14px;color:var(--teal);letter-spacing:.3px;font-weight:500;}
+.fp-tags3 span.co{font-weight:700;}
+.fp-arrow3{position:absolute;top:calc(50% - 24px);transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--border);color:var(--navy);display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;cursor:pointer;box-shadow:0 8px 24px rgba(11,26,46,.16);z-index:5;transition:background .2s,color .2s;}
+.fp-arrow3:hover{background:var(--navy);color:#fff;}
+.fp-arrow3.prev{left:8px;}
+.fp-arrow3.next{right:8px;}
+.fp-card3.is-center{opacity:1;transform:translateY(-16px) scale(1.07);box-shadow:0 32px 64px rgba(11,26,46,.26);z-index:2;position:relative;}
+@media(max-width:900px){
+  .fp-card3{flex-basis:calc(50% - 14px);margin-right:28px;}
+  .fp-carousel3{padding:18px 44px 36px;}
+}
+@media(max-width:640px){
+  .fp-card3{flex-basis:100%;margin-right:0;}
+  .fp-carousel3{padding:16px 40px 32px;}
+  .fp-arrow3.prev{left:2px;}
+  .fp-arrow3.next{right:2px;}
+}
+
 /* WHY SECTION */
 .why{background:var(--navy);padding:88px 64px;}
 .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
@@ -109,10 +147,12 @@ html.js .rv2.in{opacity:1;transform:none;}
 @media(max-width:900px){
   nav{padding:0 16px;}
   .nav-back-label{display:none;}
-  .nav-spacer{width:24px;}
+  .nav-spacer{width:auto;}
+  .lb{padding:4px 7px;font-size:9px;}
   .nav-tag{display:none;}
   .hero,.section,.why,.value{padding-left:24px;padding-right:24px;}
   .intro{flex-direction:column;gap:16px;padding:24px;}
+  .intro-badge{white-space:normal;text-align:center;}
   .services-grid{grid-template-columns:1fr;}
   .why-grid{grid-template-columns:1fr;}
   footer{flex-direction:column;gap:12px;text-align:center;padding:24px;}
@@ -126,23 +166,28 @@ html.js .rv2.in{opacity:1;transform:none;}
 <nav>
   <a class="nav-back" href="index.html">
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M13 7H1M6 2L1 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <span class="nav-back-label">Back to S.T.A.C.</span>
+    <span class="nav-back-label" data-nl="Terug naar S.T.A.C.">Back to S.T.A.C.</span>
   </a>
   <div class="nav-center">
     <div class="nav-logo">S.T.A.C.</div>
     <div class="nav-tag">S · Strategy</div>
   </div>
-  <div class="nav-spacer"></div>
+  <div class="nav-spacer">
+    <div class="lang-toggle">
+      <button class="lb" id="ben">EN</button>
+      <button class="lb" id="bnl">NL</button>
+    </div>
+  </div>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
   <div class="hero-orb"></div>
   <div class="hero-grid"></div>
-  <div class="hero-label">S · Strategy · Financial Advisory</div>
-  <h1 class="hero-h1">Serious Financial<br/>Thinking.<br/><em>Decisions You Can Stand Behind.</em></h1>
-  <p class="hero-sub">We help leadership teams make sharper decisions, manage risk with confidence, and build growth that actually holds up.</p>
-  <div class="hero-tags">
+  <div class="hero-label" data-nl="S · Strategie · Financieel Advies">S · Strategy · Financial Advisory</div>
+  <h1 class="hero-h1" data-nl="Serieus Financieel&lt;br/&gt;Denken.&lt;br/&gt;&lt;em&gt;Beslissingen Waar U Achter Kunt Staan.&lt;/em&gt;">Serious Financial<br/>Thinking.<br/><em>Decisions You Can Stand Behind.</em></h1>
+  <p class="hero-sub" data-nl="Wij helpen directieteams scherpere beslissingen te nemen, risico's met vertrouwen te beheren en groei op te bouwen die daadwerkelijk standhoudt.">We help leadership teams make sharper decisions, manage risk with confidence, and build growth that actually holds up.</p>
+  <div class="hero-tags" data-nl="&lt;span class=&quot;hero-tag&quot;&gt;Strategisch Advies&lt;/span&gt;&lt;span class=&quot;hero-tag&quot;&gt;Virtuele CFO&lt;/span&gt;&lt;span class=&quot;hero-tag&quot;&gt;Risico &amp; Governance&lt;/span&gt;&lt;span class=&quot;hero-tag&quot;&gt;Regelgeving &amp; Compliance&lt;/span&gt;&lt;span class=&quot;hero-tag&quot;&gt;Bedrijfstransformatie&lt;/span&gt;&lt;span class=&quot;hero-tag&quot;&gt;Data-analyse&lt;/span&gt;">
     <span class="hero-tag">Strategic Advisory</span>
     <span class="hero-tag">Virtual CFO</span>
     <span class="hero-tag">Risk & Governance</span>
@@ -154,15 +199,15 @@ html.js .rv2.in{opacity:1;transform:none;}
 
 <!-- INTRO STRIP -->
 <div class="intro">
-  <div class="intro-text">"Creating clarity where complexity exists."</div>
-  <div class="intro-badge">Registered Accountant (RA) · Executive & Regulatory Experience</div>
+  <div class="intro-text" data-nl="&quot;Duidelijkheid scheppen waar complexiteit heerst.&quot;">"Creating clarity where complexity exists."</div>
+  <div class="intro-badge" data-nl="Registeraccountant (RA) · Bestuurlijke &amp; Regelgevende Ervaring">Registered Accountant (RA) · Executive & Regulatory Experience</div>
 </div>
 
 <!-- SERVICES -->
 <div class="section" style="background:#fff;padding-top:80px;padding-bottom:0;">
   <div class="rv">
-    <div class="s-label">What we offer</div>
-    <h2 class="s-h2">Our Services</h2>
+    <div class="s-label" data-nl="Wat wij bieden">What we offer</div>
+    <h2 class="s-h2" data-nl="Onze Diensten">Our Services</h2>
   </div>
 </div>
 <div class="services-grid rv">
@@ -170,10 +215,10 @@ html.js .rv2.in{opacity:1;transform:none;}
   <!-- 1 Strategic Financial Advisory -->
   <div class="svc-card">
     <div class="svc-num">01</div>
-    <div class="svc-title">Strategic Financial Advisory</div>
-    <div class="svc-subtitle">Turning the Numbers Into Decisions You Can Act On</div>
-    <p class="svc-body">We help organizations get past basic financial reporting and put their numbers to work driving real growth and performance.</p>
-    <ul class="svc-list">
+    <div class="svc-title" data-nl="Strategisch Financieel Advies">Strategic Financial Advisory</div>
+    <div class="svc-subtitle" data-nl="Cijfers Omzetten in Beslissingen Waarop U Kunt Handelen">Turning the Numbers Into Decisions You Can Act On</div>
+    <p class="svc-body" data-nl="Wij helpen organisaties verder te kijken dan basale financiële rapportage en hun cijfers te laten werken voor echte groei en prestaties.">We help organizations get past basic financial reporting and put their numbers to work driving real growth and performance.</p>
+    <ul class="svc-list" data-nl="&lt;li&gt;Ontwikkeling financiële strategie&lt;/li&gt;&lt;li&gt;Bedrijfs- en investeringsevaluaties&lt;/li&gt;&lt;li&gt;Verbetering bedrijfsprestaties&lt;/li&gt;&lt;li&gt;Financiële modellering en prognoses&lt;/li&gt;&lt;li&gt;Budgettering en planning&lt;/li&gt;&lt;li&gt;Winstgevendheids- en margeanalyse&lt;/li&gt;&lt;li&gt;Cashflow-optimalisatie&lt;/li&gt;&lt;li&gt;Ondersteuning bij directiebeslissingen&lt;/li&gt;">
       <li>Financial strategy development</li>
       <li>Business and investment evaluations</li>
       <li>Corporate performance improvement</li>
@@ -183,16 +228,16 @@ html.js .rv2.in{opacity:1;transform:none;}
       <li>Cash flow optimization</li>
       <li>Executive decision support</li>
     </ul>
-    <div class="svc-outcome">Better decisions, stronger performance, sustainable growth.</div>
+    <div class="svc-outcome" data-nl="Betere beslissingen, sterkere prestaties, duurzame groei.">Better decisions, stronger performance, sustainable growth.</div>
   </div>
 
   <!-- 2 Virtual CFO -->
   <div class="svc-card">
     <div class="svc-num">02</div>
     <div class="svc-title">Virtual CFO Services</div>
-    <div class="svc-subtitle">Executive Financial Leadership Without the Full-Time Cost</div>
-    <p class="svc-body">For growing businesses that need senior financial expertise but aren't ready to hire it full-time, we provide experienced CFO-level leadership on demand.</p>
-    <ul class="svc-list">
+    <div class="svc-subtitle" data-nl="Financieel Directieleiderschap Zonder de Fulltime Kosten">Executive Financial Leadership Without the Full-Time Cost</div>
+    <p class="svc-body" data-nl="Voor groeiende bedrijven die senior financiële expertise nodig hebben maar nog niet klaar zijn voor een fulltime aanstelling, bieden wij ervaren leiderschap op CFO-niveau, op afroep.">For growing businesses that need senior financial expertise but aren't ready to hire it full-time, we provide experienced CFO-level leadership on demand.</p>
+    <ul class="svc-list" data-nl="&lt;li&gt;CFO-advies en directie-ondersteuning&lt;/li&gt;&lt;li&gt;Financieel toezicht en governance&lt;/li&gt;&lt;li&gt;Strategische planning&lt;/li&gt;&lt;li&gt;Bestuursrapportage&lt;/li&gt;&lt;li&gt;Prestatiemanagement&lt;/li&gt;&lt;li&gt;Investeerders- en stakeholderrapportage&lt;/li&gt;&lt;li&gt;Advies kapitaalallocatie&lt;/li&gt;&lt;li&gt;Financiële transformatie&lt;/li&gt;">
       <li>CFO advisory and executive support</li>
       <li>Financial oversight and governance</li>
       <li>Strategic planning</li>
@@ -202,16 +247,16 @@ html.js .rv2.in{opacity:1;transform:none;}
       <li>Capital allocation advice</li>
       <li>Financial transformation</li>
     </ul>
-    <div class="svc-outcome">Executive-level financial leadership tailored to your needs.</div>
+    <div class="svc-outcome" data-nl="Financieel leiderschap op directieniveau, afgestemd op uw behoeften.">Executive-level financial leadership tailored to your needs.</div>
   </div>
 
   <!-- 3 Risk Management -->
   <div class="svc-card">
     <div class="svc-num">03</div>
-    <div class="svc-title">Risk Management & Governance</div>
-    <div class="svc-subtitle">Catching Risk Before It Becomes a Problem</div>
-    <p class="svc-body">The best-run organizations spot risk early. We strengthen governance and put practical risk frameworks in place, not binders nobody reads.</p>
-    <ul class="svc-list">
+    <div class="svc-title" data-nl="Risicobeheer &amp; Governance">Risk Management & Governance</div>
+    <div class="svc-subtitle" data-nl="Risico's Signaleren Voordat Ze een Probleem Worden">Catching Risk Before It Becomes a Problem</div>
+    <p class="svc-body" data-nl="De best geleide organisaties signaleren risico's vroegtijdig. Wij versterken governance en zetten praktische risicokaders op, geen mappen die niemand leest.">The best-run organizations spot risk early. We strengthen governance and put practical risk frameworks in place, not binders nobody reads.</p>
+    <ul class="svc-list" data-nl="&lt;li&gt;Enterprise Risk Management (ERM)&lt;/li&gt;&lt;li&gt;Risicobeoordelingen en -kaders&lt;/li&gt;&lt;li&gt;Evaluaties interne beheersing&lt;/li&gt;&lt;li&gt;Governance-reviews&lt;/li&gt;&lt;li&gt;Advies aan bestuur en commissies&lt;/li&gt;&lt;li&gt;Bedrijfscontinuïteitsplanning&lt;/li&gt;&lt;li&gt;Fraude-risicobeoordelingen&lt;/li&gt;">
       <li>Enterprise Risk Management (ERM)</li>
       <li>Risk assessments and frameworks</li>
       <li>Internal control evaluations</li>
@@ -220,16 +265,16 @@ html.js .rv2.in{opacity:1;transform:none;}
       <li>Business continuity planning</li>
       <li>Fraud risk assessments</li>
     </ul>
-    <div class="svc-outcome">Stronger governance, fewer surprises, more confidence in the room.</div>
+    <div class="svc-outcome" data-nl="Sterkere governance, minder verrassingen, meer vertrouwen aan tafel.">Stronger governance, fewer surprises, more confidence in the room.</div>
   </div>
 
   <!-- 4 Regulatory Compliance -->
   <div class="svc-card">
     <div class="svc-num">04</div>
-    <div class="svc-title">Regulatory Compliance Advisory</div>
-    <div class="svc-subtitle">Making Sense of What You're Actually Required to Do</div>
-    <p class="svc-body">We help management teams understand what they're on the hook for, close compliance gaps, and tighten up controls before a regulator finds them first.</p>
-    <ul class="svc-list">
+    <div class="svc-title" data-nl="Advies Regelgeving &amp; Compliance">Regulatory Compliance Advisory</div>
+    <div class="svc-subtitle" data-nl="Duidelijkheid Over Wat Er Werkelijk van U Wordt Verwacht">Making Sense of What You're Actually Required to Do</div>
+    <p class="svc-body" data-nl="Wij helpen managementteams te begrijpen waar zij verantwoordelijk voor zijn, compliance-hiaten te dichten en beheersmaatregelen aan te scherpen voordat een toezichthouder dat doet.">We help management teams understand what they're on the hook for, close compliance gaps, and tighten up controls before a regulator finds them first.</p>
+    <ul class="svc-list" data-nl="&lt;li&gt;Ontwikkeling compliancekader&lt;/li&gt;&lt;li&gt;Hiaatanalyses regelgeving&lt;/li&gt;&lt;li&gt;Complianceprogramma's&lt;/li&gt;&lt;li&gt;Beleids- en procedurereviews&lt;/li&gt;&lt;li&gt;Governance- en compliancetraining&lt;/li&gt;&lt;li&gt;Beoordelingen regelgevingsgereedheid&lt;/li&gt;&lt;li&gt;Interne compliancereviews&lt;/li&gt;">
       <li>Compliance framework development</li>
       <li>Regulatory gap assessments</li>
       <li>Compliance monitoring programs</li>
@@ -238,16 +283,16 @@ html.js .rv2.in{opacity:1;transform:none;}
       <li>Regulatory readiness assessments</li>
       <li>Internal compliance reviews</li>
     </ul>
-    <div class="svc-outcome">Confidence that you're covered, not just paperwork that says so.</div>
+    <div class="svc-outcome" data-nl="Zekerheid dat u gedekt bent, niet alleen papierwerk dat het beweert.">Confidence that you're covered, not just paperwork that says so.</div>
   </div>
 
   <!-- 5 Business Transformation -->
   <div class="svc-card">
     <div class="svc-num">05</div>
-    <div class="svc-title">Business Transformation</div>
-    <div class="svc-subtitle">Change That Actually Sticks</div>
-    <p class="svc-body">Standing still isn't really an option. We help organizations run change initiatives that improve how they operate, not just how they look on paper.</p>
-    <ul class="svc-list">
+    <div class="svc-title" data-nl="Bedrijfstransformatie">Business Transformation</div>
+    <div class="svc-subtitle" data-nl="Verandering Die Daadwerkelijk Beklijft">Change That Actually Sticks</div>
+    <p class="svc-body" data-nl="Stilstaan is eigenlijk geen optie. Wij helpen organisaties veranderinitiatieven uit te voeren die verbeteren hoe zij daadwerkelijk opereren, niet alleen hoe ze er op papier uitzien.">Standing still isn't really an option. We help organizations run change initiatives that improve how they operate, not just how they look on paper.</p>
+    <ul class="svc-list" data-nl="&lt;li&gt;Organisatorische transformatie&lt;/li&gt;&lt;li&gt;Procesoptimalisatie&lt;/li&gt;&lt;li&gt;Herontwerp operationeel model&lt;/li&gt;&lt;li&gt;Verandermanagement&lt;/li&gt;&lt;li&gt;Financiële transformatie&lt;/li&gt;&lt;li&gt;Strategisch programmamanagement&lt;/li&gt;&lt;li&gt;Operationele excellentie&lt;/li&gt;">
       <li>Organizational transformation</li>
       <li>Process optimization</li>
       <li>Operating model redesign</li>
@@ -256,16 +301,16 @@ html.js .rv2.in{opacity:1;transform:none;}
       <li>Strategic program management</li>
       <li>Operational excellence</li>
     </ul>
-    <div class="svc-outcome">Improved efficiency, stronger execution, measurable results.</div>
+    <div class="svc-outcome" data-nl="Verbeterde efficiëntie, sterkere uitvoering, meetbare resultaten.">Improved efficiency, stronger execution, measurable results.</div>
   </div>
 
   <!-- 6 Data Analytics -->
   <div class="svc-card">
     <div class="svc-num">06</div>
-    <div class="svc-title">Data Analytics & Performance Intelligence</div>
-    <div class="svc-subtitle">Numbers You Can Actually Use</div>
-    <p class="svc-body">We turn scattered data into dashboards and reports leadership actually checks, not files that sit in a folder.</p>
-    <ul class="svc-list">
+    <div class="svc-title" data-nl="Data-analyse &amp; Performance Intelligence">Data Analytics & Performance Intelligence</div>
+    <div class="svc-subtitle" data-nl="Cijfers Die U Daadwerkelijk Kunt Gebruiken">Numbers You Can Actually Use</div>
+    <p class="svc-body" data-nl="Wij zetten versnipperde data om in dashboards en rapportages die het management daadwerkelijk bekijkt, geen bestanden die in een map blijven liggen.">We turn scattered data into dashboards and reports leadership actually checks, not files that sit in a folder.</p>
+    <ul class="svc-list" data-nl="&lt;li&gt;Managementdashboards&lt;/li&gt;&lt;li&gt;KPI-ontwikkeling&lt;/li&gt;&lt;li&gt;Financiële analyse&lt;/li&gt;&lt;li&gt;Prestatiemonitoring&lt;/li&gt;&lt;li&gt;Trend- en scenarioanalyse&lt;/li&gt;&lt;li&gt;Directierapportage&lt;/li&gt;&lt;li&gt;Business intelligence-oplossingen&lt;/li&gt;">
       <li>Management dashboards</li>
       <li>KPI development</li>
       <li>Financial analytics</li>
@@ -274,42 +319,118 @@ html.js .rv2.in{opacity:1;transform:none;}
       <li>Executive reporting</li>
       <li>Business intelligence solutions</li>
     </ul>
-    <div class="svc-outcome">Faster insights, smarter decisions, improved performance.</div>
+    <div class="svc-outcome" data-nl="Snellere inzichten, slimmere beslissingen, betere prestaties.">Faster insights, smarter decisions, improved performance.</div>
   </div>
 
+</div>
+
+<!-- SERVICES IN FOCUS -->
+<div class="section" style="background:#fff;padding-top:0;">
+  <div class="rv">
+    <div class="s-label" data-nl="Nadere Blik">A Closer Look</div>
+    <h2 class="s-h2" data-nl="Diensten Uitgelicht">Services in Focus</h2>
+  </div>
+  <p class="fp-lede rv" data-nl="Een nadere blik op hoe elk traject vorm krijgt, van de beslissingskaders die we bouwen tot de dashboards die het management daadwerkelijk opent.">A closer look at how each engagement takes shape, from the decision frameworks we build to the dashboards leadership actually opens.</p>
+
+  <div class="fp-filters rv">
+    <button class="fp-filter-btn active" data-filter="all" data-nl="Alle">All</button>
+    <button class="fp-filter-btn" data-filter="advisory" data-nl="Advies">Advisory</button>
+    <button class="fp-filter-btn" data-filter="cfo" data-nl="Virtuele CFO">Virtual CFO</button>
+    <button class="fp-filter-btn" data-filter="risk" data-nl="Risico &amp; Governance">Risk &amp; Governance</button>
+    <button class="fp-filter-btn" data-filter="compliance">Compliance</button>
+    <button class="fp-filter-btn" data-filter="transformation" data-nl="Transformatie">Transformation</button>
+    <button class="fp-filter-btn" data-filter="analytics">Analytics</button>
+  </div>
+
+  <div class="fp-carousel3 rv" id="fpCarousel3">
+    <div class="fp-viewport3" id="fp3Viewport">
+      <div class="fp-track3" id="fpTrack3">
+        <div class="fp-card3" data-tags="advisory">
+          <div class="fp-card3-img"><img src="images/FA_strategic_finance_advisory.png" alt="Strategic financial advisory decision framework" loading="lazy"/></div>
+          <div class="fp-card3-body">
+            <h4 data-nl="Strategisch Financieel Advies">Strategic Financial Advisory</h4>
+            <p data-nl="Een besluitvormingskader in vijf stappen: analyseer de financiële positie, model de opties, weeg de afwegingen, bepaal de richting en beslis met vertrouwen, zodat ruwe cijfers uitgroeien tot een besluit waar het management achter kan staan.">A five-step decision framework, analyze the financial position, model the options, evaluate the trade-offs, plan the direction, and decide with confidence, that turns raw numbers into a call leadership can stand behind.</p>
+            <div class="fp-tags3" data-nl="&lt;span class=&quot;co tag-advisory&quot;&gt;Advies&lt;/span&gt;&lt;span&gt;Financiële Modellering&lt;/span&gt;&lt;span&gt;Besluitvormingsondersteuning&lt;/span&gt;"><span class="co tag-advisory">Advisory</span><span>Financial Modeling</span><span>Decision Support</span></div>
+          </div>
+        </div>
+        <div class="fp-card3" data-tags="cfo">
+          <div class="fp-card3-img"><img src="images/FA_virtual_cfo.png" alt="Virtual CFO executive finance command center" loading="lazy"/></div>
+          <div class="fp-card3-body">
+            <h4 data-nl="Virtuele CFO-diensten">Virtual CFO Services</h4>
+            <p data-nl="Eén centraal overzicht voor financieel toezicht, strategische planning, bestuursrapportage, prestatiemanagement en kapitaalallocatie: CFO-niveau leiderschap zonder de fulltime aanstelling.">A single command center for financial oversight, strategic planning, board reporting, performance management, and capital allocation, senior CFO-level leadership without the full-time hire.</p>
+            <div class="fp-tags3" data-nl="&lt;span class=&quot;co tag-cfo&quot;&gt;Virtuele CFO&lt;/span&gt;&lt;span&gt;Bestuursrapportage&lt;/span&gt;&lt;span&gt;Kapitaalallocatie&lt;/span&gt;"><span class="co tag-cfo">Virtual CFO</span><span>Board Reporting</span><span>Capital Allocation</span></div>
+          </div>
+        </div>
+        <div class="fp-card3" data-tags="risk">
+          <div class="fp-card3-img"><img src="images/FA_risk_gov.png" alt="Enterprise risk overview and heat map" loading="lazy"/></div>
+          <div class="fp-card3-body">
+            <h4 data-nl="Risicobeheer &amp; Governance">Risk Management &amp; Governance</h4>
+            <p data-nl="Een bedrijfsbreed risico-overzicht gericht op identificeren, beoordelen en versterken, met een vergelijking van inherent versus restrisico binnen strategische, operationele, financiële en compliancecategorieën, en een heatmap die precies laat zien waar de focus moet liggen.">An enterprise risk overview built to identify, assess, and strengthen, mapping inherent versus residual risk across strategic, operational, financial, and compliance categories, with a heat map that shows exactly where to focus.</p>
+            <div class="fp-tags3" data-nl="&lt;span class=&quot;co tag-risk&quot;&gt;Risico &amp; Governance&lt;/span&gt;&lt;span&gt;Risico-heatmap&lt;/span&gt;&lt;span&gt;Beheersmaatregelen&lt;/span&gt;"><span class="co tag-risk">Risk &amp; Governance</span><span>Risk Heat Map</span><span>Controls</span></div>
+          </div>
+        </div>
+        <div class="fp-card3" data-tags="compliance">
+          <div class="fp-card3-img"><img src="images/FA_regulotory_compliance.png" alt="Regulatory compliance tracker and readiness score" loading="lazy"/></div>
+          <div class="fp-card3-body">
+            <h4 data-nl="Advies Regelgeving &amp; Compliance">Regulatory Compliance Advisory</h4>
+            <p data-nl="Een compliancetracker voor IFRS-, AML/CFT-, AVG- en CSRD-vereisten, met een gereedheidsscore en belangrijke data die gap-analyses en actieplannen op schema houden in plaats van weggestopt in e-mail.">A regulatory compliance tracker covering IFRS, AML/CFT, GDPR, and CSRD requirements, with a readiness score and key dates that keep gap assessments and action plans on schedule instead of buried in email.</p>
+            <div class="fp-tags3" data-nl="&lt;span class=&quot;co tag-compliance&quot;&gt;Compliance&lt;/span&gt;&lt;span&gt;Hiaatanalyse&lt;/span&gt;&lt;span&gt;Voortgangsbewaking&lt;/span&gt;"><span class="co tag-compliance">Compliance</span><span>Gap Assessment</span><span>Readiness Tracking</span></div>
+          </div>
+        </div>
+        <div class="fp-card3" data-tags="transformation">
+          <div class="fp-card3-img"><img src="images/FA_transformation_roadkmap.png" alt="Business transformation roadmap" loading="lazy"/></div>
+          <div class="fp-card3-body">
+            <h4 data-nl="Bedrijfstransformatie">Business Transformation</h4>
+            <p data-nl="Een transformatieroadmap die een organisatie van handmatige, versnipperde processen naar geïntegreerde systemen en realtime inzicht brengt, workstream voor workstream gepland volgens een duidelijke tijdlijn voor mensen, processen en technologie.">A transformation roadmap that moves an organization from manual, fragmented processes to integrated systems and real-time insight, planned workstream by workstream against a clear people, process, and technology timeline.</p>
+            <div class="fp-tags3" data-nl="&lt;span class=&quot;co tag-transformation&quot;&gt;Transformatie&lt;/span&gt;&lt;span&gt;Operationeel Model&lt;/span&gt;&lt;span&gt;Verandermanagement&lt;/span&gt;"><span class="co tag-transformation">Transformation</span><span>Operating Model</span><span>Change Management</span></div>
+          </div>
+        </div>
+        <div class="fp-card3" data-tags="analytics">
+          <div class="fp-card3-img"><img src="images/FA_performance_inteligence.png" alt="Executive performance intelligence report" loading="lazy"/></div>
+          <div class="fp-card3-body">
+            <h4 data-nl="Data-analyse &amp; Performance Intelligence">Data Analytics &amp; Performance Intelligence</h4>
+            <p data-nl="Een managementrapportage opgebouwd uit groepsfinanciën, winst- en verliesrekening, cashflow en KPI's per bedrijfsonderdeel, omgezet in het soort dashboard dat het management daadwerkelijk opent, geen bestand dat in een map blijft liggen.">An executive performance report built from group financials, P&amp;L, cash flow, and KPIs by business unit, turned into the kind of dashboard leadership actually opens, not a file that sits in a folder.</p>
+            <div class="fp-tags3" data-nl="&lt;span class=&quot;co tag-analytics&quot;&gt;Analytics&lt;/span&gt;&lt;span&gt;KPI-dashboards&lt;/span&gt;&lt;span&gt;Managementrapportage&lt;/span&gt;"><span class="co tag-analytics">Analytics</span><span>KPI Dashboards</span><span>Executive Reporting</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="fp-arrow3 prev" id="fp3Prev" aria-label="Previous service">&#8249;</button>
+    <button class="fp-arrow3 next" id="fp3Next" aria-label="Next service">&#8250;</button>
+  </div>
 </div>
 
 <!-- WHY US -->
 <div class="why">
   <div class="why-grid">
     <div class="why-left rv">
-      <h2 class="why-h2">Why clients<br/>choose <em>us.</em></h2>
-      <p class="why-sub">We don't just analyze businesses. We help build better ones.</p>
+      <h2 class="why-h2" data-nl="Waarom klanten&lt;br/&gt;voor &lt;em&gt;ons kiezen.&lt;/em&gt;">Why clients<br/>choose <em>us.</em></h2>
+      <p class="why-sub" data-nl="Wij analyseren niet alleen bedrijven. Wij helpen betere op te bouwen.">We don't just analyze businesses. We help build better ones.</p>
     </div>
     <div class="why-list rv2">
       <div class="why-item">
         <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#2F6FEF" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#2F6FEF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span class="why-text">Deep financial and strategic expertise from executive and regulatory experience</span>
+        <span class="why-text" data-nl="Diepgaande financiële en strategische expertise uit bestuurlijke en regelgevende ervaring">Deep financial and strategic expertise from executive and regulatory experience</span>
       </div>
       <div class="why-item">
         <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#2F6FEF" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#2F6FEF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span class="why-text">Independent and objective advice, no conflicts, no agenda</span>
+        <span class="why-text" data-nl="Onafhankelijk en objectief advies, geen belangenconflicten, geen verborgen agenda">Independent and objective advice, no conflicts, no agenda</span>
       </div>
       <div class="why-item">
         <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#2F6FEF" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#2F6FEF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span class="why-text">Practical, results-oriented solutions tailored to each client</span>
+        <span class="why-text" data-nl="Praktische, resultaatgerichte oplossingen op maat van elke klant">Practical, results-oriented solutions tailored to each client</span>
       </div>
       <div class="why-item">
         <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#2F6FEF" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#2F6FEF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span class="why-text">Strong governance and risk management focus built into every engagement</span>
+        <span class="why-text" data-nl="Sterke focus op governance en risicobeheer in elk traject">Strong governance and risk management focus built into every engagement</span>
       </div>
       <div class="why-item">
         <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#2F6FEF" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#2F6FEF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span class="why-text">Regional and international business experience across Curaçao and Europe</span>
+        <span class="why-text" data-nl="Regionale en internationale bedrijfservaring in Curaçao en Europa">Regional and international business experience across Curaçao and Europe</span>
       </div>
       <div class="why-item">
         <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#2F6FEF" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#2F6FEF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span class="why-text">Trusted partner for complex decisions, from strategy to execution</span>
+        <span class="why-text" data-nl="Vertrouwde partner voor complexe beslissingen, van strategie tot uitvoering">Trusted partner for complex decisions, from strategy to execution</span>
       </div>
     </div>
   </div>
@@ -317,28 +438,123 @@ html.js .rv2.in{opacity:1;transform:none;}
 
 <!-- VALUE PROP -->
 <div class="value rv">
-  <h2 class="value-h2">We don't just analyze<br/><em>businesses.</em></h2>
-  <p class="value-sub">Our mission is to give leadership teams the clarity, structure, and confidence to make hard calls with real numbers behind them. From financial strategy and governance to risk and transformation, we're the partner in the room when it actually matters.</p>
+  <h2 class="value-h2" data-nl="Wij analyseren niet alleen&lt;br/&gt;&lt;em&gt;bedrijven.&lt;/em&gt;">We don't just analyze<br/><em>businesses.</em></h2>
+  <p class="value-sub" data-nl="Onze missie is om directieteams de duidelijkheid, structuur en het vertrouwen te geven om moeilijke beslissingen te nemen, onderbouwd met echte cijfers. Van financiële strategie en governance tot risico en transformatie, wij zijn de partner aan tafel wanneer het er echt toe doet.">Our mission is to give leadership teams the clarity, structure, and confidence to make hard calls with real numbers behind them. From financial strategy and governance to risk and transformation, we're the partner in the room when it actually matters.</p>
   <a class="value-cta" href="index.html#contact">
-    Get in touch
+    <span data-nl="Neem contact op">Get in touch</span>
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </a>
 </div>
 
 <footer>
-  <div class="f-left">S.T.A.C. B.V. · Financial Advisory</div>
+  <div class="f-left" data-nl="S.T.A.C. B.V. · Financieel Advies">S.T.A.C. B.V. · Financial Advisory</div>
   <div class="f-right">© 2026 S.T.A.C. B.V.</div>
 </footer>
 
 <script>
 const cur=document.getElementById('cur');
 document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';});
-document.querySelectorAll('a,.svc-card').forEach(el=>{
+document.querySelectorAll('a,.svc-card,.fp-arrow3,.fp-card3,.fp-filter-btn,.lb').forEach(el=>{
   el.addEventListener('mouseenter',()=>cur.classList.add('big'));
   el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
 });
 const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.08});
 document.querySelectorAll('.rv,.rv2').forEach(el=>obs.observe(el));
+</script>
+
+<script>
+(function(){
+  var viewport = document.getElementById('fp3Viewport');
+  var track = document.getElementById('fpTrack3');
+  var allCards = Array.prototype.slice.call(document.querySelectorAll('#fpTrack3 .fp-card3'));
+  var wrap = document.getElementById('fpCarousel3');
+  var prevBtn = document.getElementById('fp3Prev');
+  var nextBtn = document.getElementById('fp3Next');
+  var filterBtns = document.querySelectorAll('.fp-filter-btn');
+  if(!track||!wrap||!viewport||!allCards.length) return;
+  var idx = 0, timer;
+  function visibleCards(){
+    return allCards.filter(function(c){ return c.style.display !== 'none'; });
+  }
+  function cardStep(){
+    var vc = visibleCards();
+    if(!vc.length) return 0;
+    var r = vc[0].getBoundingClientRect();
+    var style = getComputedStyle(vc[0]);
+    return r.width + parseFloat(style.marginRight || 0);
+  }
+  function visibleCount(){
+    var s = cardStep();
+    return s ? Math.max(1, Math.round(viewport.clientWidth / s)) : 1;
+  }
+  function render(){
+    var vc = visibleCards();
+    allCards.forEach(function(c){ c.classList.remove('is-center'); });
+    if(!vc.length) return;
+    var vcount = visibleCount();
+    var half = Math.floor(vcount/2);
+    var maxStart = Math.max(0, vc.length - vcount);
+    var start = Math.max(0, Math.min(idx - half, maxStart));
+    track.style.transform = 'translateX(-' + (start*cardStep()) + 'px)';
+    if(vcount >= 3 && vc[idx]) vc[idx].classList.add('is-center');
+  }
+  function go(n){
+    var vc = visibleCards();
+    var mx = vc.length - 1;
+    if(mx < 0) return;
+    if(n > mx) n = 0;
+    if(n < 0) n = mx;
+    idx = n;
+    render();
+  }
+  function next(){ go(idx+1); }
+  function prev(){ go(idx-1); }
+  function restart(){ clearInterval(timer); timer = setInterval(next, 5000); }
+  function applyFilter(tag){
+    allCards.forEach(function(c){
+      var tags = (c.getAttribute('data-tags') || '').split(',');
+      var show = (tag === 'all') || tags.indexOf(tag) !== -1;
+      c.style.display = show ? '' : 'none';
+    });
+    idx = 0;
+    render();
+    restart();
+  }
+  filterBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      filterBtns.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      applyFilter(btn.getAttribute('data-filter'));
+    });
+  });
+  if(nextBtn) nextBtn.addEventListener('click', function(){ next(); restart(); });
+  if(prevBtn) prevBtn.addEventListener('click', function(){ prev(); restart(); });
+  wrap.addEventListener('mouseenter', function(){ clearInterval(timer); });
+  wrap.addEventListener('mouseleave', restart);
+  window.addEventListener('resize', render);
+  render();
+  restart();
+})();
+</script>
+
+<script>
+(function(){
+  function apply(lang){
+    document.querySelectorAll('[data-nl]').forEach(function(el){
+      if(el.dataset.enCache===undefined) el.dataset.enCache = el.innerHTML;
+      el.innerHTML = lang==='nl' ? el.getAttribute('data-nl') : el.dataset.enCache;
+    });
+    var ben=document.getElementById('ben'), bnl=document.getElementById('bnl');
+    if(ben) ben.className='lb'+(lang==='en'?' on':'');
+    if(bnl) bnl.className='lb'+(lang==='nl'?' on':'');
+    try{localStorage.setItem('stac_lang',lang);}catch(e){}
+  }
+  var ben=document.getElementById('ben'), bnl=document.getElementById('bnl');
+  if(ben) ben.addEventListener('click',function(){apply('en');});
+  if(bnl) bnl.addEventListener('click',function(){apply('nl');});
+  var saved='en'; try{saved=localStorage.getItem('stac_lang')||'en';}catch(e){}
+  apply(saved);
+})();
 </script>
 </body>
 </html>

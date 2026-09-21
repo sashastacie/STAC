@@ -35,7 +35,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .nav-logo{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:16px;letter-spacing:6px;color:var(--navy);}
 .nav-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);font-weight:500;}
 .nav-center{display:flex;flex-direction:column;align-items:center;gap:2px;}
-.nav-spacer{width:120px;}
+.nav-spacer{width:120px;display:flex;justify-content:flex-end;}
+.lang-toggle{display:flex;gap:4px;}
+.lb{padding:5px 9px;font-size:10px;font-weight:700;letter-spacing:.5px;border:1px solid var(--border);border-radius:3px;background:transparent;color:var(--muted);cursor:pointer;font-family:'Inter',sans-serif;transition:background .2s,color .2s;}
+.lb.on{background:var(--navy);border-color:var(--navy);color:#fff;}
 
 /* HERO */
 .hero{background:var(--navy);padding:140px 64px 80px;position:relative;overflow:hidden;}
@@ -109,10 +112,12 @@ html.js .rv2.in{opacity:1;transform:none;}
 @media(max-width:900px){
   nav{padding:0 16px;}
   .nav-back-label{display:none;}
-  .nav-spacer{width:24px;}
+  .nav-spacer{width:auto;}
+  .lb{padding:4px 7px;font-size:9px;}
   .nav-tag{display:none;}
   .hero,.section,.why,.value{padding-left:24px;padding-right:24px;}
   .intro{flex-direction:column;gap:16px;padding:24px;}
+  .intro-badge{white-space:normal;text-align:center;}
   .services-grid{grid-template-columns:1fr;}
   .why-grid{grid-template-columns:1fr;}
   footer{flex-direction:column;gap:12px;text-align:center;padding:24px;}
@@ -242,7 +247,7 @@ html.js .rv2.in{opacity:1;transform:none;}
 .fp-card3-body p{font-size:12.5px;color:var(--muted);line-height:1.7;font-weight:300;margin-bottom:14px;flex:1;}
 .fp-tags3{display:flex;flex-wrap:wrap;gap:6px;}
 .fp-tags3 span{font-size:10px;padding:5px 11px;background:var(--off);border-radius:14px;color:var(--teal);letter-spacing:.3px;font-weight:500;}
-.fp-tags3 span.co{background:var(--navy);color:#fff;font-weight:600;}
+.fp-tags3 span.co{font-weight:700;}
 .fp-arrow3{position:absolute;top:calc(50% - 24px);transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--border);color:var(--navy);display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;cursor:pointer;box-shadow:0 8px 24px rgba(11,26,46,.16);z-index:5;transition:background .2s,color .2s;}
 .fp-arrow3:hover{background:var(--navy);color:#fff;}
 .fp-arrow3.prev{left:8px;}
@@ -280,23 +285,28 @@ html.js .rv2.in{opacity:1;transform:none;}
 <nav>
   <a class="nav-back" href="index.html">
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M13 7H1M6 2L1 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <span class="nav-back-label">Back to S.T.A.C.</span>
+    <span class="nav-back-label" data-nl="Terug naar S.T.A.C.">Back to S.T.A.C.</span>
   </a>
   <div class="nav-center">
     <div class="nav-logo">S.T.A.C.</div>
     <div class="nav-tag">T.A · Technology</div>
   </div>
-  <div class="nav-spacer"></div>
+  <div class="nav-spacer">
+    <div class="lang-toggle">
+      <button class="lb" id="ben">EN</button>
+      <button class="lb" id="bnl">NL</button>
+    </div>
+  </div>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
   <div class="hero-orb"></div>
   <div class="hero-grid"></div>
-  <div class="hero-label">T.A · Technology · AI & Technology</div>
-  <h1 class="hero-h1">Built to Work.<br/><em>Not to Impress.</em></h1>
-  <p class="hero-sub">AI tools, dashboards and automations built to run inside your business, not sit in a strategy deck.</p>
-  <div class="hero-tags">
+  <div class="hero-label" data-nl="T.A · Technologie · AI &amp; Technologie">T.A · Technology · AI & Technology</div>
+  <h1 class="hero-h1" data-nl="Gebouwd om te Werken.&lt;br/&gt;&lt;em&gt;Niet om te Imponeren.&lt;/em&gt;">Built to Work.<br/><em>Not to Impress.</em></h1>
+  <p class="hero-sub" data-nl="AI-tools, dashboards en automatiseringen gebouwd om in uw bedrijf te draaien, niet om in een strategiedocument te blijven staan.">AI tools, dashboards and automations built to run inside your business, not sit in a strategy deck.</p>
+  <div class="hero-tags" data-nl="&lt;span class=&quot;hero-tag&quot;&gt;AI-dashboards&lt;/span&gt;&lt;span class=&quot;hero-tag&quot;&gt;Voorspellende Analyse&lt;/span&gt;&lt;span class=&quot;hero-tag&quot;&gt;Workflowautomatisering&lt;/span&gt;&lt;span class=&quot;hero-tag&quot;&gt;Websiteontwikkeling&lt;/span&gt;&lt;span class=&quot;hero-tag&quot;&gt;AI-strategieadvies&lt;/span&gt;&lt;span class=&quot;hero-tag&quot;&gt;Data-engineering&lt;/span&gt;">
     <span class="hero-tag">AI Dashboards</span>
     <span class="hero-tag">Predictive Analytics</span>
     <span class="hero-tag">Workflow Automation</span>
@@ -308,15 +318,15 @@ html.js .rv2.in{opacity:1;transform:none;}
 
 <!-- INTRO STRIP -->
 <div class="intro">
-  <div class="intro-text">"If it doesn't run on Monday morning, it isn't finished."</div>
-  <div class="intro-badge">Custom AI Systems · Full-Stack Development</div>
+  <div class="intro-text" data-nl="&quot;Als het maandagochtend niet draait, is het niet af.&quot;">"If it doesn't run on Monday morning, it isn't finished."</div>
+  <div class="intro-badge" data-nl="AI-systemen op Maat · Full-Stack Ontwikkeling">Custom AI Systems · Full-Stack Development</div>
 </div>
 
 <!-- SERVICES -->
 <div class="section" style="background:#fff;padding-top:80px;padding-bottom:0;">
   <div class="rv">
-    <div class="s-label">What we offer</div>
-    <h2 class="s-h2">Our Services</h2>
+    <div class="s-label" data-nl="Wat wij bieden">What we offer</div>
+    <h2 class="s-h2" data-nl="Onze Diensten">Our Services</h2>
   </div>
 </div>
 <div class="services-grid rv">
@@ -325,9 +335,9 @@ html.js .rv2.in{opacity:1;transform:none;}
   <div class="svc-card">
     <div class="svc-num">01</div>
     <div class="svc-title">AI Dashboards & Reporting</div>
-    <div class="svc-subtitle">Real-Time Visibility Into What Matters</div>
-    <p class="svc-body">We build live dashboards that pull straight from your data: no more manual exports, no more static PDFs nobody opens.</p>
-    <ul class="svc-list">
+    <div class="svc-subtitle" data-nl="Realtime Inzicht in Wat Ertoe Doet">Real-Time Visibility Into What Matters</div>
+    <p class="svc-body" data-nl="Wij bouwen live dashboards die rechtstreeks uit uw data putten: geen handmatige exports meer, geen statische pdf's die niemand opent.">We build live dashboards that pull straight from your data: no more manual exports, no more static PDFs nobody opens.</p>
+    <ul class="svc-list" data-nl="&lt;li&gt;Live bedrijfsdashboards&lt;/li&gt;&lt;li&gt;Geautomatiseerde rapportage&lt;/li&gt;&lt;li&gt;KPI-tracking&lt;/li&gt;&lt;li&gt;Datavisualisatie&lt;/li&gt;&lt;li&gt;Directiesamenvattingen&lt;/li&gt;&lt;li&gt;Aangepaste analyseweergaven&lt;/li&gt;&lt;li&gt;Integratie met bestaande tools&lt;/li&gt;">
       <li>Live business dashboards</li>
       <li>Automated reporting</li>
       <li>KPI tracking</li>
@@ -336,16 +346,16 @@ html.js .rv2.in{opacity:1;transform:none;}
       <li>Custom analytics views</li>
       <li>Integration with existing tools</li>
     </ul>
-    <div class="svc-outcome">Decisions made on today's numbers, not last month's.</div>
+    <div class="svc-outcome" data-nl="Beslissingen gebaseerd op de cijfers van vandaag, niet die van vorige maand.">Decisions made on today's numbers, not last month's.</div>
   </div>
 
   <!-- 2 Predictive Analytics -->
   <div class="svc-card">
     <div class="svc-num">02</div>
     <div class="svc-title">Predictive Analytics</div>
-    <div class="svc-subtitle">Turning History Into Foresight</div>
-    <p class="svc-body">We use your own data to build models that forecast demand, flag risk and surface opportunities before they show up on a report.</p>
-    <ul class="svc-list">
+    <div class="svc-subtitle" data-nl="Geschiedenis Omzetten in Vooruitzicht">Turning History Into Foresight</div>
+    <p class="svc-body" data-nl="Wij gebruiken uw eigen data om modellen te bouwen die vraag voorspellen, risico's signaleren en kansen zichtbaar maken voordat ze in een rapport verschijnen.">We use your own data to build models that forecast demand, flag risk and surface opportunities before they show up on a report.</p>
+    <ul class="svc-list" data-nl="&lt;li&gt;Vraagvoorspelling&lt;/li&gt;&lt;li&gt;Verloop- &amp; risicovoorspelling&lt;/li&gt;&lt;li&gt;Trendmodellering&lt;/li&gt;&lt;li&gt;Scenariosimulatie&lt;/li&gt;&lt;li&gt;Anomaliedetectie&lt;/li&gt;&lt;li&gt;Klantgedragmodellering&lt;/li&gt;&lt;li&gt;Voorraad- &amp; cashflowprognoses&lt;/li&gt;">
       <li>Demand forecasting</li>
       <li>Churn & risk prediction</li>
       <li>Trend modeling</li>
@@ -354,16 +364,16 @@ html.js .rv2.in{opacity:1;transform:none;}
       <li>Customer behavior modeling</li>
       <li>Inventory & cashflow forecasting</li>
     </ul>
-    <div class="svc-outcome">Fewer surprises, more lead time to act.</div>
+    <div class="svc-outcome" data-nl="Minder verrassingen, meer tijd om te handelen.">Fewer surprises, more lead time to act.</div>
   </div>
 
   <!-- 3 Workflow Automation -->
   <div class="svc-card">
     <div class="svc-num">03</div>
     <div class="svc-title">Workflow Automation</div>
-    <div class="svc-subtitle">Removing the Work That Shouldn't Be Manual</div>
-    <p class="svc-body">If your team is copy-pasting between spreadsheets and inboxes, we automate it quietly and reliably in the background.</p>
-    <ul class="svc-list">
+    <div class="svc-subtitle" data-nl="Werk Wegnemen Dat Niet Handmatig Zou Moeten Zijn">Removing the Work That Shouldn't Be Manual</div>
+    <p class="svc-body" data-nl="Als uw team aan het kopiëren en plakken is tussen spreadsheets en inboxen, automatiseren wij dat stil en betrouwbaar op de achtergrond.">If your team is copy-pasting between spreadsheets and inboxes, we automate it quietly and reliably in the background.</p>
+    <ul class="svc-list" data-nl="&lt;li&gt;Procesautomatisering&lt;/li&gt;&lt;li&gt;Documentgeneratie&lt;/li&gt;&lt;li&gt;E-mail- en meldingsworkflows&lt;/li&gt;&lt;li&gt;Elimineren van handmatige data-invoer&lt;/li&gt;&lt;li&gt;Systeemintegraties&lt;/li&gt;&lt;li&gt;API-koppelingen&lt;/li&gt;&lt;li&gt;Bouw van interne tools&lt;/li&gt;">
       <li>Process automation</li>
       <li>Document generation</li>
       <li>Email & notification workflows</li>
@@ -372,16 +382,16 @@ html.js .rv2.in{opacity:1;transform:none;}
       <li>API connections</li>
       <li>Internal tool building</li>
     </ul>
-    <div class="svc-outcome">Hours back every week, fewer errors, faster turnaround.</div>
+    <div class="svc-outcome" data-nl="Elke week uren terug, minder fouten, snellere doorlooptijd.">Hours back every week, fewer errors, faster turnaround.</div>
   </div>
 
   <!-- 4 Website Development -->
   <div class="svc-card">
     <div class="svc-num">04</div>
     <div class="svc-title">Website Development</div>
-    <div class="svc-subtitle">Sites Built to Convert, Not Just Exist</div>
-    <p class="svc-body">Fast, modern websites and web apps: designed with intent, quick to load, and easy to maintain.</p>
-    <ul class="svc-list">
+    <div class="svc-subtitle" data-nl="Websites Gebouwd om te Converteren, Niet Alleen om te Bestaan">Sites Built to Convert, Not Just Exist</div>
+    <p class="svc-body" data-nl="Snelle, moderne websites en webapplicaties: doelgericht ontworpen, snel ladend en eenvoudig te onderhouden.">Fast, modern websites and web apps: designed with intent, quick to load, and easy to maintain.</p>
+    <ul class="svc-list" data-nl="&lt;li&gt;Bedrijfswebsites&lt;/li&gt;&lt;li&gt;Webapplicaties&lt;/li&gt;&lt;li&gt;E-commerceplatforms&lt;/li&gt;&lt;li&gt;Klantportalen&lt;/li&gt;&lt;li&gt;Boekings- en intakesystemen&lt;/li&gt;&lt;li&gt;Contentbeheer&lt;/li&gt;&lt;li&gt;Doorlopend onderhoud &amp; support&lt;/li&gt;">
       <li>Corporate websites</li>
       <li>Web applications</li>
       <li>E-commerce platforms</li>
@@ -390,16 +400,16 @@ html.js .rv2.in{opacity:1;transform:none;}
       <li>Content management</li>
       <li>Ongoing maintenance & support</li>
     </ul>
-    <div class="svc-outcome">A site that works as hard as the rest of your business.</div>
+    <div class="svc-outcome" data-nl="Een site die net zo hard werkt als de rest van uw bedrijf.">A site that works as hard as the rest of your business.</div>
   </div>
 
   <!-- 5 AI Strategy Consulting -->
   <div class="svc-card">
     <div class="svc-num">05</div>
     <div class="svc-title">AI Strategy Consulting</div>
-    <div class="svc-subtitle">Cutting Through the AI Noise</div>
-    <p class="svc-body">We help leadership teams separate real AI opportunity from hype, and prioritize what's actually worth building first.</p>
-    <ul class="svc-list">
+    <div class="svc-subtitle" data-nl="Duidelijkheid Scheppen in de AI-ruis">Cutting Through the AI Noise</div>
+    <p class="svc-body" data-nl="Wij helpen directieteams echte AI-kansen te onderscheiden van hype, en te prioriteren wat het eerst de moeite waard is om te bouwen.">We help leadership teams separate real AI opportunity from hype, and prioritize what's actually worth building first.</p>
+    <ul class="svc-list" data-nl="&lt;li&gt;AI-gereedheidsbeoordelingen&lt;/li&gt;&lt;li&gt;Prioritering van use cases&lt;/li&gt;&lt;li&gt;Advies bouwen vs. kopen&lt;/li&gt;&lt;li&gt;Beoordeling data-infrastructuur&lt;/li&gt;&lt;li&gt;Evaluatie leveranciers &amp; tools&lt;/li&gt;&lt;li&gt;Teamtraining &amp; begeleiding&lt;/li&gt;&lt;li&gt;Implementatieroadmaps&lt;/li&gt;">
       <li>AI readiness assessments</li>
       <li>Use-case prioritization</li>
       <li>Build vs. buy guidance</li>
@@ -408,16 +418,16 @@ html.js .rv2.in{opacity:1;transform:none;}
       <li>Team training & enablement</li>
       <li>Implementation roadmaps</li>
     </ul>
-    <div class="svc-outcome">A clear, sequenced plan, not another AI buzzword deck.</div>
+    <div class="svc-outcome" data-nl="Een helder, gefaseerd plan, geen zoveelste AI-buzzworddocument.">A clear, sequenced plan, not another AI buzzword deck.</div>
   </div>
 
   <!-- 6 Data Engineering & Integration -->
   <div class="svc-card">
     <div class="svc-num">06</div>
     <div class="svc-title">Data Engineering & Integration</div>
-    <div class="svc-subtitle">Making Your Systems Talk to Each Other</div>
-    <p class="svc-body">Most "data problems" are actually plumbing problems. We connect your tools, clean your data, and build the pipes that make everything else possible.</p>
-    <ul class="svc-list">
+    <div class="svc-subtitle" data-nl="Uw Systemen Met Elkaar Laten Communiceren">Making Your Systems Talk to Each Other</div>
+    <p class="svc-body" data-nl="De meeste 'dataproblemen' zijn eigenlijk leidingproblemen. Wij koppelen uw tools, ruimen uw data op en bouwen de verbindingen die al het andere mogelijk maken.">Most "data problems" are actually plumbing problems. We connect your tools, clean your data, and build the pipes that make everything else possible.</p>
+    <ul class="svc-list" data-nl="&lt;li&gt;Ontwerp datapijplijnen&lt;/li&gt;&lt;li&gt;Systeemintegraties&lt;/li&gt;&lt;li&gt;Databaseontwerp&lt;/li&gt;&lt;li&gt;Data-opschoning &amp; structurering&lt;/li&gt;&lt;li&gt;API-ontwikkeling&lt;/li&gt;&lt;li&gt;Cloudinfrastructuur&lt;/li&gt;&lt;li&gt;Modernisering legacysystemen&lt;/li&gt;">
       <li>Data pipeline design</li>
       <li>System integrations</li>
       <li>Database design</li>
@@ -426,7 +436,7 @@ html.js .rv2.in{opacity:1;transform:none;}
       <li>Cloud infrastructure</li>
       <li>Legacy system modernization</li>
     </ul>
-    <div class="svc-outcome">Clean, connected data that the rest of the business can trust.</div>
+    <div class="svc-outcome" data-nl="Schone, gekoppelde data waar de rest van het bedrijf op kan vertrouwen.">Clean, connected data that the rest of the business can trust.</div>
   </div>
 
 </div>
@@ -435,24 +445,24 @@ html.js .rv2.in{opacity:1;transform:none;}
 <!-- FEATURED PROJECTS -->
 <div class="section" style="background:#fff;padding-top:0;">
   <div class="rv">
-    <div class="s-label">Case Studies</div>
-    <h2 class="s-h2">Featured Projects</h2>
+    <div class="s-label" data-nl="Praktijkvoorbeelden">Case Studies</div>
+    <h2 class="s-h2" data-nl="Uitgelichte Projecten">Featured Projects</h2>
   </div>
-  <p class="fp-lede rv">From predictive analytics and NLP pipelines to computer vision, dashboards, and generative AI, these projects focus on solving real problems with clear, explainable, and practical solutions.</p>
+  <p class="fp-lede rv" data-nl="Van voorspellende analyses en NLP-pipelines tot computer vision, dashboards en generatieve AI: deze projecten zijn gericht op het oplossen van echte problemen met heldere, verklaarbare en praktische oplossingen.">From predictive analytics and NLP pipelines to computer vision, dashboards, and generative AI, these projects focus on solving real problems with clear, explainable, and practical solutions.</p>
 
     <div class="fp-filters rv">
-    <button class="fp-filter-btn active" data-filter="all">All</button>
+    <button class="fp-filter-btn active" data-filter="all" data-nl="Alle">All</button>
     <button class="fp-filter-btn" data-filter="ml">ML<span class="fp-info-dot" tabindex="0" data-tip="Machine Learning" aria-label="Machine Learning">i</span></button>
     <button class="fp-filter-btn" data-filter="genai">GenAI<span class="fp-info-dot" tabindex="0" data-tip="Generative AI" aria-label="Generative AI">i</span></button>
     <button class="fp-filter-btn" data-filter="analytics">Analytics/BI<span class="fp-info-dot" tabindex="0" data-tip="Analytics & Business Intelligence" aria-label="Analytics and Business Intelligence">i</span></button>
     <button class="fp-filter-btn" data-filter="xai">XAI<span class="fp-info-dot" tabindex="0" data-tip="Explainable AI" aria-label="Explainable AI">i</span></button>
     <button class="fp-filter-btn" data-filter="nlp">NLP<span class="fp-info-dot" tabindex="0" data-tip="Natural Language Processing" aria-label="Natural Language Processing">i</span></button>
-    <button class="fp-filter-btn" data-filter="timeseries">Time-Series</button>
-    <button class="fp-filter-btn" data-filter="sports">Sports</button>
+    <button class="fp-filter-btn" data-filter="timeseries" data-nl="Tijdreeksen">Time-Series</button>
+    <button class="fp-filter-btn" data-filter="sports" data-nl="Sport">Sports</button>
     <button class="fp-filter-btn" data-filter="cv">CV<span class="fp-info-dot" tabindex="0" data-tip="Computer Vision" aria-label="Computer Vision">i</span></button>
     <button class="fp-filter-btn" data-filter="rl">RL<span class="fp-info-dot" tabindex="0" data-tip="Reinforcement Learning" aria-label="Reinforcement Learning">i</span></button>
-    <button class="fp-filter-btn" data-filter="robotics">Robotics</button>
-    <button class="fp-filter-btn" data-filter="research">Research</button>
+    <button class="fp-filter-btn" data-filter="robotics" data-nl="Robotica">Robotics</button>
+    <button class="fp-filter-btn" data-filter="research" data-nl="Onderzoek">Research</button>
     <button class="fp-filter-btn" data-filter="app">App</button>
   </div>
 
@@ -463,31 +473,31 @@ html.js .rv2.in{opacity:1;transform:none;}
         <div class="fp-card3-img"><img src="images/savings_impact_analyzer.png" alt="Savings Impact Analyzer" loading="lazy"/></div>
         <div class="fp-card3-body">
           <h4>Savings Impact Analyzer</h4>
-          <p>A tool built for ASML that standardizes how savings from parts, labor, and overhead initiatives are estimated, replacing ad hoc spreadsheet calculations with one consistent, configurable workflow.</p>
+          <p data-nl="Een tool gebouwd voor ASML die standaardiseert hoe besparingen uit onderdelen-, arbeids- en overheadinitiatieven worden geschat, en ad-hoc spreadsheetberekeningen vervangt door één consistente, configureerbare workflow.">A tool built for ASML that standardizes how savings from parts, labor, and overhead initiatives are estimated, replacing ad hoc spreadsheet calculations with one consistent, configurable workflow.</p>
           <div class="fp-tags3"><span class="co">ASML</span><span>Python</span><span>Analytics</span></div>
         </div>
       </div>
       <div class="fp-card3" data-tags="ml,timeseries">
         <div class="fp-card3-img"><img src="images/predictive_truck_maintinance.png" alt="Predictive Truck Maintenance System" loading="lazy"/></div>
         <div class="fp-card3-body">
-          <h4>Predictive Truck Maintenance System</h4>
-          <p>Built for the largest DAF dealer in the Netherlands, combining 20+ years of workshop history with live telemetry from 691 vehicles to flag trucks headed for trouble, catching 95% of failures an average of 14 days early, using data they already had.</p>
-          <div class="fp-tags3"><span>ETL</span><span>ML</span><span>Forecasting</span></div>
+          <h4 data-nl="Voorspellend Onderhoudssysteem voor Vrachtwagens">Predictive Truck Maintenance System</h4>
+          <p data-nl="Gebouwd voor de grootste DAF-dealer van Nederland, met een combinatie van 20+ jaar werkplaatsgeschiedenis en live telemetrie van 691 voertuigen om vrachtwagens te signaleren die op problemen afstevenen, waarbij 95% van de storingen gemiddeld 14 dagen vroeger wordt opgespoord, met data die al voorhanden was.">Built for the largest DAF dealer in the Netherlands, combining 20+ years of workshop history with live telemetry from 691 vehicles to flag trucks headed for trouble, catching 95% of failures an average of 14 days early, using data they already had.</p>
+          <div class="fp-tags3"><span>ETL</span><span>ML</span><span data-nl="Prognoses">Forecasting</span></div>
         </div>
       </div>
       <div class="fp-card3" data-tags="cv,rl,robotics">
         <div class="fp-card3-img"><img src="images/root_segmentation.png" alt="Root Segmentation &amp; RL Control of OT-2 Robot" loading="lazy"/></div>
         <div class="fp-card3-body">
           <h4>Root Segmentation &amp; RL Control of OT-2 Robot</h4>
-          <p>From pixels to motion: a U-Net segments plant roots, skeletonization quantifies growth, and a PPO-trained policy guides an OT-2 lab robot to the growth point automatically.</p>
-          <div class="fp-tags3"><span>CV</span><span>RL</span><span>Robotics</span></div>
+          <p data-nl="Van pixels naar beweging: een U-Net segmenteert plantwortels, skeletonisatie kwantificeert de groei, en een met PPO getraind beleid stuurt een OT-2-labrobot automatisch naar het groeipunt.">From pixels to motion: a U-Net segments plant roots, skeletonization quantifies growth, and a PPO-trained policy guides an OT-2 lab robot to the growth point automatically.</p>
+          <div class="fp-tags3"><span>CV</span><span>RL</span><span data-nl="Robotica">Robotics</span></div>
         </div>
       </div>
       <div class="fp-card3" data-tags="nlp,ml,app">
         <div class="fp-card3-img"><img src="images/sense_ai.png" alt="SenseAI" loading="lazy"/></div>
         <div class="fp-card3-body">
           <h4>SenseAI</h4>
-          <p>A speech-to-emotion pipeline that transcribes, segments, and classifies audio, surfacing the exact frustrated or excited moments in a call or interview.</p>
+          <p data-nl="Een spraak-naar-emotie-pipeline die audio transcribeert, segmenteert en classificeert, en precies de gefrustreerde of enthousiaste momenten in een gesprek of interview blootlegt.">A speech-to-emotion pipeline that transcribes, segments, and classifies audio, surfacing the exact frustrated or excited moments in a call or interview.</p>
           <div class="fp-tags3"><span>NLP</span><span>Speech AI</span><span>FastAPI</span></div>
         </div>
       </div>
@@ -495,7 +505,7 @@ html.js .rv2.in{opacity:1;transform:none;}
         <div class="fp-card3-img"><img src="images/arboreal.png" alt="Arboreal" loading="lazy"/></div>
         <div class="fp-card3-body">
           <h4>Arboreal</h4>
-          <p>A CNN trained on urban tree species with Grad-CAM overlays, so every prediction shows what the model actually used to decide, built for conservation and inventory review.</p>
+          <p data-nl="Een CNN getraind op stedelijke boomsoorten met Grad-CAM-overlays, zodat elke voorspelling laat zien waar het model zijn beslissing daadwerkelijk op baseerde, gebouwd voor natuurbehoud en inventarisatie.">A CNN trained on urban tree species with Grad-CAM overlays, so every prediction shows what the model actually used to decide, built for conservation and inventory review.</p>
           <div class="fp-tags3"><span>CV</span><span>Deep Learning</span><span>XAI</span></div>
         </div>
       </div>
@@ -503,7 +513,7 @@ html.js .rv2.in{opacity:1;transform:none;}
         <div class="fp-card3-img"><img src="images/sdg_6_powerbi.png" alt="SDG-6 Water &amp; Sanitation" loading="lazy"/></div>
         <div class="fp-card3-body">
           <h4>SDG-6 Water &amp; Sanitation</h4>
-          <p>A multi-page Power BI report modeling WASH data with KPI tiles, correlation toggles, maps, and narrative bookmarks, built for policy framing.</p>
+          <p data-nl="Een meerpagina Power BI-rapport dat WASH-data modelleert met KPI-tegels, correlatie-schakelaars, kaarten en verhalende bladwijzers, gebouwd voor beleidsvorming.">A multi-page Power BI report modeling WASH data with KPI tiles, correlation toggles, maps, and narrative bookmarks, built for policy framing.</p>
           <div class="fp-tags3"><span>Power BI</span><span>DAX</span><span>Storytelling</span></div>
         </div>
       </div>
@@ -511,48 +521,48 @@ html.js .rv2.in{opacity:1;transform:none;}
         <div class="fp-card3-img"><img src="images/nac_breda.png" alt="NAC Breda Player Insights" loading="lazy"/></div>
         <div class="fp-card3-body">
           <h4>NAC Breda Player Insights</h4>
-          <p>Cleaned and repaired scouting tables, then analyzed goal-contribution signals such as shots per 90, shot-on-target percentage, assists, and duels by position and age to produce a concise shortlist.</p>
-          <div class="fp-tags3"><span>Python</span><span>Sports Analytics</span><span>EDA</span></div>
+          <p data-nl="Scoutingtabellen opgeschoond en hersteld, waarna doelbijdrage-signalen zoals schoten per 90 minuten, schotpercentage op doel, assists en duels per positie en leeftijd werden geanalyseerd om een beknopte shortlist samen te stellen.">Cleaned and repaired scouting tables, then analyzed goal-contribution signals such as shots per 90, shot-on-target percentage, assists, and duels by position and age to produce a concise shortlist.</p>
+          <div class="fp-tags3"><span>Python</span><span data-nl="Sportanalyse">Sports Analytics</span><span>EDA</span></div>
         </div>
       </div>
       <div class="fp-card3" data-tags="genai,nlp,app">
         <div class="fp-card3-img"><img src="images/marbet.png" alt="Marbet Trip Assistant" loading="lazy"/></div>
         <div class="fp-card3-body">
           <h4>Marbet Trip Assistant</h4>
-          <p>A Streamlit chatbot grounded on curated trip data (itinerary, Wi-Fi, spa, packing, visa) using a Chroma vector database and a local Llama 3 model through Ollama.</p>
+          <p data-nl="Een Streamlit-chatbot gebaseerd op samengestelde reisdata (reisschema, wifi, spa, inpakken, visum), met een Chroma-vectordatabase en een lokaal Llama 3-model via Ollama.">A Streamlit chatbot grounded on curated trip data (itinerary, Wi-Fi, spa, packing, visa) using a Chroma vector database and a local Llama 3 model through Ollama.</p>
           <div class="fp-tags3"><span>GenAI</span><span>RAG</span><span>Streamlit</span></div>
         </div>
       </div>
       <div class="fp-card3" data-tags="ml,sports,analytics">
         <div class="fp-card3-img"><img src="images/epl_analytics.png" alt="EPL Match &amp; Player Analytics" loading="lazy"/></div>
         <div class="fp-card3-body">
-          <h4>EPL Match &amp; Player Analytics</h4>
-          <p>Match-outcome and player-value models comparing classical and gradient-boosted approaches on league performance data.</p>
-          <div class="fp-tags3"><span>ML</span><span>Sports Analytics</span><span>XGBoost</span></div>
+          <h4 data-nl="EPL Wedstrijd- en Spelersanalyse">EPL Match &amp; Player Analytics</h4>
+          <p data-nl="Modellen voor wedstrijduitslagen en spelerswaarde die klassieke en gradient-boosted methoden vergelijken op basis van competitieprestatiedata.">Match-outcome and player-value models comparing classical and gradient-boosted approaches on league performance data.</p>
+          <div class="fp-tags3"><span>ML</span><span data-nl="Sportanalyse">Sports Analytics</span><span>XGBoost</span></div>
         </div>
       </div>
       <div class="fp-card3" data-tags="genai">
         <div class="fp-card3-img"><img src="images/gen_ai.png" alt="Gen-AI Storyboards" loading="lazy"/></div>
         <div class="fp-card3-body">
           <h4>Gen-AI Storyboards</h4>
-          <p>Compared ComfyUI against Automatic1111 and WebUI, enforcing character consistency across frames with fixed seeds and anchor phrasing for fast, coherent visual narratives.</p>
-          <div class="fp-tags3"><span>GenAI</span><span>Prompt Engineering</span><span>ComfyUI</span></div>
+          <p data-nl="Vergeleek ComfyUI met Automatic1111 en WebUI, met behoud van personageconsistentie tussen frames via vaste seeds en ankerzinnen voor snelle, samenhangende visuele verhalen.">Compared ComfyUI against Automatic1111 and WebUI, enforcing character consistency across frames with fixed seeds and anchor phrasing for fast, coherent visual narratives.</p>
+          <div class="fp-tags3"><span>GenAI</span><span data-nl="Promptontwerp">Prompt Engineering</span><span>ComfyUI</span></div>
         </div>
       </div>
       <div class="fp-card3" data-tags="ml,timeseries,app">
         <div class="fp-card3-img"><img src="images/road_accident_pred.png" alt="Road Accident Risk Predictor" loading="lazy"/></div>
         <div class="fp-card3-body">
-          <h4>Road Accident Risk Predictor</h4>
-          <p>A street-level risk-forecasting app combining historical incident, traffic, and weather data into a live risk map.</p>
-          <div class="fp-tags3"><span>ML</span><span>Geospatial</span><span>Risk Modeling</span></div>
+          <h4 data-nl="Risicovoorspeller Verkeersongevallen">Road Accident Risk Predictor</h4>
+          <p data-nl="Een risicovoorspellingsapp op straatniveau die historische incident-, verkeers- en weersgegevens combineert tot een live risicokaart.">A street-level risk-forecasting app combining historical incident, traffic, and weather data into a live risk map.</p>
+          <div class="fp-tags3"><span>ML</span><span>Geospatial</span><span data-nl="Risicomodellering">Risk Modeling</span></div>
         </div>
       </div>
       <div class="fp-card3" data-tags="research,genai">
         <div class="fp-card3-img"><img src="images/sme_genai_willingness.png" alt="SME GenAI Willingness Study" loading="lazy"/></div>
         <div class="fp-card3-body">
-          <h4>SME GenAI Willingness Study</h4>
-          <p>Finds that willingness to learn GenAI is broadly distributed across education levels, while sector and organizational support shape how quickly that willingness turns into practice.</p>
-          <div class="fp-tags3"><span>Research</span><span>GenAI</span><span>Policy</span></div>
+          <h4 data-nl="Onderzoek naar GenAI-bereidheid bij MKB">SME GenAI Willingness Study</h4>
+          <p data-nl="Toont aan dat de bereidheid om GenAI te leren breed verspreid is over opleidingsniveaus, terwijl sector en organisatorische ondersteuning bepalen hoe snel die bereidheid in praktijk wordt omgezet.">Finds that willingness to learn GenAI is broadly distributed across education levels, while sector and organizational support shape how quickly that willingness turns into practice.</p>
+          <div class="fp-tags3"><span data-nl="Onderzoek">Research</span><span>GenAI</span><span data-nl="Beleid">Policy</span></div>
         </div>
       </div>
       </div>
@@ -566,33 +576,33 @@ html.js .rv2.in{opacity:1;transform:none;}
 <div class="why">
   <div class="why-grid">
     <div class="why-left rv">
-      <h2 class="why-h2">Why clients<br/>choose <em>us.</em></h2>
-      <p class="why-sub">We don't just talk AI. We build things your team actually uses.</p>
+      <h2 class="why-h2" data-nl="Waarom klanten&lt;br/&gt;voor &lt;em&gt;ons kiezen.&lt;/em&gt;">Why clients<br/>choose <em>us.</em></h2>
+      <p class="why-sub" data-nl="Wij praten niet alleen over AI. Wij bouwen dingen die uw team daadwerkelijk gebruikt.">We don't just talk AI. We build things your team actually uses.</p>
     </div>
     <div class="why-list rv2">
       <div class="why-item">
         <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#14D8B4" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#14D8B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span class="why-text">Engineers who ship production systems, not just prototypes</span>
+        <span class="why-text" data-nl="Engineers die productiesystemen opleveren, niet alleen prototypes">Engineers who ship production systems, not just prototypes</span>
       </div>
       <div class="why-item">
         <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#14D8B4" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#14D8B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span class="why-text">Practical AI, chosen for the problem, not the trend</span>
+        <span class="why-text" data-nl="Praktische AI, gekozen voor het probleem, niet voor de trend">Practical AI, chosen for the problem, not the trend</span>
       </div>
       <div class="why-item">
         <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#14D8B4" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#14D8B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span class="why-text">Full-stack capability: strategy, build and maintenance in one team</span>
+        <span class="why-text" data-nl="Full-stack capaciteit: strategie, bouw en onderhoud in één team">Full-stack capability: strategy, build and maintenance in one team</span>
       </div>
       <div class="why-item">
         <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#14D8B4" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#14D8B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span class="why-text">Systems designed around how your team actually works</span>
+        <span class="why-text" data-nl="Systemen ontworpen rond hoe uw team daadwerkelijk werkt">Systems designed around how your team actually works</span>
       </div>
       <div class="why-item">
         <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#14D8B4" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#14D8B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span class="why-text">Regional and international delivery experience across Curaçao and Europe</span>
+        <span class="why-text" data-nl="Regionale en internationale leverervaring in Curaçao en Europa">Regional and international delivery experience across Curaçao and Europe</span>
       </div>
       <div class="why-item">
         <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#14D8B4" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#14D8B4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span class="why-text">Ongoing support after launch, not a one-time handoff</span>
+        <span class="why-text" data-nl="Doorlopende ondersteuning na lancering, geen eenmalige overdracht">Ongoing support after launch, not a one-time handoff</span>
       </div>
     </div>
   </div>
@@ -600,23 +610,23 @@ html.js .rv2.in{opacity:1;transform:none;}
 
 <!-- VALUE PROP -->
 <div class="value rv">
-  <h2 class="value-h2">We don't just<br/><em>talk AI.</em></h2>
-  <p class="value-sub">Our mission is to build technology your team actually uses: dashboards people check every morning, automations that quietly save hours, and systems that keep working long after the project ends.</p>
+  <h2 class="value-h2" data-nl="Wij praten niet alleen&lt;br/&gt;&lt;em&gt;over AI.&lt;/em&gt;">We don't just<br/><em>talk AI.</em></h2>
+  <p class="value-sub" data-nl="Onze missie is technologie te bouwen die uw team daadwerkelijk gebruikt: dashboards die mensen elke ochtend checken, automatiseringen die stilletjes uren besparen, en systemen die lang na afloop van het project blijven werken.">Our mission is to build technology your team actually uses: dashboards people check every morning, automations that quietly save hours, and systems that keep working long after the project ends.</p>
   <a class="value-cta" href="index.html#contact">
-    Get in touch
+    <span data-nl="Neem contact op">Get in touch</span>
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </a>
 </div>
 
 <footer>
-  <div class="f-left">S.T.A.C. B.V. · AI & Technology</div>
+  <div class="f-left" data-nl="S.T.A.C. B.V. · AI &amp; Technologie">S.T.A.C. B.V. · AI & Technology</div>
   <div class="f-right">© 2026 S.T.A.C. B.V.</div>
 </footer>
 
 <script>
 const cur=document.getElementById('cur');
 document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';});
-document.querySelectorAll('a,.svc-card,.fp-arrow3,.fp-card3,.fp-filter-btn').forEach(el=>{
+document.querySelectorAll('a,.svc-card,.fp-arrow3,.fp-card3,.fp-filter-btn,.lb').forEach(el=>{
   el.addEventListener('mouseenter',()=>cur.classList.add('big'));
   el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
 });
@@ -708,6 +718,26 @@ document.querySelectorAll('.rv,.rv2').forEach(el=>obs.observe(el));
   window.addEventListener('resize', render);
   render();
   restart();
+})();
+</script>
+
+<script>
+(function(){
+  function apply(lang){
+    document.querySelectorAll('[data-nl]').forEach(function(el){
+      if(el.dataset.enCache===undefined) el.dataset.enCache = el.innerHTML;
+      el.innerHTML = lang==='nl' ? el.getAttribute('data-nl') : el.dataset.enCache;
+    });
+    var ben=document.getElementById('ben'), bnl=document.getElementById('bnl');
+    if(ben) ben.className='lb'+(lang==='en'?' on':'');
+    if(bnl) bnl.className='lb'+(lang==='nl'?' on':'');
+    try{localStorage.setItem('stac_lang',lang);}catch(e){}
+  }
+  var ben=document.getElementById('ben'), bnl=document.getElementById('bnl');
+  if(ben) ben.addEventListener('click',function(){apply('en');});
+  if(bnl) bnl.addEventListener('click',function(){apply('nl');});
+  var saved='en'; try{saved=localStorage.getItem('stac_lang')||'en';}catch(e){}
+  apply(saved);
 })();
 </script>
 

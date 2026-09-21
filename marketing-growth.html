@@ -35,7 +35,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .nav-logo{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:16px;letter-spacing:6px;color:var(--navy);}
 .nav-tag{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);font-weight:500;}
 .nav-center{display:flex;flex-direction:column;align-items:center;gap:2px;}
-.nav-spacer{width:120px;}
+.nav-spacer{width:120px;display:flex;justify-content:flex-end;}
+.lang-toggle{display:flex;gap:4px;}
+.lb{padding:5px 9px;font-size:10px;font-weight:700;letter-spacing:.5px;border:1px solid var(--border);border-radius:3px;background:transparent;color:var(--muted);cursor:pointer;font-family:'Inter',sans-serif;transition:background .2s,color .2s;}
+.lb.on{background:var(--navy);border-color:var(--navy);color:#fff;}
 
 /* HERO */
 .hero{background:var(--navy);padding:140px 64px 80px;position:relative;overflow:hidden;}
@@ -75,6 +78,41 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .svc-list li::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:4px;height:4px;border-radius:50%;background:var(--teal);}
 .svc-outcome{margin-top:20px;padding:12px 16px;background:rgba(109,40,217,0.06);border-left:2px solid var(--teal);font-size:12px;color:var(--teal);font-weight:500;letter-spacing:.3px;}
 
+/* CASE STUDIES CAROUSEL */
+.fp-lede{font-size:15px;color:var(--muted);font-weight:300;line-height:1.8;max-width:640px;margin-top:-30px;margin-bottom:48px;}
+.fp-filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px;}
+.fp-filter-btn{padding:9px 20px;border-radius:24px;border:1.5px solid var(--border);background:#fff;color:var(--navy);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap;font-family:'Inter',sans-serif;}
+.fp-filter-btn:hover{border-color:var(--teal);}
+.fp-filter-btn.active{background:var(--navy);border-color:var(--navy);color:#fff;}
+.fp-carousel3{position:relative;background:var(--off);border-radius:20px;padding:20px 48px 40px;}
+.fp-viewport3{overflow:hidden;}
+.fp-track3{display:flex;transition:transform .6s cubic-bezier(.65,0,.35,1);padding:34px 4px 18px;}
+.fp-card3{flex:0 0 calc(33.333% - 25.33px);margin-right:38px;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 24px rgba(11,26,46,.06);display:flex;flex-direction:column;transition:transform .4s ease,opacity .4s ease,box-shadow .4s ease;opacity:.65;}
+.fp-card3-img{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--navy);}
+.fp-card3-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease;}
+.fp-card3:hover .fp-card3-img img{transform:scale(1.06);}
+.fp-card3-body{padding:18px 20px 22px;display:flex;flex-direction:column;flex:1;}
+.fp-card3-body h4{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;color:var(--navy);margin-bottom:8px;line-height:1.1;}
+.fp-card3-body p{font-size:12.5px;color:var(--muted);line-height:1.7;font-weight:300;margin-bottom:14px;flex:1;}
+.fp-tags3{display:flex;flex-wrap:wrap;gap:6px;}
+.fp-tags3 span{font-size:10px;padding:5px 11px;background:var(--off);border-radius:14px;color:var(--teal);letter-spacing:.3px;font-weight:500;}
+.fp-tags3 span.co{font-weight:700;}
+.fp-arrow3{position:absolute;top:calc(50% - 24px);transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--border);color:var(--navy);display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;cursor:pointer;box-shadow:0 8px 24px rgba(11,26,46,.16);z-index:5;transition:background .2s,color .2s;}
+.fp-arrow3:hover{background:var(--navy);color:#fff;}
+.fp-arrow3.prev{left:8px;}
+.fp-arrow3.next{right:8px;}
+.fp-card3.is-center{opacity:1;transform:translateY(-16px) scale(1.07);box-shadow:0 32px 64px rgba(11,26,46,.26);z-index:2;position:relative;}
+@media(max-width:900px){
+  .fp-card3{flex-basis:calc(50% - 14px);margin-right:28px;}
+  .fp-carousel3{padding:18px 44px 36px;}
+}
+@media(max-width:640px){
+  .fp-card3{flex-basis:100%;margin-right:0;}
+  .fp-carousel3{padding:16px 40px 32px;}
+  .fp-arrow3.prev{left:2px;}
+  .fp-arrow3.next{right:2px;}
+}
+
 /* WHY SECTION */
 .why{background:var(--navy);padding:88px 64px;}
 .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
@@ -109,10 +147,12 @@ html.js .rv2.in{opacity:1;transform:none;}
 @media(max-width:900px){
   nav{padding:0 16px;}
   .nav-back-label{display:none;}
-  .nav-spacer{width:24px;}
+  .nav-spacer{width:auto;}
+  .lb{padding:4px 7px;font-size:9px;}
   .nav-tag{display:none;}
   .hero,.section,.why,.value{padding-left:24px;padding-right:24px;}
   .intro{flex-direction:column;gap:16px;padding:24px;}
+  .intro-badge{white-space:normal;text-align:center;}
   .services-grid{grid-template-columns:1fr;}
   .why-grid{grid-template-columns:1fr;}
   footer{flex-direction:column;gap:12px;text-align:center;padding:24px;}
@@ -126,23 +166,28 @@ html.js .rv2.in{opacity:1;transform:none;}
 <nav>
   <a class="nav-back" href="index.html">
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M13 7H1M6 2L1 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <span class="nav-back-label">Back to S.T.A.C.</span>
+    <span class="nav-back-label" data-nl="Terug naar S.T.A.C.">Back to S.T.A.C.</span>
   </a>
   <div class="nav-center">
     <div class="nav-logo">S.T.A.C.</div>
     <div class="nav-tag">C · Consulting</div>
   </div>
-  <div class="nav-spacer"></div>
+  <div class="nav-spacer">
+    <div class="lang-toggle">
+      <button class="lb" id="ben">EN</button>
+      <button class="lb" id="bnl">NL</button>
+    </div>
+  </div>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
   <div class="hero-orb"></div>
   <div class="hero-grid"></div>
-  <div class="hero-label">C · Consulting · Marketing & Growth</div>
-  <h1 class="hero-h1">Seen by the<br/>Right People.<br/><em>Chosen by Them.</em></h1>
-  <p class="hero-sub">Strategy, content and channels built to put your business in front of the customers who actually convert.</p>
-  <div class="hero-tags">
+  <div class="hero-label" data-nl="C · Consulting · Marketing &amp; Groei">C · Consulting · Marketing & Growth</div>
+  <h1 class="hero-h1" data-nl="Gezien door de&lt;br/&gt;Juiste Mensen.&lt;br/&gt;&lt;em&gt;Door Hen Gekozen.&lt;/em&gt;">Seen by the<br/>Right People.<br/><em>Chosen by Them.</em></h1>
+  <p class="hero-sub" data-nl="Strategie, content en kanalen die uw bedrijf onder de aandacht brengen van de klanten die daadwerkelijk converteren.">Strategy, content and channels built to put your business in front of the customers who actually convert.</p>
+  <div class="hero-tags" data-nl="&lt;span class=&quot;hero-tag&quot;&gt;Merkstrategie&lt;/span&gt;&lt;span class=&quot;hero-tag&quot;&gt;Digitale Marketing&lt;/span&gt;&lt;span class=&quot;hero-tag&quot;&gt;Social Media&lt;/span&gt;&lt;span class=&quot;hero-tag&quot;&gt;Campagnebeheer&lt;/span&gt;&lt;span class=&quot;hero-tag&quot;&gt;Content &amp; Copy&lt;/span&gt;&lt;span class=&quot;hero-tag&quot;&gt;Groei-advies&lt;/span&gt;">
     <span class="hero-tag">Brand Strategy</span>
     <span class="hero-tag">Digital Marketing</span>
     <span class="hero-tag">Social Media</span>
@@ -154,15 +199,15 @@ html.js .rv2.in{opacity:1;transform:none;}
 
 <!-- INTRO STRIP -->
 <div class="intro">
-  <div class="intro-text">"If nobody knows you exist, nothing else matters."</div>
-  <div class="intro-badge">Strategy-Led · Full Channel Execution</div>
+  <div class="intro-text" data-nl="&quot;Als niemand weet dat u bestaat, doet niets anders ertoe.&quot;">"If nobody knows you exist, nothing else matters."</div>
+  <div class="intro-badge" data-nl="Strategiegedreven · Volledige Kanaaluitvoering">Strategy-Led · Full Channel Execution</div>
 </div>
 
 <!-- SERVICES -->
 <div class="section" style="background:#fff;padding-top:80px;padding-bottom:0;">
   <div class="rv">
-    <div class="s-label">What we offer</div>
-    <h2 class="s-h2">Our Services</h2>
+    <div class="s-label" data-nl="Wat wij bieden">What we offer</div>
+    <h2 class="s-h2" data-nl="Onze Diensten">Our Services</h2>
   </div>
 </div>
 <div class="services-grid rv">
@@ -170,10 +215,10 @@ html.js .rv2.in{opacity:1;transform:none;}
   <!-- 1 Marketing Strategy & Planning -->
   <div class="svc-card">
     <div class="svc-num">01</div>
-    <div class="svc-title">Marketing Strategy & Planning</div>
-    <div class="svc-subtitle">A Plan Before the Posting Starts</div>
-    <p class="svc-body">We build the strategy first: who you're speaking to, what you're saying, and where, before a single piece of content goes out.</p>
-    <ul class="svc-list">
+    <div class="svc-title" data-nl="Marketingstrategie &amp; Planning">Marketing Strategy & Planning</div>
+    <div class="svc-subtitle" data-nl="Een Plan Voordat het Posten Begint">A Plan Before the Posting Starts</div>
+    <p class="svc-body" data-nl="Wij bouwen eerst de strategie: tegen wie u spreekt, wat u zegt en waar, voordat er ook maar één stuk content naar buiten gaat.">We build the strategy first: who you're speaking to, what you're saying, and where, before a single piece of content goes out.</p>
+    <ul class="svc-list" data-nl="&lt;li&gt;Merkpositionering&lt;/li&gt;&lt;li&gt;Marketingplannen&lt;/li&gt;&lt;li&gt;Doelgroeponderzoek&lt;/li&gt;&lt;li&gt;Kanaalstrategie&lt;/li&gt;&lt;li&gt;Concurrentieanalyse&lt;/li&gt;&lt;li&gt;Campagneplanning&lt;/li&gt;&lt;li&gt;Go-to-marketstrategie&lt;/li&gt;">
       <li>Brand positioning</li>
       <li>Marketing plans</li>
       <li>Target audience research</li>
@@ -182,16 +227,16 @@ html.js .rv2.in{opacity:1;transform:none;}
       <li>Campaign planning</li>
       <li>Go-to-market strategy</li>
     </ul>
-    <div class="svc-outcome">Marketing that has a direction, not just activity.</div>
+    <div class="svc-outcome" data-nl="Marketing met een duidelijke richting, niet alleen activiteit.">Marketing that has a direction, not just activity.</div>
   </div>
 
   <!-- 2 Social Media Management -->
   <div class="svc-card">
     <div class="svc-num">02</div>
     <div class="svc-title">Social Media Management</div>
-    <div class="svc-subtitle">Consistent Presence, Managed End to End</div>
-    <p class="svc-body">We plan, create and post, so your channels stay active, on-brand and worth following without eating your team's time.</p>
-    <ul class="svc-list">
+    <div class="svc-subtitle" data-nl="Consistente Aanwezigheid, Volledig Beheerd">Consistent Presence, Managed End to End</div>
+    <p class="svc-body" data-nl="Wij plannen, maken en posten, zodat uw kanalen actief, on-brand en het volgen waard blijven, zonder dat het de tijd van uw team kost.">We plan, create and post, so your channels stay active, on-brand and worth following without eating your team's time.</p>
+    <ul class="svc-list" data-nl="&lt;li&gt;Contentkalenders&lt;/li&gt;&lt;li&gt;Postcreatie &amp; planning&lt;/li&gt;&lt;li&gt;Community management&lt;/li&gt;&lt;li&gt;Platformstrategie&lt;/li&gt;&lt;li&gt;Betaalde social campagnes&lt;/li&gt;&lt;li&gt;Prestatierapportage&lt;/li&gt;&lt;li&gt;Influencer-coördinatie&lt;/li&gt;">
       <li>Content calendars</li>
       <li>Post creation & scheduling</li>
       <li>Community management</li>
@@ -200,16 +245,16 @@ html.js .rv2.in{opacity:1;transform:none;}
       <li>Performance reporting</li>
       <li>Influencer coordination</li>
     </ul>
-    <div class="svc-outcome">A presence that looks after itself, run by people who know it.</div>
+    <div class="svc-outcome" data-nl="Een aanwezigheid die zichzelf onderhoudt, beheerd door mensen die het kennen.">A presence that looks after itself, run by people who know it.</div>
   </div>
 
   <!-- 3 Direct & Campaign Marketing -->
   <div class="svc-card">
     <div class="svc-num">03</div>
-    <div class="svc-title">Direct & Campaign Marketing</div>
-    <div class="svc-subtitle">Mail, WhatsApp & Email That Actually Gets Opened</div>
-    <p class="svc-body">We design and run direct campaigns, the kind that reach people where they already are, with a message worth reading.</p>
-    <ul class="svc-list">
+    <div class="svc-title" data-nl="Direct- &amp; Campagnemarketing">Direct & Campaign Marketing</div>
+    <div class="svc-subtitle" data-nl="Post, WhatsApp &amp; E-mail Die Daadwerkelijk Geopend Wordt">Mail, WhatsApp & Email That Actually Gets Opened</div>
+    <p class="svc-body" data-nl="Wij ontwerpen en voeren directe campagnes uit, van het soort dat mensen bereikt waar ze al zijn, met een boodschap die het lezen waard is.">We design and run direct campaigns, the kind that reach people where they already are, with a message worth reading.</p>
+    <ul class="svc-list" data-nl="&lt;li&gt;E-mailmarketingcampagnes&lt;/li&gt;&lt;li&gt;WhatsApp-bedrijfscampagnes&lt;/li&gt;&lt;li&gt;Nieuwsbriefontwerp &amp; -beheer&lt;/li&gt;&lt;li&gt;Lijstopbouw &amp; segmentatie&lt;/li&gt;&lt;li&gt;Campagneautomatisering&lt;/li&gt;&lt;li&gt;A/B-testen&lt;/li&gt;&lt;li&gt;Reactietracking&lt;/li&gt;">
       <li>Email marketing campaigns</li>
       <li>WhatsApp business campaigns</li>
       <li>Newsletter design & management</li>
@@ -218,16 +263,16 @@ html.js .rv2.in{opacity:1;transform:none;}
       <li>A/B testing</li>
       <li>Response tracking</li>
     </ul>
-    <div class="svc-outcome">Direct lines to your customers that convert, not clutter.</div>
+    <div class="svc-outcome" data-nl="Directe lijnen naar uw klanten die converteren, geen ruis.">Direct lines to your customers that convert, not clutter.</div>
   </div>
 
   <!-- 4 Content & Copy -->
   <div class="svc-card">
     <div class="svc-num">04</div>
     <div class="svc-title">Content & Copy</div>
-    <div class="svc-subtitle">Words and Visuals That Actually Say Something</div>
-    <p class="svc-body">We write, edit and design content that sounds like your business, not like a template with your logo pasted on it.</p>
-    <ul class="svc-list">
+    <div class="svc-subtitle" data-nl="Woorden en Beelden Die Daadwerkelijk Iets Zeggen">Words and Visuals That Actually Say Something</div>
+    <p class="svc-body" data-nl="Wij schrijven, redigeren en ontwerpen content die klinkt als uw bedrijf, niet als een sjabloon met uw logo erop geplakt.">We write, edit and design content that sounds like your business, not like a template with your logo pasted on it.</p>
+    <ul class="svc-list" data-nl="&lt;li&gt;Copywriting &amp; redactie&lt;/li&gt;&lt;li&gt;Websitecontent&lt;/li&gt;&lt;li&gt;Ontwikkeling merkstem&lt;/li&gt;&lt;li&gt;Fotografie &amp; videoregie&lt;/li&gt;&lt;li&gt;Grafisch ontwerp&lt;/li&gt;&lt;li&gt;Verkoopmateriaal&lt;/li&gt;&lt;li&gt;Case studies &amp; testimonials&lt;/li&gt;">
       <li>Copywriting & editing</li>
       <li>Website content</li>
       <li>Brand voice development</li>
@@ -236,16 +281,16 @@ html.js .rv2.in{opacity:1;transform:none;}
       <li>Sales collateral</li>
       <li>Case studies & testimonials</li>
     </ul>
-    <div class="svc-outcome">Content people actually read, not scroll past.</div>
+    <div class="svc-outcome" data-nl="Content die mensen daadwerkelijk lezen, niet voorbij scrollen.">Content people actually read, not scroll past.</div>
   </div>
 
   <!-- 5 Growth & Customer Acquisition -->
   <div class="svc-card">
     <div class="svc-num">05</div>
-    <div class="svc-title">Growth & Customer Acquisition</div>
-    <div class="svc-subtitle">Finding the Customers Worth Having</div>
-    <p class="svc-body">We build acquisition strategies focused on the right customers, not the most clicks, and track what's actually driving revenue.</p>
-    <ul class="svc-list">
+    <div class="svc-title" data-nl="Groei &amp; Klantwerving">Growth & Customer Acquisition</div>
+    <div class="svc-subtitle" data-nl="De Klanten Vinden Die Het Waard Zijn">Finding the Customers Worth Having</div>
+    <p class="svc-body" data-nl="Wij bouwen wervingsstrategieën gericht op de juiste klanten, niet op de meeste clicks, en volgen wat daadwerkelijk omzet oplevert.">We build acquisition strategies focused on the right customers, not the most clicks, and track what's actually driving revenue.</p>
+    <ul class="svc-list" data-nl="&lt;li&gt;Leadgeneratiestrategie&lt;/li&gt;&lt;li&gt;Conversieoptimalisatie&lt;/li&gt;&lt;li&gt;Klantwervingsfunnels&lt;/li&gt;&lt;li&gt;Marketinganalyse&lt;/li&gt;&lt;li&gt;ROI-tracking&lt;/li&gt;&lt;li&gt;Referral- &amp; partnerprogramma's&lt;/li&gt;&lt;li&gt;Marktuitbreidingsadvies&lt;/li&gt;">
       <li>Lead generation strategy</li>
       <li>Conversion rate optimization</li>
       <li>Customer acquisition funnels</li>
@@ -254,16 +299,16 @@ html.js .rv2.in{opacity:1;transform:none;}
       <li>Referral & partnership programs</li>
       <li>Market expansion advice</li>
     </ul>
-    <div class="svc-outcome">Growth you can trace back to a decision, not a guess.</div>
+    <div class="svc-outcome" data-nl="Groei die u kunt herleiden tot een beslissing, geen gok.">Growth you can trace back to a decision, not a guess.</div>
   </div>
 
   <!-- 6 Marketing Advisory -->
   <div class="svc-card">
     <div class="svc-num">06</div>
-    <div class="svc-title">Marketing Advisory</div>
-    <div class="svc-subtitle">A Second Set of Eyes on What You're Already Doing</div>
-    <p class="svc-body">Sometimes the fastest fix isn't a new campaign. It's an outside review of what's working, what isn't, and why.</p>
-    <ul class="svc-list">
+    <div class="svc-title" data-nl="Marketingadvies">Marketing Advisory</div>
+    <div class="svc-subtitle" data-nl="Een Frisse Blik op Wat U Al Doet">A Second Set of Eyes on What You're Already Doing</div>
+    <p class="svc-body" data-nl="Soms is de snelste oplossing geen nieuwe campagne, maar een externe blik op wat werkt, wat niet werkt, en waarom.">Sometimes the fastest fix isn't a new campaign. It's an outside review of what's working, what isn't, and why.</p>
+    <ul class="svc-list" data-nl="&lt;li&gt;Marketingaudits&lt;/li&gt;&lt;li&gt;Bureau- &amp; leveranciersevaluatie&lt;/li&gt;&lt;li&gt;Budgetallocatie-advies&lt;/li&gt;&lt;li&gt;Merkconsistentiecontrole&lt;/li&gt;&lt;li&gt;Structurering marketingteam&lt;/li&gt;&lt;li&gt;Tool- &amp; platformselectie&lt;/li&gt;&lt;li&gt;Prestatiebenchmarking&lt;/li&gt;">
       <li>Marketing audits</li>
       <li>Agency & vendor evaluation</li>
       <li>Budget allocation advice</li>
@@ -272,42 +317,116 @@ html.js .rv2.in{opacity:1;transform:none;}
       <li>Tool & platform selection</li>
       <li>Performance benchmarking</li>
     </ul>
-    <div class="svc-outcome">Clarity on what to keep, cut, or fix.</div>
+    <div class="svc-outcome" data-nl="Duidelijkheid over wat u moet behouden, schrappen of aanpassen.">Clarity on what to keep, cut, or fix.</div>
   </div>
 
+</div>
+
+<!-- CLIENT WORK -->
+<div class="section" style="background:#fff;padding-top:0;">
+  <div class="rv">
+    <div class="s-label" data-nl="Praktijkvoorbeelden">Case Studies</div>
+    <h2 class="s-h2" data-nl="Klantwerk">Client Work</h2>
+  </div>
+  <p class="fp-lede rv" data-nl="Een kijkje in klantwerk bij uiteenlopende soorten bedrijven, van dagelijkse content en community management tot de kalenders die alles op schema houden. Volledige weekoverzichten en rapportages worden gedeeld tijdens een kennismakingsgesprek.">A look at client work across different types of businesses, from daily content and community management to the calendars that keep it all on schedule. Full weekly breakdowns and reporting are shared during a consultation.</p>
+
+  <div class="fp-filters rv">
+    <button class="fp-filter-btn active" data-filter="all" data-nl="Alle">All</button>
+    <button class="fp-filter-btn" data-filter="smm">Social Media Management</button>
+    <button class="fp-filter-btn" data-filter="community">Community Management</button>
+    <button class="fp-filter-btn" data-filter="planning" data-nl="Contentplanning">Content Planning</button>
+    <button class="fp-filter-btn" data-filter="video" data-nl="Videocontent">Video Content</button>
+  </div>
+
+  <div class="fp-carousel3 rv" id="fpCarousel3">
+    <div class="fp-viewport3" id="fp3Viewport">
+      <div class="fp-track3" id="fpTrack3">
+        <div class="fp-card3" data-tags="smm,planning,video">
+          <div class="fp-card3-img"><img src="images/MG_bakery.png" alt="Bakery social media management" loading="lazy"/></div>
+          <div class="fp-card3-body">
+            <h4 data-nl="Bakkerij">Bakery</h4>
+            <p data-nl="Een wekelijks ritme van nieuwe menu-items, verse gebakjes, seizoensproducten en klantfavorieten, elke post ontworpen om het eten onmogelijk te laten voorbijscrollen. Hield de bakkerij actief online met de producten top of mind, zodat volgers elke week een reden hadden om de pagina te checken.">A weekly rhythm of new menu items, fresh pastries, seasonal products, and customer favourites, each post designed to make the food impossible to scroll past. Kept the bakery active online with its products front of mind, giving followers a reason to check the page each week.</p>
+            <div class="fp-tags3" data-nl="&lt;span class=&quot;co&quot;&gt;Bakkerij&lt;/span&gt;&lt;span class=&quot;tag-smm&quot;&gt;Social Media Management&lt;/span&gt;&lt;span class=&quot;tag-planning&quot;&gt;Contentplanning&lt;/span&gt;&lt;span class=&quot;tag-video&quot;&gt;Videocontent&lt;/span&gt;"><span class="co">Bakery</span><span class="tag-smm">Social Media Management</span><span class="tag-planning">Content Planning</span><span class="tag-video">Video Content</span></div>
+          </div>
+        </div>
+        <div class="fp-card3" data-tags="smm,planning,video">
+          <div class="fp-card3-img"><img src="images/MG_genral_store.png" alt="General store social media management" loading="lazy"/></div>
+          <div class="fp-card3-body">
+            <h4 data-nl="Buurtwinkel">General Store</h4>
+            <p data-nl="Een consistente lay-out voor elke productpost maakte een enorm, gevarieerd assortiment in één oogopslag herkenbaar. Opgebouwd rond een terugkerend weekritme: een video aan het begin van de week, spotlightposts over nieuwe voorraad en stories voor bereik, wat zorgde voor gestage dagelijkse betrokkenheid en volgersgroei gedurende de maanden dat het account werd beheerd.">A consistent layout for every product post made a huge, varied catalog easy to recognize at a glance. Built around a repeating weekly rhythm, a start-of-week video, spotlight posts on new stock, and stories placed for reach, driving consistent daily engagement and follower growth over months managed.</p>
+            <div class="fp-tags3" data-nl="&lt;span class=&quot;co&quot;&gt;Buurtwinkel&lt;/span&gt;&lt;span class=&quot;tag-smm&quot;&gt;Social Media Management&lt;/span&gt;&lt;span class=&quot;tag-planning&quot;&gt;Contentplanning&lt;/span&gt;&lt;span class=&quot;tag-video&quot;&gt;Videocontent&lt;/span&gt;"><span class="co">General Store</span><span class="tag-smm">Social Media Management</span><span class="tag-planning">Content Planning</span><span class="tag-video">Video Content</span></div>
+          </div>
+        </div>
+        <div class="fp-card3" data-tags="smm,video">
+          <div class="fp-card3-img"><img src="images/MG_italian_place.png" alt="Italian restaurant social media management" loading="lazy"/></div>
+          <div class="fp-card3-body">
+            <h4 data-nl="Italiaans Restaurant">Italian Restaurant</h4>
+            <p data-nl="Gaf elk onderdeel van de kaart, pizza, pasta, salades, een eigen moment, gecombineerd met leuke, herkenbare TikTok-video's die een jonger publiek aantrokken en het eten en de sfeer lieten zien. Zorgde voor meer online aandacht, meer klanten in het restaurant en hielp zelfs bij het aantrekken van nieuw personeel. Een Linktree verbindt elke locatie en elk platform.">Gave every part of the menu, pizza, pasta, salads, its own moment, paired with fun, relatable TikTok videos that pulled in a younger audience and showed off the food and atmosphere. Increased online attention, brought more customers into the restaurant, and even helped attract new staff. A Linktree ties every location and platform together.</p>
+            <div class="fp-tags3" data-nl="&lt;span class=&quot;co&quot;&gt;Restaurant&lt;/span&gt;&lt;span class=&quot;tag-video&quot;&gt;Videocontent&lt;/span&gt;&lt;span class=&quot;tag-smm&quot;&gt;Social Media Management&lt;/span&gt;"><span class="co">Restaurant</span><span class="tag-video">Video Content</span><span class="tag-smm">Social Media Management</span></div>
+          </div>
+        </div>
+        <div class="fp-card3" data-tags="smm,planning,video">
+          <div class="fp-card3-img"><img src="images/MG_massage_studio.png" alt="Massage studio social media management" loading="lazy"/></div>
+          <div class="fp-card3-body">
+            <h4 data-nl="Massagestudio">Massage Studio</h4>
+            <p data-nl="Een rustigere, consistentere manier om diensten te tonen en klanten terug te laten komen naar de pagina. Opgebouwd rond behandelhighlights, ontspannende visuele stories, beschikbaarheidsherinneringen en educatieve content die de ervaring makkelijk te begrijpen maakt vóór het boeken, wat zorgde voor meer consistente zichtbaarheid en betrokkenheid via een gestructureerd contentritme.">A calmer, more consistent way to show services and bring clients back to the page. Built around treatment highlights, relaxing visual stories, availability reminders, and educational content that makes the experience easy to understand before booking, delivering more consistent visibility and engagement through a structured content rhythm.</p>
+            <div class="fp-tags3" data-nl="&lt;span class=&quot;co&quot;&gt;Massagestudio&lt;/span&gt;&lt;span class=&quot;tag-smm&quot;&gt;Social Media Management&lt;/span&gt;&lt;span class=&quot;tag-planning&quot;&gt;Contentplanning&lt;/span&gt;&lt;span class=&quot;tag-video&quot;&gt;Videocontent&lt;/span&gt;"><span class="co">Massage Studio</span><span class="tag-smm">Social Media Management</span><span class="tag-planning">Content Planning</span><span class="tag-video">Video Content</span></div>
+          </div>
+        </div>
+        <div class="fp-card3" data-tags="community">
+          <div class="fp-card3-img"><img src="images/MG_client_exchange.png" alt="Client conversations across WhatsApp and Instagram" loading="lazy"/></div>
+          <div class="fp-card3-body">
+            <h4 data-nl="Klantcontact">Client Exchange</h4>
+            <p data-nl="Echte gesprekken, dagelijks afgehandeld: boekingsvragen, menuvragen en voorraadchecks beantwoord via WhatsApp, e-mail en Instagram, elk in de eigen stem van de klant, zodat elk account responsief blijft zonder de rest van het werk te vertragen.">Real conversations, handled daily: booking questions, menu inquiries, and stock checks answered across WhatsApp, Email, and Instagram in each client's own voice, keeping every account responsive without slowing down the rest of the work.</p>
+            <div class="fp-tags3" data-nl="&lt;span class=&quot;co tag-community&quot;&gt;Community Management&lt;/span&gt;&lt;span&gt;WhatsApp&lt;/span&gt;&lt;span&gt;E-mail&lt;/span&gt;&lt;span&gt;Klantondersteuning&lt;/span&gt;"><span class="co tag-community">Community Management</span><span>WhatsApp</span><span>Email</span><span>Client Support</span></div>
+          </div>
+        </div>
+        <div class="fp-card3" data-tags="planning">
+          <div class="fp-card3-img"><img src="images/MG_content_planning.png" alt="Content planning calendar and process" loading="lazy"/></div>
+          <div class="fp-card3-body">
+            <h4 data-nl="Contentplanning">Content Planning</h4>
+            <p data-nl="Elk account draait op een gedeelde contentkalender, gepland op datum, platform, format en status, zodat niets naar buiten gaat zonder plan erachter, en niets wordt gemist.">Every account runs on a shared content calendar, planned by date, platform, format, and status, so nothing goes out without a plan behind it, and nothing gets missed.</p>
+            <div class="fp-tags3" data-nl="&lt;span class=&quot;co tag-planning&quot;&gt;Contentplanning&lt;/span&gt;&lt;span&gt;Contentkalender&lt;/span&gt;&lt;span&gt;Proces&lt;/span&gt;"><span class="co tag-planning">Content Planning</span><span>Content Calendar</span><span>Process</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="fp-arrow3 prev" id="fp3Prev" aria-label="Previous case study">&#8249;</button>
+    <button class="fp-arrow3 next" id="fp3Next" aria-label="Next case study">&#8250;</button>
+  </div>
 </div>
 
 <!-- WHY US -->
 <div class="why">
   <div class="why-grid">
     <div class="why-left rv">
-      <h2 class="why-h2">Why clients<br/>choose <em>us.</em></h2>
-      <p class="why-sub">We don't just post. We put you in front of the people who buy.</p>
+      <h2 class="why-h2" data-nl="Waarom klanten&lt;br/&gt;voor &lt;em&gt;ons kiezen.&lt;/em&gt;">Why clients<br/>choose <em>us.</em></h2>
+      <p class="why-sub" data-nl="Wij posten niet zomaar. Wij brengen u onder de aandacht van de mensen die kopen.">We don't just post. We put you in front of the people who buy.</p>
     </div>
     <div class="why-list rv2">
       <div class="why-item">
         <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#A855F7" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#A855F7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span class="why-text">Strategy comes first, execution follows a plan, not a trend</span>
+        <span class="why-text" data-nl="Strategie komt eerst, uitvoering volgt een plan, geen trend">Strategy comes first, execution follows a plan, not a trend</span>
       </div>
       <div class="why-item">
         <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#A855F7" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#A855F7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span class="why-text">Direct experience running campaigns across Curaçao and Europe</span>
+        <span class="why-text" data-nl="Directe ervaring met campagnes in Curaçao en Europa">Direct experience running campaigns across Curaçao and Europe</span>
       </div>
       <div class="why-item">
         <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#A855F7" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#A855F7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span class="why-text">One team for strategy, content and execution, no handoffs between agencies</span>
+        <span class="why-text" data-nl="Eén team voor strategie, content en uitvoering, geen overdrachten tussen bureaus">One team for strategy, content and execution, no handoffs between agencies</span>
       </div>
       <div class="why-item">
         <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#A855F7" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#A855F7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span class="why-text">Campaigns measured on what changed, not what was posted</span>
+        <span class="why-text" data-nl="Campagnes gemeten op wat er veranderde, niet op wat er geplaatst werd">Campaigns measured on what changed, not what was posted</span>
       </div>
       <div class="why-item">
         <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#A855F7" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#A855F7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span class="why-text">Practical, honest advice, including when the answer is "don't run this campaign"</span>
+        <span class="why-text" data-nl="Praktisch, eerlijk advies, ook als het antwoord is: 'voer deze campagne niet uit'">Practical, honest advice, including when the answer is "don't run this campaign"</span>
       </div>
       <div class="why-item">
         <svg class="why-check" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#A855F7" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="#A855F7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span class="why-text">Built to work alongside your existing team, not replace it</span>
+        <span class="why-text" data-nl="Gebouwd om naast uw bestaande team te werken, niet om het te vervangen">Built to work alongside your existing team, not replace it</span>
       </div>
     </div>
   </div>
@@ -315,28 +434,123 @@ html.js .rv2.in{opacity:1;transform:none;}
 
 <!-- VALUE PROP -->
 <div class="value rv">
-  <h2 class="value-h2">We don't just<br/><em>post.</em></h2>
-  <p class="value-sub">Our mission is to put your business in front of the people who are actually going to buy, with a strategy behind every campaign and a clear read on what's working.</p>
+  <h2 class="value-h2" data-nl="Wij posten niet&lt;br/&gt;&lt;em&gt;zomaar.&lt;/em&gt;">We don't just<br/><em>post.</em></h2>
+  <p class="value-sub" data-nl="Onze missie is om uw bedrijf onder de aandacht te brengen van de mensen die daadwerkelijk gaan kopen, met een strategie achter elke campagne en een helder beeld van wat werkt.">Our mission is to put your business in front of the people who are actually going to buy, with a strategy behind every campaign and a clear read on what's working.</p>
   <a class="value-cta" href="index.html#contact">
-    Get in touch
+    <span data-nl="Neem contact op">Get in touch</span>
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </a>
 </div>
 
 <footer>
-  <div class="f-left">S.T.A.C. B.V. · Marketing & Growth</div>
+  <div class="f-left" data-nl="S.T.A.C. B.V. · Marketing &amp; Groei">S.T.A.C. B.V. · Marketing & Growth</div>
   <div class="f-right">© 2026 S.T.A.C. B.V.</div>
 </footer>
 
 <script>
 const cur=document.getElementById('cur');
 document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';});
-document.querySelectorAll('a,.svc-card').forEach(el=>{
+document.querySelectorAll('a,.svc-card,.fp-arrow3,.fp-card3,.fp-filter-btn,.lb').forEach(el=>{
   el.addEventListener('mouseenter',()=>cur.classList.add('big'));
   el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
 });
 const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.08});
 document.querySelectorAll('.rv,.rv2').forEach(el=>obs.observe(el));
+</script>
+
+<script>
+(function(){
+  var viewport = document.getElementById('fp3Viewport');
+  var track = document.getElementById('fpTrack3');
+  var allCards = Array.prototype.slice.call(document.querySelectorAll('#fpTrack3 .fp-card3'));
+  var wrap = document.getElementById('fpCarousel3');
+  var prevBtn = document.getElementById('fp3Prev');
+  var nextBtn = document.getElementById('fp3Next');
+  var filterBtns = document.querySelectorAll('.fp-filter-btn');
+  if(!track||!wrap||!viewport||!allCards.length) return;
+  var idx = 0, timer;
+  function visibleCards(){
+    return allCards.filter(function(c){ return c.style.display !== 'none'; });
+  }
+  function cardStep(){
+    var vc = visibleCards();
+    if(!vc.length) return 0;
+    var r = vc[0].getBoundingClientRect();
+    var style = getComputedStyle(vc[0]);
+    return r.width + parseFloat(style.marginRight || 0);
+  }
+  function visibleCount(){
+    var s = cardStep();
+    return s ? Math.max(1, Math.round(viewport.clientWidth / s)) : 1;
+  }
+  function render(){
+    var vc = visibleCards();
+    allCards.forEach(function(c){ c.classList.remove('is-center'); });
+    if(!vc.length) return;
+    var vcount = visibleCount();
+    var half = Math.floor(vcount/2);
+    var maxStart = Math.max(0, vc.length - vcount);
+    var start = Math.max(0, Math.min(idx - half, maxStart));
+    track.style.transform = 'translateX(-' + (start*cardStep()) + 'px)';
+    if(vcount >= 3 && vc[idx]) vc[idx].classList.add('is-center');
+  }
+  function go(n){
+    var vc = visibleCards();
+    var mx = vc.length - 1;
+    if(mx < 0) return;
+    if(n > mx) n = 0;
+    if(n < 0) n = mx;
+    idx = n;
+    render();
+  }
+  function next(){ go(idx+1); }
+  function prev(){ go(idx-1); }
+  function restart(){ clearInterval(timer); timer = setInterval(next, 5000); }
+  function applyFilter(tag){
+    allCards.forEach(function(c){
+      var tags = (c.getAttribute('data-tags') || '').split(',');
+      var show = (tag === 'all') || tags.indexOf(tag) !== -1;
+      c.style.display = show ? '' : 'none';
+    });
+    idx = 0;
+    render();
+    restart();
+  }
+  filterBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      filterBtns.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      applyFilter(btn.getAttribute('data-filter'));
+    });
+  });
+  if(nextBtn) nextBtn.addEventListener('click', function(){ next(); restart(); });
+  if(prevBtn) prevBtn.addEventListener('click', function(){ prev(); restart(); });
+  wrap.addEventListener('mouseenter', function(){ clearInterval(timer); });
+  wrap.addEventListener('mouseleave', restart);
+  window.addEventListener('resize', render);
+  render();
+  restart();
+})();
+</script>
+
+<script>
+(function(){
+  function apply(lang){
+    document.querySelectorAll('[data-nl]').forEach(function(el){
+      if(el.dataset.enCache===undefined) el.dataset.enCache = el.innerHTML;
+      el.innerHTML = lang==='nl' ? el.getAttribute('data-nl') : el.dataset.enCache;
+    });
+    var ben=document.getElementById('ben'), bnl=document.getElementById('bnl');
+    if(ben) ben.className='lb'+(lang==='en'?' on':'');
+    if(bnl) bnl.className='lb'+(lang==='nl'?' on':'');
+    try{localStorage.setItem('stac_lang',lang);}catch(e){}
+  }
+  var ben=document.getElementById('ben'), bnl=document.getElementById('bnl');
+  if(ben) ben.addEventListener('click',function(){apply('en');});
+  if(bnl) bnl.addEventListener('click',function(){apply('nl');});
+  var saved='en'; try{saved=localStorage.getItem('stac_lang')||'en';}catch(e){}
+  apply(saved);
+})();
 </script>
 </body>
 </html>
