@@ -365,9 +365,7 @@ footer{background:#0B1A2E;padding:24px 64px;border-top:1px solid rgba(255,255,25
 .acro-row:nth-child(3){transition-delay:.2s;}
 .acro-letter{width:72px;flex-shrink:0;display:flex;flex-direction:column;gap:8px;}
 .acro-cube{width:56px;height:56px;perspective:400px;}
-.acro-cube-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transform:rotateY(-110deg);transition:transform .7s cubic-bezier(.34,1.56,.64,1);}
-.acro-row.in .acro-cube-inner{transform:rotateY(0deg);}
-.acro-letter .acro-cube:nth-child(2) .acro-cube-inner{transition-delay:.18s;}
+.acro-cube-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transform:rotateY(-110deg);}
 .cube-face{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:26px;border-radius:8px;backface-visibility:hidden;}
 .cube-front{background:#fff;border:2px solid rgba(11,26,46,.14);color:#0B1A2E;transform:translateZ(28px);}
 .cube-side{background:linear-gradient(150deg,#14329E,#2F6FEF);transform:rotateY(90deg) translateZ(28px);}
@@ -1050,6 +1048,29 @@ setInterval(cycle,2600);
 // SCROLL REVEAL
 const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.08});
 document.querySelectorAll('.rv,.rv2').forEach(el=>obs.observe(el));
+
+// ACRONYM CUBES — rotation tied directly to scroll position
+(function(){
+  var cubes=Array.prototype.slice.call(document.querySelectorAll('.acro-cube-inner'));
+  if(!cubes.length) return;
+  var ticking=false;
+  function update(){
+    ticking=false;
+    var vh=window.innerHeight||document.documentElement.clientHeight;
+    var start=vh*0.95;
+    var end=vh*0.55;
+    cubes.forEach(function(cube){
+      var r=cube.getBoundingClientRect();
+      var raw=(start-r.top)/(start-end);
+      var progress=Math.max(0,Math.min(1,raw));
+      cube.style.transform='rotateY(' + (-110+progress*110) + 'deg)';
+    });
+  }
+  function onScroll(){ if(!ticking){ requestAnimationFrame(update); ticking=true; } }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll);
+  update();
+})();
 
 // PROCESS ROAD — scroll-driven progress path
 (function(){
