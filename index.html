@@ -469,17 +469,17 @@ html.js .rv2.in{opacity:1;transform:none;}
 
 <!-- ACRONYM -->
 <section id="acronym">
-  <div class="acro-row rv">
+  <div class="acro-row">
     <div class="acro-letter"><span class="ink">S</span></div>
     <div class="acro-line"></div>
     <div class="acro-word"><span id="aw1">Strategy</span></div>
   </div>
-  <div class="acro-row rv">
+  <div class="acro-row">
     <div class="acro-letter"><span class="ink">T</span><span class="ink">A</span></div>
     <div class="acro-line"></div>
     <div class="acro-word"><span id="aw2">Technology &amp; Analytics</span></div>
   </div>
-  <div class="acro-row rv">
+  <div class="acro-row">
     <div class="acro-letter"><span class="ink">C</span></div>
     <div class="acro-line"></div>
     <div class="acro-word"><span id="aw3">Consulting</span></div>
@@ -1042,6 +1042,12 @@ setInterval(cycle,2600);
 // SCROLL REVEAL
 const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.08});
 document.querySelectorAll('.rv,.rv2').forEach(el=>obs.observe(el));
+
+// ACRONYM ROWS — only reveal once meaningfully scrolled into view,
+// so the ink-wipe actually plays as you scroll instead of firing
+// the moment the row barely peeks onscreen at load.
+const acroObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.45});
+document.querySelectorAll('.acro-row').forEach(el=>acroObs.observe(el));
 
 // PROCESS ROAD — scroll-driven progress path
 (function(){
