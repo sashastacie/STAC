@@ -363,11 +363,14 @@ footer{background:#0B1A2E;padding:24px 64px;border-top:1px solid rgba(255,255,25
 .acro-row:nth-child(1){transition-delay:.0s;}
 .acro-row:nth-child(2){transition-delay:.1s;}
 .acro-row:nth-child(3){transition-delay:.2s;}
-.acro-letter{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:clamp(32px,3.6vw,52px);line-height:1;color:#0B1A2E;width:72px;flex-shrink:0;letter-spacing:1px;perspective:320px;}
-.acro-letter-stack{display:flex;flex-direction:column;line-height:.82;gap:2px;}
-.acro-letter span{display:inline-block;transform:rotateX(-100deg);transform-origin:50% 100%;opacity:0;backface-visibility:hidden;transition:transform .6s cubic-bezier(.34,1.56,.64,1),opacity .35s ease;}
-.acro-row.in .acro-letter span{transform:rotateX(0deg);opacity:1;}
-.acro-letter-stack span:nth-child(2){transition-delay:.16s;}
+.acro-letter{width:72px;flex-shrink:0;display:flex;flex-direction:column;gap:8px;}
+.acro-cube{width:56px;height:56px;perspective:400px;}
+.acro-cube-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transform:rotateY(-110deg);transition:transform .7s cubic-bezier(.34,1.56,.64,1);}
+.acro-row.in .acro-cube-inner{transform:rotateY(0deg);}
+.acro-letter .acro-cube:nth-child(2) .acro-cube-inner{transition-delay:.18s;}
+.cube-face{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:26px;border-radius:8px;backface-visibility:hidden;}
+.cube-front{background:#fff;border:2px solid rgba(11,26,46,.14);color:#0B1A2E;transform:translateZ(28px);}
+.cube-side{background:linear-gradient(150deg,#14329E,#2F6FEF);transform:rotateY(90deg) translateZ(28px);}
 .acro-line{flex:1;height:1px;background:rgba(11,26,46,0.1);margin:0 32px;position:relative;overflow:hidden;}
 .acro-line::after{content:'';position:absolute;top:0;left:-100%;right:100%;height:1px;background:linear-gradient(90deg,#14329E,#2F6FEF);transition:left .7s cubic-bezier(.77,0,.175,1),right .7s cubic-bezier(.77,0,.175,1);}
 .acro-row.in .acro-line::after{left:0;right:0;}
@@ -379,7 +382,11 @@ footer{background:#0B1A2E;padding:24px 64px;border-top:1px solid rgba(255,255,25
 @media(max-width:900px){
   #acronym{padding:28px 24px;}
   .acro-row{padding:9px 0;}
-  .acro-letter{font-size:28px;width:52px;}
+  .acro-letter{width:52px;gap:6px;}
+  .acro-cube{width:44px;height:44px;}
+  .cube-face{font-size:20px;}
+  .cube-front{transform:translateZ(22px);}
+  .cube-side{transform:rotateY(90deg) translateZ(22px);}
   .acro-word{font-size:20px;width:180px;}
   .acro-line{margin:0 16px;}
 }
@@ -471,17 +478,17 @@ html.js .rv2.in{opacity:1;transform:none;}
 <!-- ACRONYM -->
 <section id="acronym">
   <div class="acro-row rv">
-    <div class="acro-letter"><span>S</span></div>
+    <div class="acro-letter"><div class="acro-cube"><div class="acro-cube-inner"><div class="cube-face cube-front">S</div><div class="cube-face cube-side"></div></div></div></div>
     <div class="acro-line"></div>
     <div class="acro-word"><span id="aw1">Strategy</span></div>
   </div>
   <div class="acro-row rv">
-    <div class="acro-letter acro-letter-stack"><span>T</span><span>A</span></div>
+    <div class="acro-letter"><div class="acro-cube"><div class="acro-cube-inner"><div class="cube-face cube-front">T</div><div class="cube-face cube-side"></div></div></div><div class="acro-cube"><div class="acro-cube-inner"><div class="cube-face cube-front">A</div><div class="cube-face cube-side"></div></div></div></div>
     <div class="acro-line"></div>
     <div class="acro-word"><span id="aw2">Technology &amp; Analytics</span></div>
   </div>
   <div class="acro-row rv">
-    <div class="acro-letter"><span>C</span></div>
+    <div class="acro-letter"><div class="acro-cube"><div class="acro-cube-inner"><div class="cube-face cube-front">C</div><div class="cube-face cube-side"></div></div></div></div>
     <div class="acro-line"></div>
     <div class="acro-word"><span id="aw3">Consulting</span></div>
   </div>
