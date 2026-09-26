@@ -364,9 +364,13 @@ footer{background:#0B1A2E;padding:24px 64px;border-top:1px solid rgba(255,255,25
 .acro-row:nth-child(2){transition-delay:.1s;}
 .acro-row:nth-child(3){transition-delay:.2s;}
 .acro-letter{width:72px;flex-shrink:0;display:flex;flex-direction:column;gap:2px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:clamp(32px,3.6vw,52px);line-height:.92;color:#0B1A2E;letter-spacing:1px;}
-.acro-letter .ink{display:inline-block;clip-path:circle(0% at 20% 50%);transition:clip-path .9s cubic-bezier(.22,1,.36,1);}
+.acro-letter .ink-wrap{position:relative;display:inline-block;}
+.acro-letter .ink-blot{position:absolute;left:20%;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:radial-gradient(circle,#2F6FEF 0%,#14329E 65%,rgba(20,50,158,0) 100%);opacity:.55;transform:scale(0);transition:transform .85s cubic-bezier(.22,1,.36,1),opacity .85s ease .25s;pointer-events:none;}
+.acro-row.in .acro-letter .ink-blot{transform:scale(9);opacity:0;}
+.acro-letter .ink{position:relative;display:inline-block;clip-path:circle(0% at 20% 50%);transition:clip-path .9s cubic-bezier(.22,1,.36,1);}
 .acro-row.in .acro-letter .ink{clip-path:circle(120% at 20% 50%);}
-.acro-letter .ink:nth-child(2){transition-delay:.22s;}
+.acro-letter .ink-wrap:nth-child(2) .ink-blot{transition:transform .85s cubic-bezier(.22,1,.36,1) .22s,opacity .85s ease .47s;}
+.acro-letter .ink-wrap:nth-child(2) .ink{transition:clip-path .9s cubic-bezier(.22,1,.36,1) .22s;}
 .acro-line{flex:1;height:1px;background:rgba(11,26,46,0.1);margin:0 32px;position:relative;overflow:hidden;}
 .acro-line::after{content:'';position:absolute;top:0;left:-100%;right:100%;height:1px;background:linear-gradient(90deg,#14329E,#2F6FEF);transition:left .7s cubic-bezier(.77,0,.175,1),right .7s cubic-bezier(.77,0,.175,1);}
 .acro-row.in .acro-line::after{left:0;right:0;}
@@ -470,17 +474,17 @@ html.js .rv2.in{opacity:1;transform:none;}
 <!-- ACRONYM -->
 <section id="acronym">
   <div class="acro-row">
-    <div class="acro-letter"><span class="ink">S</span></div>
+    <div class="acro-letter"><span class="ink-wrap"><span class="ink-blot"></span><span class="ink">S</span></span></div>
     <div class="acro-line"></div>
     <div class="acro-word"><span id="aw1">Strategy</span></div>
   </div>
   <div class="acro-row">
-    <div class="acro-letter"><span class="ink">T</span><span class="ink">A</span></div>
+    <div class="acro-letter"><span class="ink-wrap"><span class="ink-blot"></span><span class="ink">T</span></span><span class="ink-wrap"><span class="ink-blot"></span><span class="ink">A</span></span></div>
     <div class="acro-line"></div>
     <div class="acro-word"><span id="aw2">Technology &amp; Analytics</span></div>
   </div>
   <div class="acro-row">
-    <div class="acro-letter"><span class="ink">C</span></div>
+    <div class="acro-letter"><span class="ink-wrap"><span class="ink-blot"></span><span class="ink">C</span></span></div>
     <div class="acro-line"></div>
     <div class="acro-word"><span id="aw3">Consulting</span></div>
   </div>
