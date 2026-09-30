@@ -1,0 +1,15 @@
+# Security headers for the STAC website (read by Cloudflare Pages and Netlify).
+# The local preview server (tools/serve.ps1) applies them too, so they're tested before going live.
+#
+# Allowed outside services: Google Fonts (fonts.googleapis.com / fonts.gstatic.com),
+# GoatCounter visitor stats (gc.zgo.at / stac.goatcounter.com) and FormSubmit (contact form).
+# If you add another service (a video embed, a new form tool...), add it here or the browser will block it.
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://gc.zgo.at; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://stac.goatcounter.com; connect-src 'self' https://formsubmit.co https://stac.goatcounter.com; form-action 'self' https://formsubmit.co mailto:; frame-src 'self'; frame-ancestors 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
+  Cross-Origin-Opener-Policy: same-origin
