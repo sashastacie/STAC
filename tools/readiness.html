@@ -864,7 +864,11 @@ const CHAT_INDUSTRY_TESTS = [
   ['a food business wanna help automate my task', 'food'], ['we run a small restaurant', 'food'], ['ik heb een bakkerij', 'food'],
   ['my shop needs a website', 'retail'], ['onze winkel', 'retail'], ['massage salon marketing', 'wellness'],
   ['we have a fleet of trucks', 'transport'], ['how much does it cost', null], ['what is a virtual cfo', null],
+  ['cookie business', 'food'], ['ik verkoop taarten', 'food'],
 ];
+// Messages that only name a business type: the chat should give the business-type examples and
+// the contact button, not a loose keyword answer (e.g. "cookie business" used to get the dashboard answer)
+const CHAT_BUSINESS_ONLY = ['cookie business', 'i have a cookie business', 'we sell cookies', 'ik heb een bakkerij', 'my own shop'];
 const CHAT_LANG_TESTS = [['wat kost het', 'nl'], ['how much does it cost', 'en'], ['hoe lang duurt het project', 'nl'], ['do you speak spanish', 'en']];
 const CHAT_CONFIDENTIAL = new RegExp('\\b(' + atob('TkFDfEJyZWRhfE1hcmJldHxEQUY=') + ')\\b', 'i');   // client names that must never appear (encoded so they aren't readable in the repo)
 const CHAT_PROMISES = /(within (one|1|24|48|two|2) (working )?(day|days|hour|hours)|working day|werkdag|binnen \d+ (uur|dagen)|guarantee|garantie|gegarandeerd)/i;
@@ -954,6 +958,11 @@ async function checkChatbot(pages) {
       const got = api.industry(q);
       C.industry.push({ q, exp, got, ok: got === exp });
       if (got !== exp) addC(1, 'warn', `Chatbot misreads the business type: "${q}"`, `expected ${exp || 'none'}, got ${got || 'none'}`);
+    }
+    if (api.reply) for (const q of CHAT_BUSINESS_ONLY) {
+      const got = api.reply(q), ok = got === null && !!api.industry(q);
+      C.industry.push({ q, exp: 'examples + contact', got: got === null ? 'examples + contact' : 'answer #' + got, ok });
+      if (!ok) addC(1, 'warn', `Chatbot answers "${q}" with a loose keyword match`, got === null ? 'business type not recognised' : `it gives answer #${got} instead of the business-type examples and the contact button`);
     }
     for (const ind of api.industries || []) for (const lang of ['en', 'nl']) {
       const t = ind[lang] || '', w = `business-type line "${ind.key}" (${lang.toUpperCase()})`;

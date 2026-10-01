@@ -44,8 +44,8 @@ every answer ends where a real person would, often with a next step.
 - **NL:** Zeker niet. Elke discipline staat op zichzelf. Begin met één, voeg er later een toe of combineer alle drie. Wat het beste past.
 
 **51. What services do you offer?**
-- **EN:** Three disciplines, on their own or combined:\n• Financial Advisory: e.g. a cashflow forecast, a virtual CFO, due diligence, compliance checks, bookkeeping and tax returns.\n• AI & Technology: e.g. a live sales dashboard, automated invoices and reports, a new website, demand forecasting.\n• Marketing & Growth: e.g. a marketing plan, running your social media, WhatsApp and email campaigns, content and copy.\nWhat are you working on?
-- **NL:** Drie disciplines, los of gecombineerd:\n• Financieel Advies: bijv. een cashflowprognose, een virtuele CFO, due diligence, compliancechecks, boekhouding en belastingaangiftes.\n• AI & Technologie: bijv. een live verkoopdashboard, automatische facturen en rapportages, een nieuwe website, vraagvoorspelling.\n• Marketing & Groei: bijv. een marketingplan, het beheer van uw social media, WhatsApp- en e-mailcampagnes, content en teksten.\nWaar bent u mee bezig?
+- **EN:** Three disciplines, on their own or combined:\n• Financial Advisory: e.g. a cashflow forecast, a virtual CFO, due diligence, compliance checks, bookkeeping and tax returns.\n• AI & Technology: e.g. a live sales dashboard, automated invoices and reports, a new website, demand forecasting.\n• Marketing & Growth: e.g. a marketing plan, running your social media, WhatsApp and email campaigns, content and copy.\nTell us more via the contact form.
+- **NL:** Drie disciplines, los of gecombineerd:\n• Financieel Advies: bijv. een cashflowprognose, een virtuele CFO, due diligence, compliancechecks, boekhouding en belastingaangiftes.\n• AI & Technologie: bijv. een live verkoopdashboard, automatische facturen en rapportages, een nieuwe website, vraagvoorspelling.\n• Marketing & Groei: bijv. een marketingplan, het beheer van uw social media, WhatsApp- en e-mailcampagnes, content en teksten.\nVertel ons meer via het contactformulier.
 
 ## B. Getting started
 

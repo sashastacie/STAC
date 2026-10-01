@@ -14,14 +14,14 @@
         note:'Automated answers from STAC. For anything else, talk to the team.',
         greet:"Hi! I'm the STAC assistant. Ask me anything about our services, how we work, or how to get started.",
         miss:"Good question. I don't have a ready answer for that one. Want to send it to the team? They read every message and reply personally.",
-        human:'Talk to a person',sendTeam:'Send this question to the team',also:'You might also mean:',
+        human:'Talk to a person',contact:'Go to the contact form',sendTeam:'Send this question to the team',also:'You might also mean:',
         handoff:"Great, I'll take you to the contact form with your question filled in."},
     nl:{title:'STAC-assistent',status:'Online · direct antwoord',open:'Chat met STAC',close:'Chat sluiten',
         hint:'Vragen? Vraag het STAC.',placeholder:'Typ uw vraag…',send:'Versturen',
         note:'Automatische antwoorden van STAC. Voor al het andere: praat met het team.',
         greet:'Hallo! Ik ben de STAC-assistent. Stel mij gerust een vraag over onze diensten, onze werkwijze of hoe u kunt beginnen.',
         miss:'Goede vraag. Daar heb ik geen kant-en-klaar antwoord op. Wilt u de vraag doorsturen naar het team? Zij lezen elk bericht en reageren persoonlijk.',
-        human:'Praat met een persoon',sendTeam:'Stuur deze vraag naar het team',also:'Misschien bedoelt u ook:',
+        human:'Praat met een persoon',contact:'Naar het contactformulier',sendTeam:'Stuur deze vraag naar het team',also:'Misschien bedoelt u ook:',
         handoff:'Top, ik breng u naar het contactformulier met uw vraag alvast ingevuld.'}
   };
   var POPULAR=[51,9,17,11,47];
@@ -182,7 +182,7 @@
   // tailored line after the answer. Examples stay within STAC's real services, and
   // the "we've done this" parts refer to work shown on the site.
   var INDUSTRIES=[
-    {key:'food', re:/\b(food|foods|restaurant|restaurants|bakery|bakeries|cafe|coffee|catering|lunchroom|snackbar|bar|kitchen|horeca|eten|bakkerij|restaurantje|koffie)\b/,
+    {key:'food', re:/\b(food|foods|restaurant|restaurants|bakery|bakeries|baker|bakers|cafe|coffee|catering|lunchroom|snackbar|bar|kitchen|horeca|eten|bakkerij|restaurantje|koffie|cookie|cookies|cake|cakes|pastry|pastries|dessert|desserts|sweets|chocolate|ice cream|food truck|koekjes|koek|taart|taarten|gebak|banketbakker|ijs)\b/,
      en:"For a food business, that could mean automating orders, stock counts and invoices, a live dashboard of daily sales, or running your menu and social media posts. We've already run social media for a bakery and a restaurant.",
      nl:'Voor een foodbedrijf kan dat betekenen: bestellingen, voorraadtellingen en facturen automatiseren, een live dashboard van de dagomzet, of uw menu- en social media posts verzorgen. We hebben al social media gedaan voor een bakkerij en een restaurant.'},
     {key:'retail', re:/\b(shop|shops|store|stores|retail|webshop|boutique|winkel|winkels|supermarket|supermarkt|minimarket)\b/,
@@ -201,6 +201,16 @@
     for(var i=0;i<INDUSTRIES.length;i++) if(INDUSTRIES[i].re.test(w)) return INDUSTRIES[i];
     return null;
   }
+  // "cookie business", "we run a bakery": only a business type, no real question.
+  // Those get the business-type examples and the contact button, not a loose keyword match.
+  var GENERIC={business:1,businesses:1,company:1,companies:1,firm:1,own:1,owner:1,run:1,running:1,sell:1,selling:1,sells:1,small:1,local:1,im:1,bedrijf:1,bedrijfje:1,zaak:1,zaakje:1,onderneming:1,eigen:1,verkoop:1,verkopen:1,klein:1,kleine:1};
+  function onlyBusinessType(text,ind){
+    return content(words(text)).every(function(w){ return GENERIC[w]||ind.re.test(w); });
+  }
+  function route(text){
+    var ind=detectIndustry(text);
+    return ind&&onlyBusinessType(text,ind)?[]:match(text);
+  }
   // The tailored line, once per business type per visit, after the main reply
   function industryLine(text,lang,then){
     var ind=detectIndustry(text);
@@ -212,6 +222,7 @@
 
   // Hand-picked follow-ups where the default (same topic group) isn't the best next step
   var NEXT={51:[22,31,40]};   // "What services do you offer?" -> dig into one discipline
+  var CONTACT_AFTER={51:1};   // answers that end by pointing to the contact form get a button for it
   function followUps(d){
     if(NEXT[d.id]) return NEXT[d.id].slice();
     var same=DATA.filter(function(x){ return x.cat===d.cat&&x.id!==d.id; });
@@ -226,7 +237,7 @@
     addText('user',text); log.push({w:'user',t:text}); save();
     var lang=forced?siteLang():detectLang(text);
     if(forced){ answer(forced,lang); return; }
-    var res=match(text);
+    var res=route(text);
     if(!res.length){
       track('chat-no-answer','Chat: question without an answer');
       // A known business type still gets relevant examples before the hand-off
@@ -252,7 +263,10 @@
     botSay(d.a[lang],function(){
       var ids=followUps(d);
       if(alt&&ids.indexOf(alt.id)<0) ids.unshift(alt.id);
-      var done=function(){ chips(ids,lang); };
+      var done=function(){
+        if(CONTACT_AFTER[d.id]) addAction(UI[lang].contact,function(){ handoff(''); });
+        chips(ids,lang);
+      };
       if(text) industryLine(text,lang,done); else done();
     });
   }
@@ -325,5 +339,7 @@
   // Small test hook for the readiness tool and QA
   window.STAC_CHAT={match:function(q){ var r=match(q); return r.length?r[0].d.id:null; },detectLang:detectLang,
     industry:function(q){ var i=detectIndustry(q); return i?i.key:null; },
+    // What the chat actually does with a message: an answer id, or null (business-type line / hand-off)
+    reply:function(q){ var r=route(q); return r.length?r[0].d.id:null; },
     industries:INDUSTRIES.map(function(i){ return {key:i.key,en:i.en,nl:i.nl}; })};
 })();
