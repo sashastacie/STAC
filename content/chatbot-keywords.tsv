@@ -1,0 +1,53 @@
+# Chat assistant: Dutch question + search keywords (EN and NL) per answer id.
+# Columns (tab-separated): id, Dutch question, keywords, optional 1 = preferred when two answers tie. Answers themselves live in chatbot-faq.md.
+1	Wat is STAC?	stac what who company firm about wat wie bedrijf firma over do doen disciplines
+2	Waar staat STAC voor?	stand acronym meaning name letters betekenis afkorting naam letters staat
+3	Waar zijn jullie gevestigd?	based where location located office curacao netherlands holland europe waar gevestigd locatie kantoor nederland zitten zit liggen located live
+4	Werken jullie ook met klanten buiten Curaçao?	outside abroad international remote worldwide world overseas buitenland internationaal afstand wereld buiten
+5	Wie zit er achter STAC?	who team behind people founder experience accountant ra wie team achter mensen oprichter ervaring
+6	Met wat voor bedrijven werken jullie?	businesses clients industries sectors customers kind type who bedrijven klanten sectoren branches soort
+7	Wat maakt STAC anders?	different unique why choose better special anders uniek waarom kiezen beter onderscheidend
+8	Moet ik alle drie de diensten afnemen?	all three one service combine need only alle drie een dienst combineren nodig alleen
+9	Hoe begin ik?	start begin get started first step contact hire work together beginnen starten eerste stap samenwerken
+10	Wat gebeurt er in het eerste gesprek?	first conversation call meeting intake happens eerste gesprek kennismaking intake afspraak gebeurt
+11	Is het eerste gesprek gratis?	free cost first call charge consultation minutes gratis kosteloos eerste gesprek minuten kosten
+12	Wat zijn de startassessments?	assessment health check readiness scan starter first step gezondheidscheck gereedheidsscan startassessment
+13	Zit ik na een assessment ergens aan vast?	commitment obligation contract after assessment bound verplichting vast contract na verbonden
+14	Hoe werkt jullie proces?	process how work phases steps approach method discovery strategy execution delivery proces werkwijze fasen stappen aanpak verkenning uitvoering oplevering
+15	Hoe lang duurt een project?	how long duration time timeline weeks months take lang duur tijd tijdlijn weken maanden duurt
+16	Hoe snel reageren jullie?	reply response respond answer quickly fast soon reageren reactie antwoord snel
+17	Wat kost het?	cost price pricing how much fee rates expensive quote kost kosten prijs tarief duur offerte prijzen pricing tarieven charge
+18	Rekenen jullie per uur of een vaste prijs?	hourly fixed price per hour phase rate billing uurtarief vaste prijs per uur fase rekenen
+19	Bieden jullie doorlopende maandelijkse ondersteuning?	monthly ongoing retainer support subscription maintenance maandelijks doorlopend ondersteuning abonnement onderhoud
+20	Zijn jullie betaalbaar voor kleine bedrijven?	small business affordable startup budget cheap klein bedrijf betaalbaar mkb goedkoop
+21	Kunnen jullie binnen een vast budget werken?	budget limited set fixed within spend budget beperkt vast binnen
+22	Wat valt onder Financieel Advies?	financial advisory finance services include what offer financieel advies financien diensten
+23	Wat is een virtuele CFO?	virtual cfo part time finance director virtuele cfo financieel directeur parttime
+24	Doen jullie boekhouding of belastingaangiftes?	bookkeeping accounting tax returns taxes administration boekhouding belasting belastingaangifte aangifte administratie
+25	Kunnen jullie helpen met due diligence?	due diligence acquisition investment evaluation buy company overname investering evaluatie
+26	Kunnen jullie helpen bij cashflowproblemen?	cashflow cash flow money liquidity forecasting geld liquiditeit prognose
+27	Kunnen jullie helpen met compliance en regelgeving?	compliance regulation regulatory rules law ifrs aml gdpr csrd regelgeving wetgeving regels avg
+28	Wat doen jullie op het gebied van risicobeheer en governance?	risk management governance controls fraud continuity risico risicobeheer beheersing fraude continuiteit
+29	Kunnen jullie bestuurs- of investeerdersrapportages maken?	board investor reporting stakeholders reports bestuur investeerders rapportage rapportages
+30	Is jullie advies onafhankelijk?	independent objective unbiased conflict onafhankelijk objectief belangenconflict
+31	Wat valt onder AI & Technologie?	ai technology tech services include artificial intelligence technologie diensten kunstmatige intelligentie
+32	Moet ik technisch zijn om met jullie te werken?	tech savvy technical knowledge beginner understand technisch kennis beginner begrijpen
+33	Wat is een AI-gereedheidsscan?	ai readiness assessment scan ready gereedheidsscan klaar
+34	Kunnen jullie dashboards bouwen voor mijn bedrijf?	dashboard dashboards reporting kpi data visualization rapportage visualisatie
+35	Wat kunnen jullie automatiseren?	automate automation automatic workflow manual repetitive automatiseren automatisering handmatig herhalend task tasks admin paperwork orders invoices invoicing bookings stock inventory taken taak administratie bestellingen facturen facturatie boekingen voorraad
+36	Bouwen jullie websites?	website websites web webshop ecommerce e-commerce app portal booking site bouwen webwinkel online shop
+37	Ondersteunen jullie ons na de lancering?	support after launch maintenance help updates ondersteuning na lancering onderhoud
+38	Kunnen jullie werken met de tools die wij al gebruiken?	existing tools systems integration integrate api connect software bestaande systemen integratie koppelen koppeling
+39	Is onze data veilig bij jullie?	data safe secure privacy confidential security share gdpr veilig vertrouwelijk privacy beveiliging delen
+40	Wat valt onder Marketing & Groei?	marketing growth services include what offer groei diensten
+41	Kunnen jullie onze social media beheren?	social media posts manage beheren beheer run
+42	Doen jullie WhatsApp- en e-mailcampagnes?	whatsapp email newsletter campaign campaigns mail direct nieuwsbrief campagne campagnes
+43	Kunnen jullie content voor ons maken?	content copywriting copy photos video design graphics foto fotografie ontwerp teksten
+44	Doen jullie betaalde advertenties?	ads advertising paid ads promotion boost advertenties adverteren betaald promotie
+45	Hoe meten jullie resultaten?	measure results roi reporting performance metrics meten resultaten rendement prestaties
+46	Wat zit er in een Marketingassessment?	marketing assessment audit review report rapport analyse
+47	In welke talen werken jullie?	language languages english dutch papiamentu spanish speak taal talen engels nederlands papiaments spaans spreken
+48	Werken jullie op afstand of op locatie?	remote in person meeting video call zoom teams visit afstand persoonlijk afspraak videogesprek bellen bezoek
+49	Tekenen jullie een geheimhoudingsverklaring (NDA)?	nda confidentiality agreement confidential secret geheimhouding geheimhoudingsverklaring vertrouwelijk
+50	Hoe kan ik contact opnemen?	contact email phone reach instagram tiktok linkedin socials mail telefoon bereiken address adres account follow handle volgen
+51	Welke diensten bieden jullie aan?	services service offer offering available provide diensten dienst aanbod aanbieden beschikbaar leveren	1

@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>STAC Site Readiness</title>
+<link rel="icon" type="image/png" href="../logo/icon.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Inter:wght@400;500;600&family=Barlow+Condensed:wght@700&display=swap" rel="stylesheet"/>
+<!-- The site's real chat assistant, so it can be tried here before running the check -->
+<link rel="stylesheet" href="../assets/stac-chat.css"/>
+<script src="../assets/stac-chat-data.js" defer></script>
+<script src="../assets/stac-chat.js" defer></script>
+<style>
+:root{
+  --navy:#0B1A2E;--bg:#FFFFFF;--bg2:#F0F5FA;--text:#0B1A2E;--muted:#5A7A9A;--border:#DCE6F0;
+  --cyan:#14D8B4;--techdk:#0C7A6E;--indigo:#14329E;
+  --pass:#0C7A6E;--pass-bg:#DDF7F0;--warn:#9A5B00;--warn-bg:#FFF1D6;--fail:#B42318;--fail-bg:#FDE4E1;--info:#3D5A80;--info-bg:#E6EEF8;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0B1A2E;--bg2:#12253F;--text:#E8F0F8;--muted:#8BA7C0;--border:#23395A;
+    --pass:#5EE6C8;--pass-bg:#0E3B37;--warn:#FFC266;--warn-bg:#3D2E12;--fail:#FF8A7A;--fail-bg:#44201C;--info:#A9C4E8;--info-bg:#1C3050;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0B1A2E;--bg2:#12253F;--text:#E8F0F8;--muted:#8BA7C0;--border:#23395A;
+  --pass:#5EE6C8;--pass-bg:#0E3B37;--warn:#FFC266;--warn-bg:#3D2E12;--fail:#FF8A7A;--fail-bg:#44201C;--info:#A9C4E8;--info-bg:#1C3050;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.55;}
+h1,h2,h3{font-family:'Montserrat',sans-serif;letter-spacing:-.2px;}
+button{font:inherit;cursor:pointer;}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px;}
+header{background:var(--navy);color:#fff;padding:22px 0;}
+header .wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+header img{width:36px;height:36px;border-radius:8px;}
+header h1{font-size:20px;}
+header p{color:#8BA7C0;font-size:13px;}
+header .grow{flex:1;min-width:200px;}
+.btn{background:var(--cyan);color:#0B1A2E;border:0;border-radius:8px;padding:10px 18px;font-weight:600;}
+.btn:disabled{opacity:.55;cursor:default;}
+.btn.ghost{background:transparent;color:inherit;border:1px solid var(--border);}
+header .btn.ghost{border-color:rgba(255,255,255,.25);color:#fff;}
+.notice{margin:18px 0;padding:14px 16px;border-radius:10px;background:var(--warn-bg);color:var(--warn);display:none;}
+.notice code{background:rgba(0,0,0,.08);padding:1px 6px;border-radius:4px;}
+.summary{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center;margin:24px 0 8px;}
+.score{width:120px;height:120px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;border:6px solid var(--border);}
+.score b{font-family:'Montserrat',sans-serif;font-size:34px;line-height:1;}
+.score span{font-size:11px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.8px;}
+.verdict h2{font-size:22px;margin-bottom:4px;}
+.verdict p{color:var(--muted);}
+.counts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600;}
+.pill.fail{background:var(--fail-bg);color:var(--fail);} .pill.warn{background:var(--warn-bg);color:var(--warn);}
+.pill.info{background:var(--info-bg);color:var(--info);} .pill.pass{background:var(--pass-bg);color:var(--pass);}
+#log{font-size:12px;color:var(--muted);min-height:18px;margin:6px 0 14px;}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--border);margin-top:10px;overflow-x:auto;}
+.tabs button{background:none;border:0;padding:10px 14px;color:var(--muted);font-weight:600;border-bottom:2px solid transparent;white-space:nowrap;}
+.tabs button.on{color:var(--text);border-bottom-color:var(--cyan);}
+.panel{display:none;padding:20px 0 60px;} .panel.on{display:block;}
+.scroll{overflow-x:auto;}
+table{border-collapse:collapse;width:100%;}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top;}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);font-weight:600;}
+.matrix td.cell{text-align:center;cursor:pointer;font-weight:600;min-width:84px;}
+.matrix td.cell:hover{outline:2px solid var(--cyan);outline-offset:-2px;}
+.matrix .gname b{display:block;font-family:'Montserrat',sans-serif;font-size:13px;}
+.matrix .gname span{color:var(--muted);font-size:12px;}
+.c-pass{background:var(--pass-bg);color:var(--pass);} .c-warn{background:var(--warn-bg);color:var(--warn);} .c-fail{background:var(--fail-bg);color:var(--fail);} .c-na{color:var(--muted);}
+.cell small{display:block;font-weight:400;font-size:11px;opacity:.85;}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center;}
+select{font:inherit;padding:7px 10px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);}
+.finding{border:1px solid var(--border);border-left:4px solid var(--info);border-radius:8px;padding:12px 14px;margin-bottom:10px;}
+.finding.fail{border-left-color:var(--fail);} .finding.warn{border-left-color:var(--warn);}
+.finding.ignored{opacity:.5;}
+.finding .top{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;}
+.finding .top b{flex:1;min-width:200px;}
+.finding .meta{font-size:12px;color:var(--muted);}
+.finding .where{margin-top:6px;font-size:13px;background:var(--bg2);padding:6px 10px;border-radius:6px;overflow-wrap:anywhere;}
+.finding .fix{margin-top:6px;font-size:13px;}
+.finding .fix::before{content:'Fix: ';font-weight:600;}
+.linkbtn{background:none;border:0;color:var(--muted);text-decoration:underline;font-size:12px;}
+.tr td{font-size:13px;overflow-wrap:anywhere;}
+.tr td:nth-child(1),.tr td:nth-child(2){width:40%;}
+.flag{display:inline-block;margin:0 4px 4px 0;}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;}
+.card{border:1px solid var(--border);border-radius:12px;padding:16px;}
+.card .num{font-family:'Montserrat',sans-serif;color:var(--techdk);font-weight:700;font-size:12px;letter-spacing:1px;}
+.card h3{font-size:16px;margin:4px 0 8px;}
+.card p{font-size:13px;margin-bottom:6px;}
+.card .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);font-weight:600;}
+.chat-try{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;background:linear-gradient(135deg,var(--bg2),var(--bg));border-color:rgba(20,216,180,.45);}
+.chat-try h3{margin:4px 0 6px;}
+.chat-try p{margin:0;max-width:560px;color:var(--muted);}
+.voice{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0;}
+.voice div{border-radius:12px;padding:14px 16px;}
+.voice .do{background:var(--pass-bg);} .voice .dont{background:var(--fail-bg);}
+.voice h3{font-size:14px;margin-bottom:6px;}
+.voice li{margin-left:18px;font-size:13px;margin-bottom:4px;}
+.swatches{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 18px;}
+.sw{width:112px;font-size:11px;}
+.sw i{display:block;height:44px;border-radius:8px;border:1px solid var(--border);margin-bottom:4px;}
+h2.sec{font-size:18px;margin:26px 0 10px;}
+.muted{color:var(--muted);}
+#frames{position:fixed;left:-12000px;top:0;}
+@media (max-width:640px){
+  .summary{grid-template-columns:1fr;justify-items:start;}
+  .voice{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <img src="../logo/icon.png" alt=""/>
+    <div class="grow">
+      <h1>Site Readiness</h1>
+      <p>Links, redirects, EN/NL translation, voice and brand, checked against STAC's 9 guidelines.</p>
+    </div>
+    <a class="btn ghost" id="statsBtn" href="https://stac.goatcounter.com/" target="_blank" rel="noopener" style="text-decoration:none">Visitor stats ↗</a>
+    <button class="btn ghost" id="exportBtn" disabled>Copy report</button>
+    <button class="btn" id="runBtn">Run check</button>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="notice" id="fileNotice">
+    This tool needs the site served over http so it can open each page. Double-click <code>check-site.cmd</code> in the project folder
+    (or run <code>powershell -ExecutionPolicy Bypass -File tools\serve.ps1</code>), and it opens here automatically.
+  </div>
+
+  <section class="summary">
+    <div class="score" id="scoreRing"><b id="scoreNum">–</b><span>Readiness</span></div>
+    <div class="verdict">
+      <h2 id="verdictH">Not run yet</h2>
+      <p id="verdictP">Press "Run check". Every page is opened, clicked through in English and Dutch, and scored.</p>
+      <div class="counts" id="counts"></div>
+    </div>
+  </section>
+  <div id="log"></div>
+
+  <nav class="tabs" id="tabs">
+    <button data-tab="matrix" class="on">Matrix</button>
+    <button data-tab="findings">Findings</button>
+    <button data-tab="translation">Translation</button>
+    <button data-tab="links">Links</button>
+    <button data-tab="chat">Chatbot</button>
+    <button data-tab="stats">Visitor stats</button>
+    <button data-tab="guide">Brand guide</button>
+  </nav>
+
+  <section class="panel on" id="p-matrix">
+    <p class="muted" style="margin-bottom:12px">Each cell scores one guideline on one page (100 = nothing to fix). Click a cell to see what's behind it.</p>
+    <div class="scroll"><table class="matrix" id="matrix"></table></div>
+    <h2 class="sec">Voice metrics</h2>
+    <p class="muted" style="margin-bottom:10px">English copy. Aim for an average sentence under 20 words and at least as much "you" as "we".</p>
+    <div class="scroll"><table id="voiceTable"></table></div>
+  </section>
+
+  <section class="panel" id="p-findings">
+    <div class="filters">
+      <select id="fSev"><option value="">All severities</option><option value="fail">Fail</option><option value="warn">Warning</option><option value="info">Note</option></select>
+      <select id="fG"><option value="">All guidelines</option></select>
+      <select id="fPage"><option value="">All pages</option></select>
+      <label class="muted"><input type="checkbox" id="fIgn"/> Show items marked as intended</label>
+    </div>
+    <div id="findingList"></div>
+  </section>
+
+  <section class="panel" id="p-translation">
+    <div class="filters">
+      <select id="tPage"></select>
+      <label class="muted"><input type="checkbox" id="tAll"/> Show every pair, not just flagged ones</label>
+    </div>
+    <p class="muted" style="margin-bottom:10px">Every visible text block, captured with the site's own EN and NL buttons. Read the flagged rows side by side; the tool finds drift, a person confirms meaning.</p>
+    <div class="scroll"><table class="tr" id="trTable"></table></div>
+  </section>
+
+  <section class="panel" id="p-links">
+    <p class="muted" style="margin-bottom:10px">Every link on every page: where it points, what happened when it was requested, and whether the label matches the destination.</p>
+    <div class="scroll"><table id="linkTable"></table></div>
+  </section>
+
+  <section class="panel" id="p-chat">
+    <div class="card chat-try">
+      <div>
+        <div class="num">TRY IT FIRST</div>
+        <h3>Talk to the chatbot yourself</h3>
+        <p>This is the same assistant visitors see on the site. Ask it a few real questions, then run the check to see how it scores.</p>
+      </div>
+      <button class="btn" type="button" id="openChat">Open the chatbot</button>
+    </div>
+    <p class="muted" style="margin:18px 0 12px">The chat assistant, tested on the live code: its answers, how well it matches real questions, and a full walkthrough of the chat window.</p>
+    <div class="counts" id="chatStats" style="margin-bottom:18px"></div>
+    <h2 class="sec" style="margin-top:0">Walkthrough</h2>
+    <div class="scroll"><table id="chatFlow"></table></div>
+    <h2 class="sec">Visitor questions</h2>
+    <div class="filters"><label class="muted"><input type="checkbox" id="chatAll"/> Show every test, not just the misses</label></div>
+    <div class="scroll"><table id="chatTests"></table></div>
+    <h2 class="sec">Answers</h2>
+    <p class="muted" style="margin-bottom:10px">Every approved answer, with anything the content checks flagged.</p>
+    <div class="scroll"><table class="tr" id="chatData"></table></div>
+  </section>
+
+  <section class="panel" id="p-stats">
+    <div class="card chat-try">
+      <div>
+        <div class="num">GOATCOUNTER · COOKIE-FREE</div>
+        <h3>Visitor stats for the live site</h3>
+        <p>Visits, pages, where people come from, and what they do with the chatbot and contact form. Totals only: no names, no cookies. Opens in a new tab (GoatCounter doesn't allow its dashboard inside other pages).</p>
+      </div>
+      <a class="btn" href="https://stac.goatcounter.com/" target="_blank" rel="noopener" style="text-decoration:none">Open the dashboard ↗</a>
+    </div>
+    <h2 class="sec">Quick views</h2>
+    <p class="muted" style="margin-bottom:10px">Each link opens the dashboard filtered to one topic. You need to be logged in to GoatCounter.</p>
+    <div class="cards" id="statsLinks"></div>
+    <h2 class="sec">What the events mean</h2>
+    <p class="muted" style="margin-bottom:10px">Events show up next to the pages in the dashboard. Here's how to read them, and what to do about each.</p>
+    <div class="scroll"><table id="statsEvents"></table></div>
+  </section>
+
+  <section class="panel" id="p-guide">
+    <h2 class="sec" style="margin-top:0">The 9 guidelines</h2>
+    <div class="cards" id="guideCards"></div>
+    <h2 class="sec">Voice: polished, human, quietly confident</h2>
+    <div class="voice">
+      <div class="do"><h3>Sounds like STAC</h3><ul>
+        <li>"Built to work. Not to impress."</li>
+        <li>"If it doesn't run on Monday morning, it isn't finished."</li>
+        <li>"Come with the chaos. Leave with the clarity."</li>
+        <li>Name the deliverable: "a standalone report on what's working and what's not."</li>
+        <li>Talk to one reader: "your books, your cashflow, your team."</li>
+      </ul></div>
+      <div class="dont"><h3>Doesn't sound like STAC</h3><ul>
+        <li>"World-class, cutting-edge solutions."</li>
+        <li>"We guarantee results!"</li>
+        <li>"Leveraging synergies for holistic, seamless growth."</li>
+        <li>"We'll try to help where we can, hopefully."</li>
+        <li>Sentences so long the reader has to go back to the start.</li>
+      </ul></div>
+    </div>
+    <h2 class="sec">Brand snapshot</h2>
+    <p class="muted">Pulled live from the site when the check runs.</p>
+    <div class="swatches" id="swatches"></div>
+    <div class="scroll"><table id="brandTable"></table></div>
+  </section>
+</main>
+<div id="frames"></div>
+
+<script>
+'use strict';
+/* ------------------------------------------------------------------ config */
+const SITE = new URL('../', location.href);
+const START = new URL('index.html', SITE).href;
+const LANG_BTN = { en: '#ben', nl: '#bnl' };
+const LANG_KEY = 'stac_lang';
+const IGNORE_KEY = 'stac_readiness_ignored';
+const YEAR = new Date().getFullYear();
+
+const GUIDELINES = [
+  { n: 1, name: 'Every click keeps its promise', short: 'Click directions',
+    good: 'Each link, card and button lands exactly where its label says, in both languages.',
+    watch: 'Vague labels, "#" links, buttons that open panels that don\'t exist, JavaScript that sends people somewhere unexpected.' },
+  { n: 2, name: 'No dead ends', short: 'Redirects & reach',
+    good: 'No broken pages, missing images or redirect hops. Every page offers a way back and a way to reach STAC.',
+    watch: '404s, filename case mistakes that only break once hosted, contact paths that rely on the visitor\'s mail app.' },
+  { n: 3, name: 'Two languages, one message', short: 'Translation',
+    good: 'The Dutch says what the English says: same facts, same promises, same structure, one consistent "u".',
+    watch: 'Untranslated blocks, Dutch that drops or adds claims, English left inside Dutch, the page language not switching.' },
+  { n: 4, name: 'Speak like a person', short: 'Human voice',
+    good: 'Short sentences and plain words, written to one reader. It should sound like STAC talking across a table.',
+    watch: 'Corporate filler (leverage, seamless, holistic), sentences over ~28 words, exclamation marks.' },
+  { n: 5, name: 'Confident, not cocky', short: 'Earned trust',
+    good: 'Claims are backed by what STAC does and delivers. The specifics carry the confidence.',
+    watch: 'Superlatives (best, world-class, leading), guarantees, and hedging (hopefully, maybe).' },
+  { n: 6, name: 'Show the craft', short: 'Specialization',
+    good: 'Each discipline shows concrete services, deliverables and real project examples.',
+    watch: 'Pages that describe without showing, thin service lists, no examples of work.' },
+  { n: 7, name: 'One name, one voice', short: 'Naming',
+    good: '"STAC", "STAC B.V." and the three discipline names are written the same way everywhere, with the same tag codes.',
+    watch: '"Stac", "AI and Technology", mismatched S · / T.A · / C · codes, page titles without STAC.' },
+  { n: 8, name: 'Look like STAC everywhere', short: 'Visual identity',
+    good: 'Barlow Condensed headings, Inter body text, the STAC logo in Montserrat, the same colour tokens, logo and favicon on every page, no sideways scrolling on phones.',
+    watch: 'Headings in a different font, drifting colour values, a missing favicon, layouts wider than a phone screen.' },
+  { n: 9, name: 'Trust in the details', short: 'Polish',
+    good: 'Titles, descriptions, alt text, language tags, headings and the © line are right, and images load quickly.',
+    watch: 'Missing meta descriptions, more than one H1, heavy images, an outdated year.' },
+];
+
+const CANON = {
+  en: ['Financial Advisory', 'AI & Technology', 'Marketing & Growth'],
+  nl: ['Financieel Advies', 'AI & Technologie', 'Marketing & Groei'],
+};
+const NAME_VARIANTS = [
+  { re: /\bAI and Technolog(y|ie)\b/i, use: 'AI & Technology / AI & Technologie', sev: 'warn' },
+  { re: /\bMarketing and Growth\b|\bMarketing en Groei\b/i, use: 'Marketing & Growth / Marketing & Groei', sev: 'warn' },
+  { re: /\bFinancial Advisory Services\b|\bFinance Advisory\b/i, use: 'Financial Advisory', sev: 'warn' },
+  { re: /\bAI & Tech\b(?!nolog)/, use: 'AI & Technology (or confirm the short form is intentional)', sev: 'info' },
+];
+const BRAND_MISSPELL = /(^|[^\w@./-])(Stac|stac|S\.T\.A\.C\.?|Stac International)(?=$|[^\w@.])/;
+
+// EN term -> what the Dutch block should contain. A miss suggests the meaning drifted.
+const GLOSSARY = [
+  [/financial advisory/i, /financi[eë]{1,2}le? advies|financieel advies/i, 'Financial Advisory → Financieel Advies'],
+  [/AI & technology/i, /AI & technologie/i, 'AI & Technology → AI & Technologie'],
+  [/marketing & growth/i, /marketing & groei/i, 'Marketing & Growth → Marketing & Groei'],
+  [/\bdue diligence\b/i, /due diligence/i, 'due diligence'],
+  [/\bcash ?flow/i, /cashflow|kasstroom/i, 'cashflow'],
+  [/\bcompliance\b/i, /compliance|naleving/i, 'compliance'],
+  [/\brisk/i, /risico/i, 'risk → risico'],
+  [/\bdashboards?\b/i, /dashboard/i, 'dashboard'],
+  [/\bautomat/i, /automati/i, 'automation → automatisering'],
+  [/\bstrateg/i, /strateg/i, 'strategy → strategie'],
+  [/\bservices\b/i, /dienst/i, 'services → diensten'],
+  [/\bCura[çc]ao\b/i, /Cura[çc]ao/i, 'Curaçao'],
+  [/\bEurope\b/i, /Europa/i, 'Europe → Europa'],
+  [/\bno (ongoing )?commitment\b/i, /zonder|geen/i, 'no commitment → zonder verplichting'],
+];
+
+const EN_IN_NL = ['the','and','with','your','our','you','are','for','that','this','from','into','what','how','not','will','can','their','which','more','than','just','about','built','business','only'];
+const WORDS = {
+  hype: {
+    en: ['best','world-class','world class','industry-leading','market-leading','leading','#1','number one','unmatched','unrivaled','unrivalled','unparalleled','revolutionary','revolutionize','cutting-edge','cutting edge','game-changing','game changer','guaranteed','guarantee','ultimate','premier','elite','disrupt','disruptive','next-level','supercharge','skyrocket','dominate','perfect','flawless','effortless','unbeatable','second to none','top-notch','state-of-the-art','best-in-class','10x','the only'],
+    nl: ['beste','toonaangevend','toonaangevende','ongeëvenaard','ongeëvenaarde','revolutionair','revolutionaire','baanbrekend','baanbrekende','gegarandeerd','garantie','garanderen','ultiem','ultieme','perfect','perfecte','marktleider','nummer één','state-of-the-art','wereldklasse','onverslaanbaar','moeiteloos','de enige'],
+  },
+  jargon: {
+    en: ['synergy','synergies','leverage','leveraging','seamless','seamlessly','holistic','robust','empower','empowering','utilize','utilise','in order to','best practices','paradigm','streamline','turnkey','value-add','solutions','ecosystem','bespoke','innovative','scalable','deliverables','stakeholders','going forward'],
+    nl: ['synergie','naadloos','naadloze','holistisch','holistische','robuust','robuuste','empoweren','faciliteren','oplossingen','innovatief','innovatieve','ecosysteem','schaalbaar','stakeholders','ontzorgen'],
+  },
+  hedge: {
+    en: ['we try','we\'ll try','hopefully','maybe','perhaps','sort of','kind of','we think','might be able'],
+    nl: ['misschien','hopelijk','wellicht','we proberen','proberen we','zou kunnen'],
+  },
+};
+const INTENTS = {
+  contact: ['contact','talk','reach','touch','send','message','mail','neem','laten','samenwerken','praat','bericht'],
+  services: ['services','service','diensten','dienst','what','do','offer','doen','bieden'],
+  about: ['about','over','wie','us','ons'],
+  home: ['home','stac','top','back','terug'],
+};
+const GENERIC = new Set(['learn','more','meer','weten','read','lees','view','bekijk','here','hier','click','klik','our','onze','services','diensten','see','zie','go','ga','open']);
+const STOP = new Set(['the','and','for','with','our','your','you','van','het','een','de','en','met','uw','onze','naar','to','of','in','a','an','is','are','we','wij','that','dat','this','dit','not','niet','but','maar','all','alle','from','uit','its','it']);
+
+/* ----------------------------------------------------------------- helpers */
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const norm = s => String(s || '').replace(/\s+/g, ' ').trim();
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const cut = (s, n = 140) => (s = norm(s)).length > n ? s.slice(0, n - 1) + '…' : s;
+const tokens = s => norm(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+  .replace(/[^a-z0-9& ]/g, ' ').split(/\s+/).filter(w => w.length > 1 && !STOP.has(w));
+const pageName = url => { const p = new URL(url).pathname.split('/').pop() || 'index.html'; return p; };
+function hash(s) { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return (h >>> 0).toString(36); }
+function wordHits(text, list) {
+  const hits = [];
+  const low = ' ' + text.toLowerCase() + ' ';
+  for (const w of list) {
+    // Hyphens count as part of a word, so "best-run" doesn't read as "best".
+    const re = new RegExp('(^|[^\\p{L}\\p{N}\\-])' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?=$|[^\\p{L}\\p{N}\\-])', 'giu');
+    let m; while ((m = re.exec(low))) hits.push({ w, i: m.index });   // i = where the word starts in text
+  }
+  return hits;
+}
+// "We're the best" boasts; "whichever fits best" / "wat het beste past" doesn't.
+function isBoast(text, h) {
+  if (!/^(best|beste)$/.test(h.w)) return true;
+  const after = text.slice(h.i + h.w.length);
+  if (/^\s*([.,;:!?)]|$)/.test(after)) return false;
+  const next = (after.match(/^\s*(\p{L}+)/u) || [])[1] || '';
+  return !/^(past|passen|fits?|suits?|werkt|works?|bij|voor|for)$/i.test(next);
+}
+function around(text, i, n = 60) { return (i > n ? '…' : '') + text.slice(Math.max(0, i - n), i + n).trim() + (i + n < text.length ? '…' : ''); }
+function describe(el) {
+  if (!el || !el.tagName) return '';
+  let d = el.tagName.toLowerCase();
+  if (el.id) d += '#' + el.id;
+  else if (el.classList && el.classList.length) d += '.' + [...el.classList].slice(0, 2).join('.');
+  return d;
+}
+function loadIgnored() { try { return new Set(JSON.parse(localStorage.getItem(IGNORE_KEY) || '[]')); } catch (e) { return new Set(); } }
+function saveIgnored() { try { localStorage.setItem(IGNORE_KEY, JSON.stringify([...ignored])); } catch (e) {} }
+function log(msg) { $('#log').textContent = msg; }
+
+/* ------------------------------------------------------------------ state */
+let ignored = loadIgnored();
+let R = null; // results of the last run
+
+function add(f) {
+  f.id = hash([f.g, f.page, f.title, f.where || ''].join('|'));
+  if (!R.findings.some(x => x.id === f.id)) R.findings.push(f);
+}
+
+/* --------------------------------------------------------------- fetching */
+const fetchCache = new Map();
+function probe(url) {
+  if (!fetchCache.has(url)) {
+    fetchCache.set(url, fetch(url, { cache: 'no-store' }).then(async r => {
+      const type = r.headers.get('content-type') || '';
+      const body = type.includes('text/html') ? await r.text() : await r.blob();
+      return { ok: r.ok, status: r.status, redirected: r.redirected, finalUrl: r.url, type,
+        caseMismatch: r.headers.get('X-Case-Mismatch'), size: typeof body === 'string' ? body.length : body.size };
+    }).catch(e => ({ ok: false, status: 0, error: String(e) })));
+  }
+  return fetchCache.get(url);
+}
+
+function loadFrame(url, width) {
+  return new Promise((resolve, reject) => {
+    const f = document.createElement('iframe');
+    f.style.width = width + 'px'; f.style.height = '900px'; f.style.border = '0';
+    const timer = setTimeout(() => reject(new Error('Timed out loading ' + url)), 20000);
+    f.onload = async () => { clearTimeout(timer); await sleep(700); resolve(f); };
+    f.src = url;
+    $('#frames').appendChild(f);
+  });
+}
+
+/* ------------------------------------------------------- text snapshotting */
+function outermostDataNl(el) {
+  let found = null;
+  for (let n = el; n && n.nodeType === 1; n = n.parentElement) if (n.hasAttribute('data-nl')) found = n;
+  return found;
+}
+function ownText(el) { let t = ''; for (const n of el.childNodes) if (n.nodeType === 3) t += n.nodeValue; return norm(t); }
+const SKIP = 'script,style,noscript,template,svg,#cur';
+
+function snapshotEN(doc) {
+  const blocks = []; const seen = new Set(); const fullEN = new Map();
+  doc.querySelectorAll('[id],[data-nl]').forEach(el => fullEN.set(el, norm(el.textContent)));
+  for (const el of doc.body.querySelectorAll('*')) {
+    if (el.closest(SKIP)) continue;
+    const own = ownText(el);
+    if (!own || !/\p{L}/u.test(own)) continue;
+    const dn = outermostDataNl(el);
+    const key = dn || el;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    blocks.push({ el: key, full: !!dn, dataNl: !!dn, en: dn ? norm(dn.textContent) : own,
+      enHTML: dn ? dn.innerHTML : null, nlAttr: dn ? dn.getAttribute('data-nl') : null,
+      anc: ancestors(el) });
+  }
+  const attrs = [];
+  for (const el of doc.body.querySelectorAll('[placeholder],[alt],[aria-label],[title]')) {
+    if (el.closest(SKIP)) continue;
+    for (const a of ['placeholder', 'alt', 'aria-label', 'title']) {
+      const v = el.getAttribute(a);
+      if (v && /\p{L}{2}/u.test(v)) attrs.push({ el, a, en: v });
+    }
+  }
+  return { blocks, attrs, fullEN, title: doc.title, lang: doc.documentElement.lang };
+}
+function ancestors(el) { const a = []; for (let n = el.parentElement; n && n.tagName !== 'BODY'; n = n.parentElement) a.push(n); return a; }
+
+function snapshotNL(doc, en) {
+  const pairs = []; const done = new Set();
+  for (const b of en.blocks) {
+    if (b.el.isConnected) {
+      pairs.push({ el: b.el, en: b.en, nl: b.full ? norm(b.el.textContent) : ownText(b.el), b });
+      continue;
+    }
+    const a = b.anc.find(n => n.isConnected && en.fullEN.has(n));
+    if (!a || done.has(a)) continue;
+    done.add(a);
+    pairs.push({ el: a, en: en.fullEN.get(a), nl: norm(a.textContent), b: { dataNl: false } });
+  }
+  const attrs = en.attrs.filter(x => x.el.isConnected).map(x => ({ el: x.el, a: x.a, en: x.en, nl: x.el.getAttribute(x.a) || '' }));
+  return { pairs, attrs, title: doc.title, lang: doc.documentElement.lang };
+}
+
+function looksProper(s) {
+  // Short labels that are names, codes or loanwords are fine to keep in English.
+  const w = s.split(/\s+/);
+  if (w.length > 8) return false;
+  if (w.length > 4 && !w.every(x => /^[\p{Lu}0-9&·\-–]/u.test(x) || /^(of|and|for|to|in|de|van|en)$/i.test(x))) return false;
+  return w.every(x => /^[\p{Lu}0-9#&·@.+/\-–]/u.test(x) || /^(of|and|&|de|van|the)$/i.test(x)) || /@|\.com|\d{3,}/.test(s);
+}
+
+/* ------------------------------------------------------------ page capture */
+async function capturePage(url) {
+  const f = await loadFrame(url, 1280);
+  const win = f.contentWindow, doc = f.contentDocument;
+  const page = pageName(url);
+  const P = { url, page, title: doc.title, nlTitleAttr: doc.documentElement.getAttribute('data-nl-title') || '', lang: doc.documentElement.lang, ids: new Set([...doc.querySelectorAll('[id]')].map(e => e.id)),
+    h1: norm((doc.querySelector('h1') || {}).textContent || ''), links: [], srcs: [], tokens: {}, fonts: {}, text: { en: [], nl: [] }, pairs: [], attrPairs: [] };
+
+  // Brand tokens
+  for (const sheet of doc.styleSheets) {
+    let rules; try { rules = sheet.cssRules; } catch (e) { continue; }
+    for (const r of rules) if (r.selectorText === ':root') for (const prop of r.style) if (prop.startsWith('--')) P.tokens[prop] = r.style.getPropertyValue(prop).trim();
+  }
+  const cs = el => el ? win.getComputedStyle(el).fontFamily : '';
+  P.fonts = { heading: cs(doc.querySelector('h1') || doc.querySelector('h2')), body: cs(doc.body) };
+
+  // Head / meta
+  P.meta = {
+    description: (doc.querySelector('meta[name="description"]') || {}).content || '',
+    ogTitle: !!doc.querySelector('meta[property="og:title"]'), ogImage: !!doc.querySelector('meta[property="og:image"]'),
+    viewport: !!doc.querySelector('meta[name="viewport"]'),
+    favicon: (doc.querySelector('link[rel~="icon"]') || {}).href || '',
+    canonical: !!doc.querySelector('link[rel="canonical"]'),
+  };
+  P.h1Count = doc.querySelectorAll('h1').length;
+  P.headings = [...doc.querySelectorAll('h1,h2,h3,h4,h5,h6')].map(h => +h.tagName[1]);
+  P.imgs = [...doc.querySelectorAll('img')].map(i => ({ src: i.currentSrc || i.src, attr: i.getAttribute('src'), alt: i.getAttribute('alt'), el: describe(i) }));
+  P.logo = P.imgs.some(i => /logo|icon/i.test(i.attr || '')) || !!doc.querySelector('[class*="logo"]');
+  P.liCount = doc.querySelectorAll('main li, section li, li').length;
+  P.projectCards = doc.querySelectorAll('[class*="fp-card"], [class*="case"], [class*="project"]').length;
+  P.forms = [...doc.querySelectorAll('form')].map(fm => ({ action: fm.getAttribute('action'), id: fm.id }));
+  P.scripts = [...doc.querySelectorAll('script:not([src])')].map(s => s.textContent).join('\n');
+  P.ariaControls = [...doc.querySelectorAll('[aria-controls]')].map(e => ({ el: describe(e), target: e.getAttribute('aria-controls') }));
+  P.buttons = [...doc.querySelectorAll('button,[role="button"]')].map(b => ({ el: describe(b), name: norm(b.getAttribute('aria-label') || b.textContent) }));
+  P.hasChat = !!doc.querySelector('.sc-launch');
+  P.analytics = win.STAC_ANALYTICS ? { ...win.STAC_ANALYTICS } : null;
+  P.cookies = (doc.cookie || '').split(';').map(c => c.split('=')[0].trim()).filter(Boolean);
+
+  // Links (EN labels first)
+  const linkEls = [...doc.querySelectorAll('a[href]')];
+  P.links = linkEls.map(a => ({ a, href: a.getAttribute('href'), abs: a.href, en: norm(a.getAttribute('aria-label') || a.textContent),
+    target: a.getAttribute('target'), rel: a.getAttribute('rel') || '', logo: /logo/i.test(a.className) || (!!a.querySelector('img') && !norm(a.textContent)),
+    ctx: linkContext(a), el: describe(a) }));
+  P.srcs = [...P.imgs.map(i => i.src), P.meta.favicon].filter(Boolean);
+
+  // Language round trip
+  const saved = win.localStorage.getItem(LANG_KEY);
+  const btnEN = doc.querySelector(LANG_BTN.en), btnNL = doc.querySelector(LANG_BTN.nl);
+  P.hasSwitch = !!(btnEN && btnNL);
+  if (P.hasSwitch) {
+    btnEN.click(); await sleep(80);
+    const en = snapshotEN(doc);
+    btnNL.click(); await sleep(150);
+    const nl = snapshotNL(doc, en);
+    P.pairs = nl.pairs.map(p => ({ en: p.en, nl: p.nl, where: describe(p.el), dataNl: p.b.dataNl, enHTML: p.b.enHTML, nlAttr: p.b.nlAttr }));
+    P.attrPairs = nl.attrs.map(p => ({ en: p.en, nl: p.nl, a: p.a, where: describe(p.el) }));
+    P.nlTitle = nl.title; P.nlLang = nl.lang; P.enLang = en.lang; P.enTitle = en.title;  // read after switching to EN, so a saved NL preference can't skew them
+    P.links.forEach(l => { l.nl = l.a.isConnected ? norm(l.a.getAttribute('aria-label') || l.a.textContent) : ''; });
+    P.text.en = en.blocks.map(b => b.en);
+    P.text.nl = nl.pairs.map(p => p.nl);
+    btnEN.click(); await sleep(50);
+  } else {
+    P.text.en = [...doc.body.querySelectorAll('*')].filter(e => !e.closest(SKIP)).map(ownText).filter(Boolean);
+  }
+  try { if (saved === null) win.localStorage.removeItem(LANG_KEY); else win.localStorage.setItem(LANG_KEY, saved); } catch (e) {}
+  P.links.forEach(l => { delete l.a; });
+  f.remove();
+
+  // Phone width
+  const m = await loadFrame(url, 390);
+  const mdoc = m.contentDocument;
+  const sw = mdoc.documentElement.scrollWidth;
+  const wide = e => { const r = e.getBoundingClientRect(); return r.right > 395 && r.width > 0 && m.contentWindow.getComputedStyle(e).position !== 'fixed'; };
+  // Report the outermost offenders, not every child inside them.
+  P.mobileOverflow = sw > 392 ? { width: sw, culprits: [...mdoc.body.querySelectorAll('*')]
+    .filter(e => wide(e) && !(e.parentElement && e.parentElement !== mdoc.body && wide(e.parentElement)))
+    .slice(0, 5).map(describe) } : null;
+  m.remove();
+  return P;
+}
+
+function linkContext(a) {
+  const box = a.closest('.fp-panel, .srow, article, li, [class*="card"], section, footer, nav');
+  if (!box) return '';
+  const h = box.querySelector('h1,h2,h3,h4,.fp-panel-h,.srow-name,[class*="name"],[class*="title"]');
+  return norm((h ? h.textContent + ' ' : '') + box.textContent).slice(0, 260);
+}
+
+/* ------------------------------------------------------------------ checks */
+async function checkLinks(P, pages) {
+  for (const l of P.links) {
+    const h = (l.href || '').trim();
+    l.status = '';
+    if (!h || h === '#' || /^javascript:/i.test(h)) {
+      l.status = 'dead';
+      add({ g: 1, page: P.page, sev: 'fail', title: 'Link goes nowhere', where: `${l.el} "${cut(l.en, 60)}" → href="${h}"`, fix: 'Point it at a real page or section, or make it a <button>.' });
+      continue;
+    }
+    if (/^mailto:/i.test(h)) {
+      const addr = decodeURIComponent(h.slice(7).split('?')[0]);
+      l.status = /^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(addr) ? 'mail ok' : 'bad address';
+      if (l.status !== 'mail ok') add({ g: 2, page: P.page, sev: 'fail', title: 'Email link has an invalid address', where: h });
+      continue;
+    }
+    if (/^tel:/i.test(h)) { l.status = 'phone'; continue; }
+    const u = new URL(l.abs);
+    if (u.origin !== location.origin) {
+      l.status = 'external';
+      if (l.target === '_blank' && !/noopener|noreferrer/.test(l.rel)) add({ g: 9, page: P.page, sev: 'warn', title: 'External link opens a new tab without rel="noopener"', where: l.abs, fix: 'Add rel="noopener".' });
+      continue;
+    }
+    const base = u.href.split('#')[0];
+    const frag = decodeURIComponent(u.hash.slice(1));
+    const r = await probe(base);
+    l.http = r.status; l.redirected = r.redirected;
+    if (r.caseMismatch) {
+      l.status = 'case';
+      add({ g: 2, page: P.page, sev: 'fail', title: 'Link only works on Windows (filename case differs)', where: `${h} → actual file ${r.caseMismatch}`, fix: 'Match the filename exactly; most hosts are case-sensitive.' });
+      continue;
+    }
+    if (!r.ok) { l.status = 'broken'; add({ g: 2, page: P.page, sev: 'fail', title: `Broken link (HTTP ${r.status})`, where: `${l.el} "${cut(l.en, 60)}" → ${h}` }); continue; }
+    if (r.redirected) add({ g: 2, page: P.page, sev: 'warn', title: 'Link goes through a redirect', where: `${h} → ${r.finalUrl}`, fix: 'Link straight to the final address.' });
+
+    const dest = pages.get(base);
+    if (frag) {
+      const ids = dest ? dest.ids : null;
+      if (ids && !ids.has(frag)) { l.status = 'missing anchor'; add({ g: 1, page: P.page, sev: 'fail', title: `Anchor #${frag} doesn't exist on ${pageName(base)}`, where: `${l.el} "${cut(l.en, 60)}" → ${h}`, fix: 'Add the id to the target section or fix the link.' }); continue; }
+    }
+    l.status = 'ok';
+    if (l.logo) continue;
+    // Does the label say where it goes?
+    for (const lang of ['en', 'nl']) {
+      const label = l[lang]; if (!label) continue;
+      const want = new Set(destTokens(dest, base, frag));
+      let lt = tokens(label).filter(w => !GENERIC.has(w));
+      let usedCtx = false;
+      if (!lt.length) { lt = tokens(l.ctx); usedCtx = true; }
+      const hit = lt.some(w => want.has(w) || [...want].some(x => x.length > 4 && (x.startsWith(w) || w.startsWith(x))));
+      if (!hit) {
+        l.status = 'label?';
+        add({ g: 1, page: P.page, sev: 'warn', title: `Label may not match its destination (${lang.toUpperCase()})`,
+          where: `"${cut(label, 70)}" → ${pageName(base)}${frag ? '#' + frag : ''}${usedCtx ? ' (checked the surrounding card too)' : ''}`,
+          fix: 'Make the label name the place it opens, or point the link at the section the label promises.' });
+        break;
+      }
+    }
+  }
+}
+
+function destTokens(dest, base, frag) {
+  const out = tokens(pageName(base).replace(/\.html$/, '').replace(/-/g, ' '));
+  if (pageName(base) === 'index.html') out.push(...INTENTS.home);
+  if (dest) out.push(...tokens(dest.title), ...tokens(dest.nlTitle || ''), ...tokens(dest.nlTitleAttr || ''), ...tokens(dest.h1));
+  if (frag) { out.push(...tokens(frag)); if (INTENTS[frag]) out.push(...INTENTS[frag]); }
+  return out;
+}
+
+async function checkAssets(P) {
+  const heavy = [];
+  for (const src of new Set(P.srcs)) {
+    let u; try { u = new URL(src); } catch (e) { continue; }
+    if (u.origin !== location.origin) continue;
+    const r = await probe(u.href);
+    const where = u.pathname.replace(SITE.pathname, '');
+    if (r.caseMismatch) add({ g: 2, page: P.page, sev: 'fail', title: 'Image only loads on Windows (filename case differs)', where: `${where} → actual file ${r.caseMismatch}`, fix: 'Rename the file or the reference so they match exactly.' });
+    else if (!r.ok) add({ g: 2, page: P.page, sev: 'fail', title: `Missing image (HTTP ${r.status})`, where });
+    else if (r.size > 600 * 1024) heavy.push({ where, size: r.size });
+  }
+  if (heavy.length) {
+    const total = heavy.reduce((s, h) => s + h.size, 0) / 1048576;
+    add({ g: 9, page: P.page, sev: total > 4 ? 'fail' : 'warn', title: `${heavy.length} heavy image${heavy.length > 1 ? 's' : ''} (${total.toFixed(1)} MB in total)`,
+      where: heavy.sort((a, b) => b.size - a.size).map(h => `${h.where} ${(h.size / 1048576).toFixed(1)} MB`).join(', '),
+      fix: 'Export as WebP or a compressed JPG around 1600px wide (aim for under 300 KB each) and add loading="lazy" to images below the fold. Slow pages on mobile data lose visitors before they read a word.' });
+  }
+  for (const i of P.imgs) if (i.alt === null) add({ g: 9, page: P.page, sev: 'warn', title: 'Image has no alt text', where: i.attr, fix: 'Describe what it shows, or use alt="" if it is decorative.' });
+  if (!P.meta.favicon) add({ g: 8, page: P.page, sev: 'warn', title: 'No favicon', fix: 'Add <link rel="icon" href="logo/icon.png">.' });
+  if (!P.logo) add({ g: 8, page: P.page, sev: 'warn', title: 'No STAC logo found on the page' });
+}
+
+function checkPageFlow(P, pages) {
+  const isHome = P.page === 'index.html';
+  const internal = P.links.filter(l => { try { return new URL(l.abs).origin === location.origin; } catch (e) { return false; } });
+  if (!isHome && !internal.some(l => pageName(l.abs.split('#')[0]) === 'index.html')) add({ g: 2, page: P.page, sev: 'warn', title: 'No way back to the home page', fix: 'Add a "Back to STAC" link or a clickable logo.' });
+  if (!P.links.some(l => /#contact$/.test(l.abs) || /^mailto:/i.test(l.href || ''))) add({ g: 2, page: P.page, sev: 'warn', title: 'No contact call-to-action on this page', fix: 'End the page with a clear next step, e.g. "Talk to us" → index.html#contact.' });
+  for (const c of P.ariaControls) if (!P.ids.has(c.target)) add({ g: 1, page: P.page, sev: 'fail', title: 'Button controls a panel that doesn\'t exist', where: `${c.el} → #${c.target}` });
+  for (const b of P.buttons) if (!b.name) add({ g: 9, page: P.page, sev: 'warn', title: 'Button has no readable label', where: b.el, fix: 'Add text or aria-label.' });
+  const jsNav = [...P.scripts.matchAll(/(location\.href\s*=|location\.assign\(|window\.open\()([^;\n]{0,80})/g)].map(m => norm(m[0]));
+  if (P.forms.length && P.forms.some(f => !f.action) && /mailto:/.test(P.scripts)) {
+    add({ g: 2, page: P.page, sev: 'warn', title: 'Contact form depends on the visitor\'s email app',
+      where: 'Submitting builds a mailto: link. Visitors on webmail or a work laptop without a mail app see nothing happen, and the message is never sent.',
+      fix: 'Post the form to a form service (Formspree, Netlify Forms, Basin) and show an on-page "Thanks, we\'ll be in touch" message.' });
+  } else for (const j of jsNav) add({ g: 1, page: P.page, sev: 'info', title: 'Script-driven navigation: click through it by hand once', where: j });
+}
+
+function checkTranslation(P) {
+  if (!P.hasSwitch) { add({ g: 3, page: P.page, sev: 'fail', title: 'No EN/NL switch on this page', fix: 'Add the same EN / NL buttons as the other pages.' }); return; }
+  if (P.nlLang === (P.enLang || P.lang)) add({ g: 3, page: P.page, sev: 'warn', title: `Page language stays "${P.nlLang}" in Dutch mode`, where: '<html lang> is not updated when NL is chosen, so screen readers and Google read the Dutch as English.', fix: 'Set document.documentElement.lang = lang inside the language switch.' });
+  if (P.nlTitle === (P.enTitle || P.title)) add({ g: 3, page: P.page, sev: 'info', title: 'Browser tab title doesn\'t switch to Dutch', where: P.title });
+
+  const ts = s => s.replace(/[^\p{L}\p{N}]+/gu, ' ').trim().toLowerCase();
+  let nlU = 0, nlJe = 0; const jeEx = [];
+  for (const p of P.pairs) {
+    p.flags = [];
+    const en = p.en, nl = p.nl;
+    if (!/\p{L}{2}/u.test(en)) continue;
+    if (ts(en) === ts(nl)) {
+      if (looksProper(en)) { p.flags.push(['info', 'same in both (name or loanword?)']); }
+      else {
+        p.flags.push(['fail', 'not translated']);
+        add({ g: 3, page: P.page, sev: 'fail', title: 'Text stays English in Dutch mode', where: `${p.where}: "${cut(en, 110)}"`, fix: 'Add a data-nl version (or the matching key in the translation table).' });
+      }
+      continue;
+    }
+    // English words left in the Dutch
+    const leftovers = wordHits(nl, EN_IN_NL).map(h => h.w);
+    if (leftovers.length >= 2) { p.flags.push(['warn', 'English words in Dutch: ' + [...new Set(leftovers)].join(', ')]);
+      add({ g: 3, page: P.page, sev: 'warn', title: 'Dutch text contains English words', where: `"${cut(nl, 120)}" (${[...new Set(leftovers)].join(', ')})` }); }
+    // Length drift
+    if (en.length >= 50) {
+      const ratio = nl.length / en.length;
+      if (ratio < 0.7 || ratio > 1.75) { p.flags.push(['warn', `NL is ${Math.round(ratio * 100)}% of EN length`]);
+        add({ g: 3, page: P.page, sev: 'warn', title: ratio < 0.7 ? 'Dutch is much shorter than the English: content may be missing' : 'Dutch is much longer than the English: content may be added',
+          where: `EN: "${cut(en, 100)}"  ·  NL: "${cut(nl, 100)}"`, fix: 'Compare the two side by side in the Translation tab.' }); }
+    }
+    // Key terms
+    const missing = GLOSSARY.filter(([e, n]) => e.test(en) && !n.test(nl)).map(g => g[2]);
+    if (missing.length) { p.flags.push(['warn', 'term missing in NL: ' + missing.join('; ')]);
+      add({ g: 3, page: P.page, sev: 'warn', title: 'Meaning drift: a key term in the English is missing from the Dutch',
+        where: `${missing.join('; ')}  ·  EN: "${cut(en, 90)}"  ·  NL: "${cut(nl, 90)}"`, fix: 'Make the Dutch say the same thing, or change both on purpose.' }); }
+    // Numbers
+    const nums = (en.match(/\d+(?:[.,]\d+)?/g) || []).filter(n => !nl.includes(n) && !nl.includes(n.replace('.', ',')));
+    if (nums.length) { p.flags.push(['warn', 'numbers differ: ' + nums.join(', ')]);
+      add({ g: 3, page: P.page, sev: 'warn', title: 'A number in the English is missing from the Dutch', where: `${nums.join(', ')} in "${cut(en, 100)}"` }); }
+    // Punctuation shape
+    const endE = en.slice(-1), endN = nl.slice(-1);
+    if (/[?!]/.test(endE) !== /[?!]/.test(endN) || (endE === '?') !== (endN === '?')) p.flags.push(['info', 'ending punctuation differs']);
+    // Markup parity for data-nl blocks
+    if (p.dataNl && p.enHTML != null && p.nlAttr != null) {
+      const count = html => { const t = document.createElement('template'); t.innerHTML = html; const c = {}; t.content.querySelectorAll('*').forEach(e => { const k = e.tagName.toLowerCase(); c[k] = (c[k] || 0) + 1; }); return c; };
+      const a = count(p.enHTML), b = count(p.nlAttr);
+      const diff = [...new Set([...Object.keys(a), ...Object.keys(b)])].filter(k => (a[k] || 0) !== (b[k] || 0));
+      if (diff.length) { p.flags.push(['warn', 'markup differs: ' + diff.map(k => `<${k}> ${a[k] || 0}→${b[k] || 0}`).join(', ')]);
+        add({ g: 3, page: P.page, sev: 'warn', title: 'Dutch version has different structure (line breaks, emphasis or list items)', where: `${p.where}: ${diff.map(k => `<${k}> EN ${a[k] || 0} / NL ${b[k] || 0}`).join(', ')}` }); }
+    }
+    // Register: u vs je
+    const u = wordHits(nl, ['u', 'uw']).length, je = wordHits(nl, ['je', 'jij', 'jouw', 'jullie']);
+    nlU += u; nlJe += je.length; if (je.length && jeEx.length < 3) jeEx.push(cut(nl, 90));
+  }
+  if (nlU && nlJe) add({ g: 3, page: P.page, sev: 'warn', title: `Dutch mixes formal "u" (${nlU}×) and informal "je" (${nlJe}×)`, where: jeEx.join('  ·  '), fix: 'Pick one register. The site mostly uses "u", so rewrite the "je" sentences.' });
+  for (const p of P.attrPairs) if (p.en === p.nl && !looksProper(p.en)) add({ g: 3, page: P.page, sev: p.a === 'alt' ? 'info' : 'warn', title: `${p.a} text isn't translated`, where: `${p.where} ${p.a}="${cut(p.en, 80)}"` });
+}
+
+function checkVoice(P) {
+  const V = { sentences: 0, words: 0, longest: '', longestN: 0, you: 0, we: 0, hype: 0 };
+  for (const lang of ['en', 'nl']) {
+    const blocks = [...new Set(P.text[lang])];
+    for (const t of blocks) {
+      for (const [kind, g, sev, label, fix] of [
+        ['hype', 5, 'warn', 'Sounds boastful', 'Swap the superlative for what you actually deliver.'],
+        ['jargon', 4, 'info', 'Corporate filler word', 'Say the plain version.'],
+        ['hedge', 5, 'info', 'Hedging undercuts trust', 'State what you do, plainly.']]) {
+        for (const h of wordHits(t, WORDS[kind][lang])) {
+          // "the kind of dashboard" describes; "it's kind of good" hedges.
+          if (kind === 'hedge' && /\b(the|this|that|what|a)\s*$/i.test(t.slice(0, Math.max(0, h.i - 1)))) continue;
+          if (kind === 'hype' && !isBoast(t, h)) continue;
+          if (lang === 'en' && kind === 'hype') V.hype++;
+          add({ g, page: P.page, sev, title: `${label}: "${h.w}" (${lang.toUpperCase()})`, where: around(t, h.i), fix });
+        }
+      }
+      if (/!/.test(t)) add({ g: 4, page: P.page, sev: 'info', title: `Exclamation mark (${lang.toUpperCase()})`, where: cut(t, 120), fix: 'Let the words do the work; a full stop reads calmer and more assured.' });
+      for (const s of t.split(/(?<=[.?!])\s+/)) {
+        const n = s.split(/\s+/).filter(Boolean).length;
+        if (lang === 'en' && n >= 3) { V.sentences++; V.words += n; if (n > V.longestN) { V.longestN = n; V.longest = s; } }
+        if (n > 32) add({ g: 4, page: P.page, sev: n > 42 ? 'warn' : 'info', title: `Long sentence: ${n} words (${lang.toUpperCase()})`, where: cut(s, 200), fix: 'Split it in two. One idea per sentence.' });
+      }
+      if (lang === 'en') { V.you += wordHits(t, ['you', 'your', 'yours']).length; V.we += wordHits(t, ['we', 'our', 'us', 'we\'re', 'we\'ll']).length; }
+      const caps = t.match(/\b[A-Z]{6,}\b/g);
+      if (caps) add({ g: 4, page: P.page, sev: 'info', title: 'Shouting in capitals', where: caps.join(', ') });
+    }
+  }
+  if (V.we > V.you * 1.6 && V.we > 6) add({ g: 5, page: P.page, sev: 'info', title: `Talks about STAC more than the client (we/our ${V.we}× vs you/your ${V.you}×)`, fix: 'Reframe a few lines around the reader\'s problem and outcome.' });
+  P.voice = V;
+}
+
+function checkCraft(P) {
+  if (P.page === 'index.html') return;
+  if (P.liCount < 12) add({ g: 6, page: P.page, sev: 'warn', title: `Only ${P.liCount} listed services or deliverables`, fix: 'List the concrete things a client gets.' });
+  if (P.projectCards < 3) add({ g: 6, page: P.page, sev: 'warn', title: 'Few or no project examples', fix: 'Show two or three real engagements with the problem, what was built and what changed.' });
+  const digits = P.text.en.join(' ').match(/\b\d+(?:[.,]\d+)?\s?(%|x|hours|clients|years|weeks|days|projects)/gi);
+  if (!digits) add({ g: 6, page: P.page, sev: 'info', title: 'No concrete numbers on the page', fix: 'Where it is true, add one: hours saved, years of experience, clients served, turnaround time.' });
+}
+
+function checkNaming(P) {
+  if (!/\bSTAC\b/.test(P.title)) add({ g: 7, page: P.page, sev: 'fail', title: 'Page title doesn\'t include STAC', where: P.title });
+  else if (P.page !== 'index.html' && !/\| STAC$/.test(P.title)) add({ g: 7, page: P.page, sev: 'info', title: 'Title doesn\'t follow "Page | STAC"', where: P.title });
+  for (const lang of ['en', 'nl']) for (const t of new Set(P.text[lang])) {
+    const m = t.match(BRAND_MISSPELL);
+    if (m) add({ g: 7, page: P.page, sev: 'warn', title: `Brand name written as "${m[2]}"`, where: cut(t, 120), fix: 'Always "STAC" (or "STAC B.V." for the legal name).' });
+    for (const v of NAME_VARIANTS) { const vm = t.match(v.re); if (vm) add({ g: 7, page: P.page, sev: v.sev, title: `Discipline name variant: "${vm[0]}"`, where: cut(t, 120), fix: 'Use ' + v.use + '.' }); }
+    const cm = t.match(/©\s?(\d{4})/);
+    if (cm && +cm[1] < YEAR) add({ g: 9, page: P.page, sev: 'warn', title: `© year is ${cm[1]}`, where: t, fix: `Update to ${YEAR}.` });
+  }
+  // Tag codes (S · / T.A · / C ·) must pair with one label per language
+  P.tagCodes = {};
+  for (const lang of ['en', 'nl']) for (const t of P.text[lang]) {
+    const m = t.match(/^(S|T\.A|C)\s·\s(.+?)(?:\s·|$)/);
+    if (m) (P.tagCodes[lang + ':' + m[1]] = P.tagCodes[lang + ':' + m[1]] || new Set()).add(m[2]);
+  }
+}
+
+function checkSiteWide(pages) {
+  const arr = [...pages.values()];
+  const home = pages.get(START);
+  // Colour tokens
+  if (home) for (const P of arr) {
+    if (P === home) continue;
+    const drift = Object.keys(home.tokens).filter(k => P.tokens[k] && P.tokens[k].toLowerCase() !== home.tokens[k].toLowerCase());
+    if (drift.length) add({ g: 8, page: P.page, sev: 'warn', title: 'Colour tokens differ from the home page', where: drift.map(k => `${k}: ${P.tokens[k]} (home ${home.tokens[k]})`).join(', '), fix: 'Use the same values, or give the page-specific colour its own token name.' });
+  }
+  for (const P of arr) {
+    // Headings are Barlow Condensed; the STAC logo stays Montserrat.
+    if (!/Barlow Condensed/i.test(P.fonts.heading)) add({ g: 8, page: P.page, sev: 'warn', title: 'Headings are not in Barlow Condensed', where: P.fonts.heading });
+    if (!/Inter/i.test(P.fonts.body)) add({ g: 8, page: P.page, sev: 'warn', title: 'Body text is not in Inter', where: P.fonts.body });
+    if (P.mobileOverflow) add({ g: 8, page: P.page, sev: 'fail', title: `Sideways scrolling on phones (page is ${P.mobileOverflow.width}px wide at 390px)`, where: 'Widest elements: ' + P.mobileOverflow.culprits.join(', '), fix: 'Constrain those elements with max-width:100% or wrap them.' });
+    if (!P.meta.viewport) add({ g: 8, page: P.page, sev: 'fail', title: 'No viewport meta tag' });
+    if (!P.meta.description) add({ g: 9, page: P.page, sev: 'warn', title: 'No meta description', where: 'Google and link previews will pull a random snippet instead.', fix: 'Add <meta name="description" content="…"> of about 150 characters in the STAC voice.' });
+    if (!P.meta.ogTitle || !P.meta.ogImage) add({ g: 9, page: P.page, sev: 'info', title: 'No Open Graph tags', where: 'Links shared on WhatsApp, LinkedIn or email show no preview card.', fix: 'Add og:title, og:description and og:image (the STAC logo works).' });
+    if (!P.lang) add({ g: 9, page: P.page, sev: 'warn', title: 'No lang attribute on <html>' });
+    if (P.h1Count !== 1) add({ g: 9, page: P.page, sev: 'warn', title: `${P.h1Count} H1 headings (should be exactly one)` });
+    for (let i = 1; i < P.headings.length; i++) if (P.headings[i] > P.headings[i - 1] + 1) { add({ g: 9, page: P.page, sev: 'info', title: `Heading level jumps from H${P.headings[i - 1]} to H${P.headings[i]}` }); break; }
+  }
+  // Visitor stats: installed everywhere, switched on, and still cookie-free
+  for (const P of arr) {
+    if (!P.analytics) add({ g: 9, page: P.page, sev: 'info', title: 'No visitor stats on this page', fix: 'Include assets/stac-analytics.js like the other pages.' });
+    if (P.cookies.length) add({ g: 9, page: P.page, sev: 'warn', title: 'Page sets cookies, but the site has no cookie banner', where: 'Cookies: ' + P.cookies.join(', '), fix: 'Find what sets them (an embed, plugin or tracker). Remove it, or add a consent banner before it loads.' });
+  }
+  if (arr.some(P => P.analytics) && !arr.some(P => P.analytics && P.analytics.configured))
+    add({ g: 9, page: 'Site', sev: 'info', title: 'Visitor stats are installed but not switched on yet', where: 'assets/stac-analytics.js has no GoatCounter site code.', fix: 'Create a free goatcounter.com account and put its site code in GC_CODE.' });
+
+  // Tag codes consistent across pages
+  const codes = {};
+  for (const P of arr) for (const [k, set] of Object.entries(P.tagCodes || {})) for (const v of set) (codes[k] = codes[k] || new Map()).set(v, (codes[k].get(v) || []).concat(P.page));
+  for (const [k, m] of Object.entries(codes)) if (m.size > 1) add({ g: 7, page: 'Site', sev: 'warn', title: `Tag code ${k.split(':')[1]} · has ${m.size} different labels (${k.split(':')[0].toUpperCase()})`, where: [...m].map(([v, p]) => `"${v}" on ${[...new Set(p)].join(', ')}`).join('  ·  ') });
+  // Canonical discipline names present
+  const all = { en: arr.flatMap(p => p.text.en).join(' '), nl: arr.flatMap(p => p.text.nl).join(' ') };
+  for (const lang of ['en', 'nl']) for (const n of CANON[lang]) if (all[lang] && !all[lang].includes(n)) add({ g: 7, page: 'Site', sev: 'warn', title: `"${n}" never appears in ${lang.toUpperCase()}` });
+}
+
+async function checkHosting() {
+  const r = await probe(new URL('404.html', SITE).href);
+  if (!r.ok) add({ g: 2, page: 'Site', sev: 'warn', title: 'No custom 404 page', where: 'A mistyped or old link shows the host\'s generic error page.', fix: 'Add a 404.html with the STAC header, a short line ("That page moved or never existed.") and links to the three disciplines and contact.' });
+  const f = await probe(new URL('logo/icon.png', SITE).href);
+  if (!f.ok) add({ g: 8, page: 'Site', sev: 'fail', title: 'Favicon file missing (logo/icon.png)' });
+}
+
+/* ---------------------------------------------------------------- chatbot */
+// Questions real visitors might type, with the answer id they should reach.
+// Add a line here whenever the chatbot gets a new answer or a question lands wrong.
+const CHAT_TESTS = [
+  ['how much does it cost', 17], ['what are your prices', 17], ['wat kost het', 17], ['is the first call free', 11],
+  ['gratis kennismaking?', 11], ['is it free', 11], ['how do i get started', 9], ['hoe begin ik', 9],
+  ['where are you located', 3], ['waar zitten jullie', 3], ['do you do bookkeeping', 24], ['doen jullie mijn belastingaangifte', 24],
+  ['tax return', 24], ['can you build me a website', 36], ['webshop laten maken', 36], ['manage my instagram', 41],
+  ['social media beheer', 41], ['whatsapp campaign', 42], ['what is a virtual cfo', 23], ['virtuele cfo', 23],
+  ['do you speak papiamentu', 47], ['spreken jullie spaans', 47], ['can you automate my invoices', 35], ['automatiseren', 35],
+  ['dashbord for sales', 34], ['is my data safe', 39], ['nda', 49], ['sign a confidentiality agreement', 49],
+  ['how long does a project take', 15], ['hoe lang duurt het', 15], ['do you work remotely', 48], ['can we meet in person', 48],
+  ['kan ik bellen', 48], ['clients outside curacao', 4], ['what does stac stand for', 2], ['cash flow problems', 26],
+  ['due dilligence', 25], ['compliance regulations', 27], ['how do you measure results', 45], ['monthly retainer', 19],
+  ['small business budget', 20], ['werken jullie met kleine bedrijven', 20], ['who is behind stac', 5], ['what services do you offer', 51],
+  ['WHAT SERVICES ARE THERE?', 51], ['whats services re available', 51], ['what do you offer', 51], ['welke diensten bieden jullie aan', 51],
+  ['wat bieden jullie', 51], ['which services', 51], ['what is stac', 1], ['do i have to use all three services', 8],
+  ['a food business wanna help automate my task', 35], ['can you help me with my admin tasks', 35], ['kunnen jullie mijn bestellingen automatiseren', 35],
+  ['do you do marketing', 40], ['what is included in financial advisory', 22], ['ai services', 31], ['I am not technical', 32],
+  ['what is the ai readiness scan', 33], ['do you help after launch', 37], ['can you connect to our software', 38], ['do you run facebook ads', 44],
+  ['what is in the marketing assessment', 46], ['how can i reach you', 50], ['email address', 50], ['do you have instagram', 50],
+  ['kosten per uur', 18], ['hourly rate', 18], ['vaste prijs', 18], ['how fast do you respond', 16],
+  ['what makes you different', 7], ['do i need all services', 8], ['wat gebeurt er in het eerste gesprek', 10], ['risk management', 28],
+  ['board report', 29], ['hoe werkt jullie proces', 14], ['what is your process', 14],
+];
+// Off-topic questions the chatbot must NOT pretend to answer.
+const CHAT_OFFTOPIC = ['purple elephant pizza', 'what is the weather today', 'who won the football match', 'tell me a joke', 'asdfgh', 'hello', 'thanks'];
+// Business types the chat should recognise (for its tailored line), and phrases it shouldn't read as one
+const CHAT_INDUSTRY_TESTS = [
+  ['a food business wanna help automate my task', 'food'], ['we run a small restaurant', 'food'], ['ik heb een bakkerij', 'food'],
+  ['my shop needs a website', 'retail'], ['onze winkel', 'retail'], ['massage salon marketing', 'wellness'],
+  ['we have a fleet of trucks', 'transport'], ['how much does it cost', null], ['what is a virtual cfo', null],
+];
+const CHAT_LANG_TESTS = [['wat kost het', 'nl'], ['how much does it cost', 'en'], ['hoe lang duurt het project', 'nl'], ['do you speak spanish', 'en']];
+const CHAT_CONFIDENTIAL = new RegExp('\\b(' + atob('TkFDfEJyZWRhfE1hcmJldHxEQUY=') + ')\\b', 'i');   // client names that must never appear (encoded so they aren't readable in the repo)
+const CHAT_PROMISES = /(within (one|1|24|48|two|2) (working )?(day|days|hour|hours)|working day|werkdag|binnen \d+ (uur|dagen)|guarantee|garantie|gegarandeerd)/i;
+
+async function waitFor(fn, ms = 7000) {
+  const t0 = Date.now();
+  while (Date.now() - t0 < ms) { try { const v = fn(); if (v) return v; } catch (e) {} await sleep(100); }
+  return null;
+}
+
+async function checkChatbot(pages) {
+  const C = R.chat = { found: false, entries: 0, tests: [], self: { ok: 0, total: 0 }, off: [], lang: [], flow: [], data: [], sync: null };
+  const where = d => `#${d.id} "${cut(d.q.en, 60)}"`;
+  const addC = (g, sev, title, w, fix) => add({ g, page: 'Chatbot', sev, title, where: w, fix });
+
+  // 0. Present on every page
+  for (const P of pages.values()) if (!P.hasChat) addC(2, 'warn', `No chat button on ${P.page}`, '', 'Include assets/stac-chat.css, stac-chat-data.js and stac-chat.js on the page.');
+
+  // Load the real chat code on the home page
+  const savedLang = (() => { try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } })();
+  const resetSession = () => { try { ['stac_chat_log', 'stac_chat_seen', 'stac_chat_q'].forEach(k => sessionStorage.removeItem(k)); localStorage.setItem(LANG_KEY, 'en'); } catch (e) {} };
+  resetSession();
+  const f = await loadFrame(START, 1280);
+  const w = f.contentWindow, doc = f.contentDocument;
+  const api = await waitFor(() => w.STAC_CHAT && w.STAC_CHAT_DATA && w.STAC_CHAT_DATA.length ? w.STAC_CHAT : null, 5000);
+  if (!api) { addC(2, 'fail', 'Chat assistant didn\'t load on the home page', '', 'Check that the three assets/stac-chat files are included and load without errors.'); f.remove(); return; }
+  C.found = true;
+  const DATA = w.STAC_CHAT_DATA; C.entries = DATA.length;
+  const byId = id => DATA.find(d => d.id === id);
+
+  // 1. Content checks on every approved answer
+  const seen = new Set();
+  for (const d of DATA) {
+    const row = { d, flags: [] };
+    const flag = (sev, msg) => row.flags.push([sev, msg]);
+    if (seen.has(d.id)) { flag('fail', 'duplicate id'); addC(9, 'fail', `Two answers share id ${d.id}`, where(d)); }
+    seen.add(d.id);
+    for (const k of ['en', 'nl']) {
+      if (!d.q || !norm(d.q[k])) { flag('fail', `no ${k.toUpperCase()} question`); addC(3, 'fail', `Missing ${k.toUpperCase()} question`, where(d)); }
+      if (!d.a || !norm(d.a[k])) { flag('fail', `no ${k.toUpperCase()} answer`); addC(3, 'fail', `Missing ${k.toUpperCase()} answer`, where(d)); }
+    }
+    if (!d.a || !d.a.en || !d.a.nl) { C.data.push(row); continue; }
+    if (norm(d.a.en) === norm(d.a.nl)) { flag('fail', 'NL answer not translated'); addC(3, 'fail', 'Dutch answer is identical to the English', where(d), 'Translate it in content/chatbot-faq.md and regenerate the chat data.'); }
+    const je = wordHits(d.a.nl, ['je', 'jij', 'jouw', 'jullie']).filter(h => h.w !== 'jullie');
+    if (je.length) { flag('warn', 'informal "je" in Dutch'); addC(3, 'warn', 'Dutch answer uses informal "je"', `${where(d)}: ${cut(d.a.nl, 100)}`, 'The site uses the formal "u"; rewrite with u/uw.'); }
+    const eng = [...new Set(wordHits(d.a.nl, EN_IN_NL).map(h => h.w))];
+    if (eng.length >= 2) { flag('warn', 'English words in Dutch: ' + eng.join(', ')); addC(3, 'warn', 'Dutch answer contains English words', `${where(d)} (${eng.join(', ')})`); }
+    for (const lang of ['en', 'nl']) {
+      const t = d.a[lang], n = t.split(/\s+/).length;
+      if (n > 70) { flag('info', `${lang.toUpperCase()} answer is ${n} words`); addC(4, 'info', `Long chat answer (${n} words, ${lang.toUpperCase()})`, where(d), 'Chat answers read best under ~60 words; link to a page for the rest.'); }
+      for (const h of wordHits(t, WORDS.hype[lang])) { if (!isBoast(t, h)) continue; flag('warn', `boastful "${h.w}"`); addC(5, 'warn', `Chat answer sounds boastful: "${h.w}" (${lang.toUpperCase()})`, `${where(d)}: ${around(t, h.i)}`); }
+      const pm = t.match(CHAT_PROMISES);
+      if (pm) { flag('warn', `promise "${pm[0]}"`); addC(5, 'warn', `Chat answer makes a promise: "${pm[0]}" (${lang.toUpperCase()})`, where(d), 'Only promise what STAC can guarantee every time.'); }
+      const cm = (t + ' ' + d.q[lang]).match(CHAT_CONFIDENTIAL);
+      if (cm) { flag('fail', `names "${cm[0]}"`); addC(9, 'fail', `Chat content names a confidential client: "${cm[0]}"`, where(d), 'Remove client names; describe the work instead.'); }
+      const mails = (t.match(/[\w.+-]+@[\w-]+\.[\w.]+/g) || []).map(m => m.replace(/\.+$/, '')).filter(m => m.toLowerCase() !== 'info@stacinternational.com');
+      if (mails.length) { flag('warn', 'unknown e-mail ' + mails[0]); addC(9, 'warn', `Chat answer uses an unexpected e-mail address: ${mails[0]}`, where(d)); }
+    }
+    C.data.push(row);
+  }
+
+  // 2. Matching: every answer must be reachable by its own question, in both languages
+  const selfMiss = [];
+  for (const d of DATA) for (const k of ['en', 'nl']) {
+    if (!d.q || !d.q[k]) continue;
+    C.self.total++;
+    const got = api.match(d.q[k]);
+    if (got === d.id) C.self.ok++; else selfMiss.push([d, k, got]);
+  }
+  for (const [d, k, got] of selfMiss) addC(1, 'warn', `Its own ${k.toUpperCase()} question doesn't reach this answer`, `${where(d)} → got ${got ? '#' + got : 'no answer'}`, 'Add keywords for this answer (faq-extra) or reword the question.');
+
+  // 3. Visitor questions and off-topic questions
+  for (const [q, exp] of CHAT_TESTS) {
+    const got = api.match(q), ok = got === exp;
+    C.tests.push({ q, exp, got, ok });
+    if (!ok) addC(1, 'warn', `Chatbot answers the wrong question: "${q}"`, `expected #${exp} "${cut((byId(exp) || { q: { en: '?' } }).q.en, 50)}", got ${got ? '#' + got + ' "' + cut(byId(got).q.en, 50) + '"' : 'no answer'}`, 'Add keywords to the right answer, or a filler word to the stop list.');
+  }
+  for (const q of CHAT_OFFTOPIC) {
+    const got = api.match(q);
+    C.off.push({ q, got, ok: got === null });
+    if (got !== null) addC(1, 'warn', `Chatbot pretends to know an off-topic question: "${q}"`, `answered with #${got} "${cut(byId(got).q.en, 50)}"`, 'It should say it has no ready answer and offer the team.');
+  }
+  // Business-type lines: recognised correctly, and held to the same content rules as answers
+  C.industry = [];
+  if (api.industry) {
+    for (const [q, exp] of CHAT_INDUSTRY_TESTS) {
+      const got = api.industry(q);
+      C.industry.push({ q, exp, got, ok: got === exp });
+      if (got !== exp) addC(1, 'warn', `Chatbot misreads the business type: "${q}"`, `expected ${exp || 'none'}, got ${got || 'none'}`);
+    }
+    for (const ind of api.industries || []) for (const lang of ['en', 'nl']) {
+      const t = ind[lang] || '', w = `business-type line "${ind.key}" (${lang.toUpperCase()})`;
+      if (!t) { addC(3, 'fail', `Missing ${w}`); continue; }
+      for (const h of wordHits(t, WORDS.hype[lang])) if (isBoast(t, h)) addC(5, 'warn', `Chat ${w} sounds boastful: "${h.w}"`, around(t, h.i));
+      const pm = t.match(CHAT_PROMISES); if (pm) addC(5, 'warn', `Chat ${w} makes a promise: "${pm[0]}"`);
+      const cm = t.match(CHAT_CONFIDENTIAL); if (cm) addC(9, 'fail', `Chat ${w} names a confidential client: "${cm[0]}"`);
+      if (lang === 'nl' && wordHits(t, ['je', 'jij', 'jouw']).length) addC(3, 'warn', `Chat ${w} uses informal "je"`);
+    }
+    for (const ind of api.industries || []) if (ind.en && ind.nl && norm(ind.en) === norm(ind.nl)) addC(3, 'fail', `Business-type line "${ind.key}" isn't translated`);
+  }
+  for (const [q, exp] of CHAT_LANG_TESTS) {
+    const got = api.detectLang(q);
+    C.lang.push({ q, exp, got, ok: got === exp });
+    if (got !== exp) addC(3, 'warn', `Chatbot misreads the visitor's language: "${q}"`, `expected ${exp.toUpperCase()}, got ${got.toUpperCase()}`);
+  }
+
+  // 4. Answers in sync with the approved copy
+  try {
+    const md = await (await fetch(new URL('content/chatbot-faq.md', SITE).href, { cache: 'no-store' })).text();
+    const src = {}; let cur = null;
+    md.replace(/\r/g, '').split('\n').forEach(line => {
+      let m;
+      if ((m = line.match(/^\*\*(\d+)\. (.+?)\*\*$/))) { cur = src[m[1]] = {}; return; }
+      if (cur && (m = line.match(/^- \*\*(EN|NL):\*\* (.+)$/)) && !cur[m[1].toLowerCase()]) cur[m[1].toLowerCase()] = m[2].replace(/&amp;/g, '&').replace(/\\n/g, '\n');
+    });
+    const out = DATA.filter(d => src[d.id] && (norm(src[d.id].en) !== norm(d.a.en) || norm(src[d.id].nl) !== norm(d.a.nl)));
+    const missing = Object.keys(src).filter(id => !byId(+id));
+    C.sync = { ok: !out.length && !missing.length, out, missing, count: Object.keys(src).length };
+    for (const d of out) addC(9, 'warn', 'Chat answer differs from the approved copy', `${where(d)}: content/chatbot-faq.md was edited but the chat data wasn't regenerated (or the other way round)`, 'Regenerate assets/stac-chat-data.js from content/chatbot-faq.md.');
+    for (const id of missing) addC(9, 'warn', `Approved answer #${id} isn't in the chatbot`, '', 'Regenerate assets/stac-chat-data.js.');
+  } catch (e) { C.sync = { ok: false, error: String(e) }; addC(9, 'info', 'Couldn\'t read content/chatbot-faq.md to compare', String(e)); }
+
+  // 5. Walkthrough on the real chat window
+  const step = (name, ok, detail, g, sev) => { C.flow.push({ name, ok: !!ok, detail }); if (!ok) addC(g, sev || 'fail', `Chat walkthrough failed: ${name}`, detail); };
+  const bots = () => [...doc.querySelectorAll('.sc-bot')];
+  const say = async text => {
+    const before = bots().length, input = doc.querySelector('.sc-form input');
+    input.value = text; input.dispatchEvent(new w.Event('input', { bubbles: true }));
+    doc.querySelector('.sc-form').requestSubmit();
+    await waitFor(() => bots().length > before && !doc.querySelector('.sc-typing'));
+    return (bots().pop() || {}).textContent || '';
+  };
+  try {
+    doc.querySelector('.sc-launch').click();
+    const greeted = await waitFor(() => doc.documentElement.classList.contains('sc-open') && bots().length >= 1);
+    step('Opens and greets the visitor', greeted, greeted ? `"${cut(bots()[0].textContent, 70)}"` : 'no greeting appeared', 2);
+    const chipsN = doc.querySelectorAll('.sc-chips button').length;
+    step('Offers suggestion chips', chipsN >= 3, `${chipsN} chips`, 2, 'warn');
+    const a1 = await say('How much does it cost?');
+    step('Answers a typed question (EN)', a1 === byId(17).a.en, `"${cut(a1, 70)}"`, 1);
+    const chipBtn = [...doc.querySelectorAll('.sc-chips button')].find(b => !b.classList.contains('human'));
+    let chipOk = false, chipDetail = 'no chip';
+    if (chipBtn) {
+      const label = chipBtn.textContent, target = DATA.find(d => d.q.en === label || d.q.nl === label), before = bots().length;
+      chipBtn.click();
+      await waitFor(() => bots().length > before && !doc.querySelector('.sc-typing'));
+      const got = (bots().pop() || {}).textContent;
+      chipOk = !!target && got === target.a.en; chipDetail = `"${cut(label, 40)}" → "${cut(got, 50)}"`;
+    }
+    step('Tapping a chip answers that question', chipOk, chipDetail, 1);
+    const titleEn = doc.querySelector('.sc-title b').textContent;
+    doc.getElementById(LANG_BTN.nl.slice(1)).click();
+    await sleep(150);
+    const titleNl = doc.querySelector('.sc-title b').textContent;
+    step('Switches to Dutch with the site', titleNl !== titleEn && doc.querySelector('.sc-form input').placeholder !== 'Type your question…', `"${titleEn}" → "${titleNl}"`, 3);
+    const a2 = await say('wat kost het?');
+    step('Answers a Dutch question in Dutch', a2 === byId(17).a.nl, `"${cut(a2, 70)}"`, 3);
+    doc.getElementById(LANG_BTN.en.slice(1)).click();
+    await sleep(100);
+    const a3 = await say('do you speak papiaments?');
+    step('Answers in the visitor\'s language', a3 === byId(47).a.en, `EN site, EN question → "${cut(a3, 60)}"`, 3, 'warn');
+    const q4 = 'Can you repair my car?';
+    const a4 = await say(q4);
+    const answered = DATA.some(d => d.a.en === a4 || d.a.nl === a4);
+    const act = [...doc.querySelectorAll('.sc-act button')].pop();
+    step('Admits when it has no answer', !answered && !!act, `"${cut(a4, 60)}"`, 1);
+    if (act) {
+      act.click();
+      const handed = await waitFor(() => !doc.documentElement.classList.contains('sc-open') && doc.getElementById('ta') && doc.getElementById('ta').value === q4);
+      step('Hands the question to the contact form', handed, handed ? `message field: "${q4}"` : `message field: "${(doc.getElementById('ta') || {}).value || ''}"`, 2);
+    } else step('Hands the question to the contact form', false, 'no "send to the team" button', 2);
+  } catch (e) { step('Walkthrough ran without errors', false, String(e), 2); }
+  f.remove();
+
+  // 6. Fits on a phone
+  resetSession();
+  try {
+    const m = await loadFrame(START, 390);
+    const md = m.contentDocument;
+    await waitFor(() => md.querySelector('.sc-launch'), 4000);
+    md.querySelector('.sc-launch').click();
+    await waitFor(() => md.documentElement.classList.contains('sc-open'), 3000);
+    await sleep(400);
+    const r = md.querySelector('.sc-panel').getBoundingClientRect(), iw = md.querySelector('.sc-form input').getBoundingClientRect();
+    const vh = m.contentWindow.innerHeight;
+    const fits = r.left >= -1 && r.right <= 391 && md.documentElement.scrollWidth <= 392 && iw.width > 150;
+    step('Fits on a phone (390px)', fits, `panel ${Math.round(r.left)}–${Math.round(r.right)}px, input ${Math.round(iw.width)}px wide`, 8);
+    const popup = r.height <= vh * 0.75 && r.top >= vh * 0.2 && r.left >= 8 && r.right <= 382;
+    step('Opens as a pop-up on phones, not full screen', popup, `${Math.round(r.height)}px tall of ${vh}px (${Math.round(r.height / vh * 100)}%), ${Math.round(r.left)}px side margins, page visible above`, 8);
+    await sleep(450);
+    md.querySelector('main, section, body').dispatchEvent(new m.contentWindow.MouseEvent('click', { bubbles: true }));
+    await sleep(100);
+    step('Tapping outside closes the pop-up', !md.documentElement.classList.contains('sc-open'), md.documentElement.classList.contains('sc-open') ? 'still open' : 'closed', 2, 'warn');
+    m.remove();
+  } catch (e) { step('Fits on a phone (390px)', false, String(e), 8); }
+
+  // Leave the visitor-facing state as we found it
+  try { ['stac_chat_log', 'stac_chat_seen', 'stac_chat_q'].forEach(k => sessionStorage.removeItem(k)); if (savedLang === null) localStorage.removeItem(LANG_KEY); else localStorage.setItem(LANG_KEY, savedLang); } catch (e) {}
+}
+
+/* -------------------------------------------------------------------- run */
+async function run() {
+  $('#runBtn').disabled = true; $('#exportBtn').disabled = true;
+  fetchCache.clear();
+  R = { findings: [], pages: new Map(), at: new Date() };
+  const pages = R.pages;
+  try {
+    const queue = [START]; const seen = new Set(queue);
+    while (queue.length) {
+      const url = queue.shift();
+      log(`Opening ${pageName(url)} in English and Dutch…`);
+      const r = await probe(url);
+      if (!r.ok) { add({ g: 2, page: pageName(url), sev: 'fail', title: `Page doesn't load (HTTP ${r.status})` }); continue; }
+      const P = await capturePage(url);
+      pages.set(url, P);
+      for (const l of P.links) {
+        let u; try { u = new URL(l.abs); } catch (e) { continue; }
+        const base = u.href.split('#')[0];
+        if (u.origin === location.origin && /\.html?$|\/$/.test(u.pathname) && !seen.has(base) && !/\/tools\//.test(u.pathname)) { seen.add(base); queue.push(base); }
+      }
+    }
+    for (const P of pages.values()) {
+      log(`Checking links on ${P.page}…`);
+      await checkLinks(P, pages);
+      await checkAssets(P);
+      checkPageFlow(P, pages);
+      checkTranslation(P);
+      checkVoice(P);
+      checkCraft(P);
+      checkNaming(P);
+    }
+    await checkHosting();
+    checkSiteWide(pages);
+    log('Testing the chat assistant…');
+    await checkChatbot(pages);
+    log(`Checked ${pages.size} pages at ${R.at.toLocaleTimeString()}.`);
+    render();
+    $('#exportBtn').disabled = false;
+  } catch (e) {
+    log('Stopped: ' + e.message);
+    console.error(e);
+  } finally {
+    $('#runBtn').disabled = false;
+    $('#frames').innerHTML = '';
+  }
+}
+
+/* ----------------------------------------------------------------- scoring */
+const PEN = { fail: 20, warn: 6, info: 1 };
+// Guidelines the chatbot check actually tests; the rest show "–" rather than a fake "clear"
+const CHAT_GUIDES = [1, 2, 3, 4, 5, 8, 9];
+function columns() { return [...[...R.pages.values()].map(p => p.page), ...(R.chat ? ['Chatbot'] : []), 'Site']; }
+function active() { return R.findings.filter(f => !ignored.has(f.id)); }
+function cellScore(g, page) {
+  const fs = active().filter(f => f.g === g && f.page === page);
+  return { score: Math.max(0, 100 - fs.reduce((s, f) => s + PEN[f.sev], 0)), fs };
+}
+// null = not applicable to this column
+function cellApplies(g, c) {
+  if (c === 'Site') return cellScore(g, c).fs.length > 0;
+  if (c === 'Chatbot') return CHAT_GUIDES.includes(g) || cellScore(g, c).fs.length > 0;
+  return true;
+}
+function overall() {
+  const scores = [];
+  for (const G of GUIDELINES) for (const c of columns()) if (cellApplies(G.n, c)) scores.push(cellScore(G.n, c).score);
+  return Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
+}
+const cls = s => s >= 90 ? 'c-pass' : s >= 70 ? 'c-warn' : 'c-fail';
+
+/* ---------------------------------------------------------------- render */
+function render() {
+  const score = overall();
+  const act = active();
+  const n = k => act.filter(f => f.sev === k).length;
+  $('#scoreNum').textContent = score;
+  $('#scoreRing').style.borderColor = score >= 90 ? 'var(--pass)' : score >= 75 ? 'var(--warn)' : 'var(--fail)';
+  $('#verdictH').textContent = n('fail') === 0 && score >= 90 ? 'Ready to launch' : score >= 75 ? 'Nearly there' : 'Not ready yet';
+  $('#verdictP').textContent = n('fail') ? `Fix the ${n('fail')} failing item${n('fail') > 1 ? 's' : ''} first: those are things a visitor would actually hit.` : 'No blockers. Work through the warnings for polish.';
+  $('#counts').innerHTML = `<span class="pill fail">${n('fail')} fail</span><span class="pill warn">${n('warn')} warning</span><span class="pill info">${n('info')} note</span>${ignored.size ? `<span class="pill pass">${R.findings.filter(f => ignored.has(f.id)).length} marked intended</span>` : ''}`;
+
+  const cols = columns();
+  let h = '<thead><tr><th>Guideline</th>' + cols.map(c => `<th>${esc(c)}</th>`).join('') + '<th>Average</th></tr></thead><tbody>';
+  for (const G of GUIDELINES) {
+    h += `<tr><td class="gname"><b>${G.n}. ${esc(G.name)}</b><span>${esc(G.short)}</span></td>`;
+    const vals = [];
+    for (const c of cols) {
+      const { score: s, fs } = cellScore(G.n, c);
+      if (!cellApplies(G.n, c)) { h += `<td class="cell c-na" data-g="${G.n}" data-p="${esc(c)}">–</td>`; continue; }
+      vals.push(s);
+      h += `<td class="cell ${cls(s)}" data-g="${G.n}" data-p="${esc(c)}">${s}<small>${fs.length ? fs.length + ' item' + (fs.length > 1 ? 's' : '') : 'clear'}</small></td>`;
+    }
+    const avg = Math.round(vals.reduce((a, b) => a + b, 0) / vals.length);
+    h += `<td class="cell ${cls(avg)}" data-g="${G.n}" data-p="">${avg}</td></tr>`;
+  }
+  $('#matrix').innerHTML = h + '</tbody>';
+
+  let v = '<thead><tr><th>Page</th><th>Avg words / sentence</th><th>Longest sentence</th><th>you : we</th><th>Boastful words</th></tr></thead><tbody>';
+  for (const P of R.pages.values()) {
+    const V = P.voice; const avg = V.sentences ? (V.words / V.sentences).toFixed(1) : '–';
+    v += `<tr><td>${esc(P.page)}</td><td><span class="pill ${avg > 20 ? 'warn' : 'pass'}">${avg}</span></td><td>${V.longestN} words<br><span class="muted">${esc(cut(V.longest, 110))}</span></td><td><span class="pill ${V.we > V.you * 1.6 ? 'warn' : 'pass'}">${V.you} : ${V.we}</span></td><td><span class="pill ${V.hype ? 'warn' : 'pass'}">${V.hype}</span></td></tr>`;
+  }
+  $('#voiceTable').innerHTML = v + '</tbody>';
+
+  const opt = (sel, items, all) => { const cur = $(sel).value; $(sel).innerHTML = `<option value="">${all}</option>` + items.map(([val, lab]) => `<option value="${esc(val)}">${esc(lab)}</option>`).join(''); $(sel).value = cur; };
+  opt('#fG', GUIDELINES.map(G => [G.n, `${G.n}. ${G.name}`]), 'All guidelines');
+  opt('#fPage', cols.map(c => [c, c]), 'All pages');
+  renderFindings();
+
+  const tp = $('#tPage').value;
+  $('#tPage').innerHTML = [...R.pages.values()].map(p => `<option>${esc(p.page)}</option>`).join('');
+  if (tp) $('#tPage').value = tp;
+  renderTranslation();
+  renderLinks();
+  renderChat();
+  renderBrand();
+}
+
+function renderFindings() {
+  if (!R) return;
+  const sev = $('#fSev').value, g = $('#fG').value, pg = $('#fPage').value, showIgn = $('#fIgn').checked;
+  const order = { fail: 0, warn: 1, info: 2 };
+  const list = R.findings.filter(f => (!sev || f.sev === sev) && (!g || f.g == g) && (!pg || f.page === pg) && (showIgn || !ignored.has(f.id)))
+    .sort((a, b) => order[a.sev] - order[b.sev] || a.g - b.g);
+  const lab = { fail: 'Fail', warn: 'Warning', info: 'Note' };
+  $('#findingList').innerHTML = list.length ? list.map(f => `
+    <div class="finding ${f.sev} ${ignored.has(f.id) ? 'ignored' : ''}">
+      <div class="top"><span class="pill ${f.sev}">${lab[f.sev]}</span><b>${esc(f.title)}</b>
+        <button class="linkbtn" data-ign="${f.id}">${ignored.has(f.id) ? 'Count it again' : 'Mark as intended'}</button></div>
+      <div class="meta">${esc(f.page)} · ${f.g}. ${esc(GUIDELINES[f.g - 1].name)}</div>
+      ${f.where ? `<div class="where">${esc(f.where)}</div>` : ''}
+      ${f.fix ? `<div class="fix">${esc(f.fix)}</div>` : ''}
+    </div>`).join('') : '<p class="muted">Nothing here. 👍</p>';
+}
+
+function renderTranslation() {
+  if (!R) return;
+  const P = [...R.pages.values()].find(p => p.page === $('#tPage').value) || [...R.pages.values()][0];
+  if (!P) return;
+  const all = $('#tAll').checked;
+  const rows = P.pairs.filter(p => all || (p.flags && p.flags.some(f => f[0] !== 'info')));
+  $('#trTable').innerHTML = '<thead><tr><th>English</th><th>Dutch</th><th>Flags</th></tr></thead><tbody>' + (rows.length ? rows.map(p => `
+    <tr><td>${esc(p.en)}<br><span class="muted">${esc(p.where)}</span></td><td>${esc(p.nl)}</td>
+    <td>${(p.flags || []).map(f => `<span class="pill ${f[0]} flag">${esc(f[1])}</span>`).join('') || '<span class="pill pass">ok</span>'}</td></tr>`).join('')
+    : '<tr><td colspan="3" class="muted">No flagged pairs on this page. Tick the box to read every pair.</td></tr>') + '</tbody>';
+}
+
+function renderChat() {
+  const C = R.chat;
+  if (!C || !C.found) {
+    $('#chatStats').innerHTML = '<span class="pill fail">Chat assistant not found</span>';
+    ['#chatFlow', '#chatTests', '#chatData'].forEach(s => $(s).innerHTML = '');
+    return;
+  }
+  const passT = C.tests.filter(t => t.ok).length, passO = C.off.filter(t => t.ok).length, passF = C.flow.filter(s => s.ok).length;
+  const pill = (ok, txt) => `<span class="pill ${ok ? 'pass' : 'warn'}">${txt}</span>`;
+  $('#chatStats').innerHTML = [
+    `<span class="pill info">${C.entries} answers</span>`,
+    pill(C.self.ok === C.self.total, `${C.self.ok}/${C.self.total} answers reachable by their own question`),
+    pill(passT === C.tests.length, `${passT}/${C.tests.length} visitor questions matched`),
+    pill(passO === C.off.length, `${passO}/${C.off.length} off-topic questions declined`),
+    pill(C.lang.every(l => l.ok), `${C.lang.filter(l => l.ok).length}/${C.lang.length} languages detected`),
+    C.industry && C.industry.length ? pill(C.industry.every(l => l.ok), `${C.industry.filter(l => l.ok).length}/${C.industry.length} business types recognised`) : '',
+    pill(passF === C.flow.length, `${passF}/${C.flow.length} walkthrough steps`),
+    C.sync ? pill(C.sync.ok, C.sync.ok ? 'in sync with chatbot-faq.md' : 'out of sync with chatbot-faq.md') : '',
+  ].join('');
+  $('#chatFlow').innerHTML = '<thead><tr><th>Step</th><th>Result</th><th>Detail</th></tr></thead><tbody>' +
+    C.flow.map(s => `<tr><td>${esc(s.name)}</td><td><span class="pill ${s.ok ? 'pass' : 'fail'}">${s.ok ? 'pass' : 'fail'}</span></td><td class="muted">${esc(s.detail || '')}</td></tr>`).join('') + '</tbody>';
+  const all = $('#chatAll').checked;
+  const qOf = id => { const d = C.data.find(r => r.d.id === id); return d ? `#${id} ${d.d.q.en}` : '–'; };
+  const rows = [...C.tests.map(t => ({ ...t, kind: 'match' })), ...C.off.map(t => ({ q: t.q, exp: null, got: t.got, ok: t.ok, kind: 'off-topic' }))]
+    .filter(t => all || !t.ok);
+  $('#chatTests').innerHTML = '<thead><tr><th>Visitor types</th><th>Should reach</th><th>Reached</th><th>Result</th></tr></thead><tbody>' +
+    (rows.length ? rows.map(t => `<tr><td>${esc(t.q)}</td><td>${t.kind === 'off-topic' ? '<span class="muted">no answer (off-topic)</span>' : esc(qOf(t.exp))}</td><td>${t.got ? esc(qOf(t.got)) : '<span class="muted">no answer</span>'}</td><td><span class="pill ${t.ok ? 'pass' : 'warn'}">${t.ok ? 'pass' : 'miss'}</span></td></tr>`).join('')
+      : `<tr><td colspan="4" class="muted">All ${C.tests.length + C.off.length} tests pass. Tick the box to see them.</td></tr>`) + '</tbody>';
+  $('#chatData').innerHTML = '<thead><tr><th>Question</th><th>English answer</th><th>Dutch answer</th><th>Checks</th></tr></thead><tbody>' +
+    C.data.map(r => `<tr><td><b>#${r.d.id}</b> ${esc(r.d.q.en)}<br><span class="muted">${esc(r.d.q.nl)}</span></td><td>${esc(r.d.a.en)}</td><td>${esc(r.d.a.nl)}</td><td>${r.flags.map(f => `<span class="pill ${f[0]} flag">${esc(f[1])}</span>`).join('') || '<span class="pill pass">ok</span>'}</td></tr>`).join('') + '</tbody>';
+}
+
+function renderLinks() {
+  let h = '<thead><tr><th>Page</th><th>Label (EN / NL)</th><th>Goes to</th><th>Result</th></tr></thead><tbody>';
+  for (const P of R.pages.values()) for (const l of P.links) {
+    const k = { ok: 'pass', 'mail ok': 'pass', external: 'info', phone: 'info', 'label?': 'warn' }[l.status] || 'fail';
+    h += `<tr><td>${esc(P.page)}</td><td>${esc(cut(l.en, 60)) || '<span class="muted">(image)</span>'}${l.nl && l.nl !== l.en ? `<br><span class="muted">${esc(cut(l.nl, 60))}</span>` : ''}</td>
+      <td>${esc(l.href)}</td><td><span class="pill ${k}">${esc(l.status || '–')}${l.http ? ' · ' + l.http : ''}${l.redirected ? ' · redirected' : ''}</span></td></tr>`;
+  }
+  $('#linkTable').innerHTML = h + '</tbody>';
+}
+
+function renderGuide() {
+  $('#guideCards').innerHTML = GUIDELINES.map(G => `
+    <div class="card"><div class="num">GUIDELINE ${G.n} · ${esc(G.short.toUpperCase())}</div><h3>${esc(G.name)}</h3>
+    <p class="lbl">What good looks like</p><p>${esc(G.good)}</p><p class="lbl">Watch for</p><p>${esc(G.watch)}</p></div>`).join('');
+}
+
+function renderBrand() {
+  const home = R.pages.get(START); if (!home) return;
+  $('#swatches').innerHTML = Object.entries(home.tokens).filter(([, v]) => /^#|^rgb/.test(v))
+    .map(([k, v]) => `<div class="sw"><i style="background:${esc(v)}"></i><b>${esc(k)}</b><br>${esc(v)}</div>`).join('');
+  const codes = {};
+  for (const P of R.pages.values()) for (const [k, s] of Object.entries(P.tagCodes || {})) codes[k] = new Set([...(codes[k] || []), ...s]);
+  const rows = [
+    ['Heading font', home.fonts.heading], ['Body font', home.fonts.body],
+    ['Discipline names (EN)', CANON.en.join('  ·  ')], ['Discipline names (NL)', CANON.nl.join('  ·  ')],
+    ['Tag codes', Object.entries(codes).map(([k, s]) => `${k.replace(':', ' ')} · ${[...s].join(' / ')}`).join('  ·  ')],
+    ['Legal name', 'STAC B.V.'], ['Page titles', [...R.pages.values()].map(p => p.title).join('  ·  ')],
+  ];
+  $('#brandTable').innerHTML = '<tbody>' + rows.map(([a, b]) => `<tr><th style="width:200px">${esc(a)}</th><td>${esc(b)}</td></tr>`).join('') + '</tbody>';
+}
+
+function markdown() {
+  const lines = [`# STAC site readiness · ${R.at.toLocaleString()}`, '', `**Score: ${overall()}** · ${$('#verdictH').textContent}`, '', '## Matrix', ''];
+  const cols = columns();
+  lines.push('| Guideline | ' + cols.join(' | ') + ' |', '|---|' + cols.map(() => '---').join('|') + '|');
+  for (const G of GUIDELINES) lines.push(`| ${G.n}. ${G.name} | ` + cols.map(c => { const s = cellScore(G.n, c); return cellApplies(G.n, c) ? s.score : '–'; }).join(' | ') + ' |');
+  const C = R.chat;
+  if (C && C.found) {
+    lines.push('', '## Chatbot', '',
+      `- ${C.entries} answers; ${C.self.ok}/${C.self.total} reachable by their own question`,
+      `- ${C.tests.filter(t => t.ok).length}/${C.tests.length} visitor questions matched; ${C.off.filter(t => t.ok).length}/${C.off.length} off-topic questions declined`,
+      `- Walkthrough: ${C.flow.map(s => (s.ok ? '✓ ' : '✗ ') + s.name).join('; ')}`,
+      `- Approved copy: ${C.sync && C.sync.ok ? 'in sync' : 'out of sync'} with content/chatbot-faq.md`);
+  }
+  lines.push('', '## Findings', '');
+  for (const sev of ['fail', 'warn', 'info']) for (const f of active().filter(f => f.sev === sev))
+    lines.push(`- **[${sev}] ${f.title}** (${f.page}, G${f.g})${f.where ? ' — ' + f.where : ''}${f.fix ? ' _Fix: ' + f.fix + '_' : ''}`);
+  return lines.join('\n');
+}
+
+/* ----------------------------------------------------------------- wiring */
+renderGuide();
+if (location.protocol === 'file:') { $('#fileNotice').style.display = 'block'; $('#runBtn').disabled = true; }
+$('#runBtn').onclick = run;
+$('#exportBtn').onclick = async () => {
+  try { await navigator.clipboard.writeText(markdown()); $('#exportBtn').textContent = 'Copied'; }
+  catch (e) { const w = window.open(''); if (w) w.document.body.innerText = markdown(); }
+  setTimeout(() => $('#exportBtn').textContent = 'Copy report', 1600);
+};
+$('#tabs').onclick = e => { const t = e.target.dataset.tab; if (!t) return; showTab(t); };
+function showTab(t) {
+  document.querySelectorAll('#tabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === t));
+  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('on', p.id === 'p-' + t));
+}
+$('#matrix').onclick = e => {
+  const c = e.target.closest('td.cell'); if (!c || !R) return;
+  $('#fG').value = c.dataset.g; $('#fPage').value = c.dataset.p; $('#fSev').value = '';
+  renderFindings(); showTab('findings');
+};
+['#fSev', '#fG', '#fPage', '#fIgn'].forEach(s => $(s).onchange = renderFindings);
+$('#tPage').onchange = renderTranslation; $('#tAll').onchange = renderTranslation;
+$('#chatAll').onchange = () => R && renderChat();
+$('#openChat').onclick = () => { const b = document.querySelector('.sc-launch'); if (b) b.click(); };
+
+/* ------------------------------------------------------------ visitor stats */
+const STATS_URL = 'https://stac.goatcounter.com/';
+const STATS_VIEWS = [
+  ['chat', 'Chatbot activity', 'Opens, answers given, questions it couldn\'t answer, hand-offs to the team.'],
+  ['chat-no-answer', 'Questions without an answer', 'What the chatbot couldn\'t help with. Each one is a candidate for a new answer.'],
+  ['chat-answer', 'Most asked questions', 'Which approved answers visitors reach most often.'],
+  ['contact-form-sent', 'Contact form sends', 'Enquiries that went through the form.'],
+  ['click', 'Social and e-mail clicks', 'Instagram, TikTok, LinkedIn and e-mail link clicks.'],
+  ['.html', 'Pages', 'Visits per page: home and the three service pages.'],
+  ['switch-to-dutch', 'Dutch visitors', 'How often visitors switch the site to Dutch.'],
+  ['flythrough', 'Fly-through exits', 'How often visitors skip ahead or go back in "The work, up close".'],
+  ['redirected', 'Mistyped or old links', 'Addresses that didn\'t exist and where the 404 page sent visitors instead.'],
+];
+const STATS_EVENTS = [
+  ['chat-open', 'A visitor opened the chat (once per page view).', 'Compare with visits: a low share means the button may be too easy to miss.'],
+  ['chat-answer-<number>', 'The chat gave that approved answer.', 'The most frequent ones are what visitors care about. Make sure the site itself answers them too.'],
+  ['chat-no-answer', 'A visitor asked something the chat couldn\'t answer. What they typed is never sent.', 'If this grows, ask visitors (or check the contact form) what they want, and add answers.'],
+  ['chat-question-to-team', 'After "no answer", the visitor sent their question to the contact form.', 'Warm leads: they had a question and wanted a person.'],
+  ['chat-talk-to-person', 'The visitor tapped "Talk to a person".', 'Same: a sign of intent to get in touch.'],
+  ['contact-form-sent', 'A contact form was sent successfully.', 'Your clearest conversion number.'],
+  ['click-instagram / -tiktok / -linkedin', 'A visitor clicked through to that social profile.', 'Shows which channel interests your visitors.'],
+  ['click-email', 'A visitor clicked your e-mail address.', 'Counts as contact intent alongside the form.'],
+  ['switch-to-dutch', 'The visitor switched the site to Dutch.', 'Compare with the Languages panel to see how many Dutch speakers stay in English.'],
+  ['flythrough-skip-to-about / -back-to-services', 'The fly-through exit button was used.', 'Lots of skipping means the section may feel too long.'],
+  ['/STAC/<address> "404 redirected to …"', 'A visitor tried an address that doesn\'t exist and was sent straight to the page it pointed to.', 'If an old address keeps appearing (e.g. from a printed card or an old post), update the link there.'],
+  ['setup-test', 'A single test event from the installation.', 'Ignore it.'],
+];
+function renderStats() {
+  $('#statsLinks').innerHTML = STATS_VIEWS.map(([f, title, desc]) =>
+    `<a class="card" style="text-decoration:none;color:inherit" href="${STATS_URL}?filter=${encodeURIComponent(f)}" target="_blank" rel="noopener"><div class="num">FILTER: ${esc(f.toUpperCase())}</div><h3>${esc(title)} ↗</h3><p class="muted">${esc(desc)}</p></a>`).join('');
+  const data = window.STAC_CHAT_DATA || [];
+  let rows = STATS_EVENTS.map(([ev, what, todo]) => `<tr><td><code>${esc(ev)}</code></td><td>${esc(what)}</td><td class="muted">${esc(todo)}</td></tr>`).join('');
+  if (data.length) rows += `<tr><td colspan="3" class="muted" style="padding-top:18px"><b>Chat answer numbers</b>: ${data.map(d => `<code>chat-answer-${d.id}</code> ${esc(d.q.en)}`).join(' · ')}</td></tr>`;
+  $('#statsEvents').innerHTML = '<thead><tr><th>Event</th><th>What happened</th><th>What to do with it</th></tr></thead><tbody>' + rows + '</tbody>';
+}
+renderStats();
+window.addEventListener('load', renderStats);   // the chat data script is deferred; re-render once it's in
+// Deep links: readiness.html#chat opens that tab; ?autorun starts the check right away
+{
+  const tab = location.hash.slice(1);
+  if (tab && document.querySelector(`#tabs [data-tab="${CSS.escape(tab)}"]`)) showTab(tab);
+  if (new URLSearchParams(location.search).has('autorun') && !$('#runBtn').disabled) run();
+}
+$('#findingList').onclick = e => {
+  const id = e.target.dataset.ign; if (!id) return;
+  ignored.has(id) ? ignored.delete(id) : ignored.add(id);
+  saveIgnored(); render();
+};
+</script>
+</body>
+</html>

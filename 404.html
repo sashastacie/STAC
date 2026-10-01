@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" data-nl-title="Pagina niet gevonden | STAC">
+<head>
+<meta charset="UTF-8"/>
+<script>/* Site root: '/STAC/' on GitHub Pages, '/' on a custom domain or locally */document.write('<base href="'+(location.pathname.indexOf('/STAC/')===0?'/STAC/':'/')+'">');</script>
+<script>
+/* Smart redirect, before anything is drawn: if the address clearly points to a
+   page (any case, with or without .html, English or Dutch), go straight there so
+   the visitor never sees this 404 page. Unclear addresses stay here with links. */
+(function(){
+  var ROUTES=[
+    [/^(index|home|homepage|start)$/,'index.html'],
+    [/\b(financial|finance|financieel|financien|advisory|advies|cfo|accounting|boekhouding|tax|belasting|fa)\b/,'financial-advisory.html'],
+    [/\b(ai|tech|technology|technologie|data|automation|automatisering|website|web|ta)\b/,'ai-technology.html'],
+    [/\b(marketing|growth|groei|social|socials|content|mg)\b/,'marketing-growth.html'],
+    [/\b(contact|mail|email|e mail)\b/,'index.html#contact'],
+    [/\b(about|over|overons|team)\b/,'index.html#about'],
+    [/\b(services|service|diensten|dienst)\b/,'index.html#services'],
+    [/\b(work|projects|projecten|portfolio|cases|werk)\b/,'index.html#work'],
+    [/\b(readiness|tools)\b/,'tools/readiness.html']
+  ];
+  var root=location.pathname.indexOf('/STAC/')===0?'/STAC/':'/';
+  var slug=location.pathname.slice(root.length);
+  try{ slug=decodeURIComponent(slug); }catch(e){}
+  var words=slug.toLowerCase().replace(/\.html?$/,'').replace(/\/+$/,'').replace(/[^a-z0-9]+/g,' ').trim();
+  if(!words) return;
+  var target=null;
+  for(var i=0;i<ROUTES.length&&!target;i++) if(ROUTES[i][0].test(words)) target=ROUTES[i][1];
+  if(!target) return;
+  // Record the old address in the visitor stats without making anyone wait:
+  // a beacon is sent in the background and survives the page change.
+  if(!/^(localhost|127\.0\.0\.1)$/.test(location.hostname)&&navigator.sendBeacon){
+    try{
+      navigator.sendBeacon('https://stac.goatcounter.com/count?p='+encodeURIComponent(location.pathname)+
+        '&t='+encodeURIComponent('404 redirected to '+target)+'&r='+encodeURIComponent(document.referrer)+
+        '&e=false&rnd='+Math.random().toString(36).slice(2));
+    }catch(e){}
+  }
+  location.replace(root+target);   // replace() keeps the broken address out of the history
+})();
+</script>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="This page moved or never existed. Find STAC's Financial Advisory, AI &amp; Technology and Marketing &amp; Growth services here."/>
+<meta name="robots" content="noindex"/>
+<title>Page not found | STAC</title>
+<link rel="icon" type="image/png" href="logo/icon.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;0,700;1,700&family=Inter:wght@300;400;500;600&family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet"/>
+<script src="assets/stac-lang.js"></script>
+<script src="assets/stac-analytics.js"></script>
+<style>
+:root{--navy:#0B1A2E;--muted:#8BA7C0;--cyan:#14D8B4;--indigo2:#2F6FEF;--violet:#A855F7;--border:rgba(255,255,255,.1);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{min-height:100vh;background:var(--navy);color:#F0F2FF;font-family:'Inter',sans-serif;display:flex;flex-direction:column;}
+a{color:inherit;}
+header{display:flex;justify-content:space-between;align-items:center;padding:24px clamp(16px,5vw,64px);}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:3px;font-size:14px;}
+.brand img{height:32px;width:auto;}
+.lang{display:flex;gap:4px;}
+.lb{background:none;border:1px solid var(--border);color:var(--muted);font:600 11px 'Inter',sans-serif;letter-spacing:1px;padding:6px 10px;border-radius:2px;cursor:pointer;}
+.lb.on{color:#fff;border-color:var(--cyan);}
+main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:40px clamp(16px,5vw,64px) 64px;max-width:1100px;}
+.code{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:20px;}
+h1{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(34px,7vw,80px);line-height:1.05;letter-spacing:-.02em;margin-bottom:20px;}
+h1 em{color:var(--cyan);}
+.sub{font-size:16px;line-height:1.6;color:rgba(240,242,255,.7);max-width:560px;margin-bottom:40px;}
+.links{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:28px;}
+.links a{display:block;text-decoration:none;border:1px solid var(--border);border-radius:4px;padding:18px 20px;transition:border-color .2s,transform .2s;}
+.links a:hover{transform:translateY(-3px);}
+.links a:nth-child(1):hover{border-color:var(--indigo2);}
+.links a:nth-child(2):hover{border-color:var(--cyan);}
+.links a:nth-child(3):hover{border-color:var(--violet);}
+.links small{display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.links b{font-family:'Barlow Condensed',sans-serif;font-size:16px;}
+.contact{font-size:14px;color:rgba(240,242,255,.7);}
+.contact a{color:var(--cyan);}
+footer{padding:20px clamp(16px,5vw,64px);font-size:11px;color:var(--muted);border-top:1px solid var(--border);}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="index.html"><img src="logo/icon.png" alt=""/>STAC</a>
+  <div class="lang"><button class="lb on" id="ben">EN</button><button class="lb" id="bnl">NL</button></div>
+</header>
+<main>
+  <div class="code" data-nl="Fout 404">Error 404</div>
+  <h1 data-nl="Deze pagina is verhuisd&lt;br/&gt;&lt;em&gt;of heeft nooit bestaan.&lt;/em&gt;">That page moved<br/><em>or never existed.</em></h1>
+  <p class="sub" data-nl="Geen probleem. Hier vindt u wat u waarschijnlijk zocht.">No harm done. Here's what you were most likely looking for.</p>
+  <nav class="links" aria-label="STAC disciplines" data-nl-aria="STAC-disciplines">
+    <a href="financial-advisory.html"><small data-nl="S · Strategie">S · Strategy</small><b data-nl="Financieel Advies">Financial Advisory</b></a>
+    <a href="ai-technology.html"><small data-nl="T.A · Technologie">T.A · Technology</small><b data-nl="AI &amp; Technologie">AI &amp; Technology</b></a>
+    <a href="marketing-growth.html"><small>C · Consulting</small><b data-nl="Marketing &amp; Groei">Marketing &amp; Growth</b></a>
+  </nav>
+  <p class="contact"><span data-nl="Iets anders nodig?">Need something else?</span> <a href="index.html#contact" data-nl="Praat met ons.">Talk to us.</a></p>
+</main>
+<footer>© 2026 STAC B.V.</footer>
+<script>
+(function(){
+  function apply(lang){
+    document.querySelectorAll('[data-nl]').forEach(function(el){
+      if(el.dataset.enCache===undefined) el.dataset.enCache=el.innerHTML;
+      el.innerHTML=lang==='nl'?el.getAttribute('data-nl'):el.dataset.enCache;
+    });
+    document.getElementById('ben').className='lb'+(lang==='en'?' on':'');
+    document.getElementById('bnl').className='lb'+(lang==='nl'?' on':'');
+    if(window.stacLangExtras) stacLangExtras(lang);
+    try{localStorage.setItem('stac_lang',lang);}catch(e){}
+  }
+  document.getElementById('ben').addEventListener('click',function(){apply('en');});
+  document.getElementById('bnl').addEventListener('click',function(){apply('nl');});
+  var saved='en'; try{saved=localStorage.getItem('stac_lang')||'en';}catch(e){}
+  apply(saved);
+})();
+</script>
+</body>
+</html>
