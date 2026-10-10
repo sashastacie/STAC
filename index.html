@@ -1406,8 +1406,8 @@ if(ctformEl){
   function req(){ if(!ticking){ ticking=true; requestAnimationFrame(frame); } }
   window.addEventListener('scroll',req,{passive:true});
   window.addEventListener('resize',function(){ layout(); req(); });
-  // Captions follow the EN/NL switch.
-  ['ben','bnl'].forEach(function(id){ var b=document.getElementById(id); if(b) b.addEventListener('click',function(){ current=-1; setSkip(dir,true); layout(); req(); }); });
+  // Captions follow the EN/NL switch right away, even while the section is off screen.
+  ['ben','bnl'].forEach(function(id){ var b=document.getElementById(id); if(b) b.addEventListener('click',function(){ cap.innerHTML=cards[Math.max(current,0)].querySelector('figcaption').innerHTML; current=-1; setSkip(dir,true); layout(); req(); }); });
   if(document.fonts&&document.fonts.ready) document.fonts.ready.then(function(){ layout(); req(); });
   setSkip('down',true);
   cap.innerHTML=cards[0].querySelector('figcaption').innerHTML;  // so layout() measures the full caption row
