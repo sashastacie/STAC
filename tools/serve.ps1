@@ -35,6 +35,25 @@ function Resolve-Exact([string]$rel) {
   [pscustomobject]@{ Path = $cur; CaseMismatch = $mismatch }
 }
 
+# Apply the same security headers as the live host (from _headers, "/*" block),
+# so problems show up here first. HTTPS-only rules are skipped on plain-http localhost.
+$securityHeaders = @{}
+$headersFile = Join-Path $root '_headers'
+if (Test-Path -LiteralPath $headersFile) {
+  $inBlock = $false
+  foreach ($line in Get-Content -LiteralPath $headersFile) {
+    if ($line -match '^\s*#' -or $line -match '^\s*$') { continue }
+    if ($line -match '^\S') { $inBlock = ($line.Trim() -eq '/*'); continue }
+    if ($inBlock -and $line -match '^\s+([A-Za-z-]+):\s*(.+)$') {
+      $name = $Matches[1]; $value = $Matches[2].Trim()
+      if ($name -eq 'Strict-Transport-Security') { continue }
+      if ($name -eq 'Content-Security-Policy') { $value = ($value -replace ';\s*upgrade-insecure-requests', '') }
+      $securityHeaders[$name] = $value
+    }
+  }
+  Write-Host ("Security headers from _headers: {0}" -f ($securityHeaders.Keys -join ', '))
+}
+
 $listener = New-Object System.Net.HttpListener
 $listener.Prefixes.Add("http://localhost:$Port/")
 $listener.Start()
@@ -59,6 +78,7 @@ try {
         $hit = Resolve-Exact ($rel.TrimEnd('/') + '/index.html')
       }
       $res.Headers.Add('Cache-Control', 'no-store')
+      foreach ($h in $securityHeaders.GetEnumerator()) { $res.Headers.Add($h.Key, $h.Value) }
       if (-not $hit -or $hit.CaseMismatch) {
         $res.StatusCode = 404
         if ($hit) {
