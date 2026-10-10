@@ -196,6 +196,8 @@ section{padding:88px 64px;}
 .wk-row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;}
 .wk-cap{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:clamp(20px,2.2vw,30px);color:#F5F8FC;display:inline-block;transition:opacity .25s,transform .25s;}
 .wk-cap.swap{opacity:0;transform:translateY(8px);}
+.wk-meta{display:flex;align-items:center;gap:16px;flex-shrink:0;}
+.wk-count{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:16px;letter-spacing:2px;color:#8BA7C0;font-variant-numeric:tabular-nums;}
 .wk-dots{display:flex;gap:6px;flex-shrink:0;}
 .wk-dots i{width:22px;height:4px;border-radius:2px;background:rgba(255,255,255,.15);transition:background .3s,width .3s;}
 .wk-dots i.on{background:rgb(var(--acc));width:34px;}
@@ -630,20 +632,20 @@ html.js .rv2.in{opacity:1;transform:none;}
     </div>
     <div class="wk-scene">
       <figure class="wk-card" data-k="fin"><img loading="lazy" decoding="async" src="images/FA_strategic_finance_advisory.jpg" width="1400" height="788" alt="Strategic Financial Advisory" data-nl-alt="Strategisch Financieel Advies"/><figcaption data-nl="Strategisch Financieel Advies">Strategic Financial Advisory</figcaption></figure>
-      <figure class="wk-card" data-k="fin"><img loading="lazy" decoding="async" src="images/FA_virtual_cfo.jpg" width="1400" height="788" alt="Virtual CFO Services" data-nl-alt="Virtuele CFO-diensten"/><figcaption data-nl="Virtuele CFO-diensten">Virtual CFO Services</figcaption></figure>
       <figure class="wk-card" data-k="fin"><img loading="lazy" decoding="async" src="images/FA_risk_gov.jpg" width="1400" height="788" alt="Risk Management &amp; Governance" data-nl-alt="Risicobeheer &amp; Governance"/><figcaption data-nl="Risicobeheer &amp; Governance">Risk Management &amp; Governance</figcaption></figure>
       <figure class="wk-card" data-k="fin"><img loading="lazy" decoding="async" src="images/FA_transformation_roadmap.jpg" width="1400" height="788" alt="Business Transformation" data-nl-alt="Bedrijfstransformatie"/><figcaption data-nl="Bedrijfstransformatie">Business Transformation</figcaption></figure>
+      <figure class="wk-card" data-k="fin"><img loading="lazy" decoding="async" src="images/FA_performance_intelligence.jpg" width="1400" height="790" alt="Performance Intelligence" data-nl-alt="Performance Intelligence"/><figcaption data-nl="Performance Intelligence">Performance Intelligence</figcaption></figure>
       <figure class="wk-card" data-k="tech"><img loading="lazy" decoding="async" src="images/savings_impact_analyzer.jpg" width="1400" height="933" alt="Savings Impact Analyzer" data-nl-alt="Analysetool besparingsimpact"/><figcaption data-nl="Analysetool besparingsimpact">Savings Impact Analyzer</figcaption></figure>
       <figure class="wk-card" data-k="tech"><img loading="lazy" decoding="async" src="images/predictive_truck_maintinance.jpg" width="1400" height="933" alt="Predictive Truck Maintenance" data-nl-alt="Voorspellend vrachtwagenonderhoud"/><figcaption data-nl="Voorspellend vrachtwagenonderhoud">Predictive Truck Maintenance</figcaption></figure>
       <figure class="wk-card" data-k="tech"><img loading="lazy" decoding="async" src="images/road_accident_pred.jpg" width="1400" height="933" alt="Road Accident Risk Predictor" data-nl-alt="Voorspeller verkeersongevalrisico"/><figcaption data-nl="Voorspeller verkeersongevalrisico">Road Accident Risk Predictor</figcaption></figure>
       <figure class="wk-card" data-k="tech"><img loading="lazy" decoding="async" src="images/arboreal.jpg" width="1400" height="933" alt="Arboreal" data-nl-alt="Arboreal"/><figcaption data-nl="Arboreal">Arboreal</figcaption></figure>
       <figure class="wk-card" data-k="mkt"><img loading="lazy" decoding="async" src="images/MG_bakery.jpg" width="1400" height="788" alt="Bakery" data-nl-alt="Bakkerij"/><figcaption data-nl="Bakkerij">Bakery</figcaption></figure>
-      <figure class="wk-card" data-k="mkt"><img loading="lazy" decoding="async" src="images/MG_general_store.jpg" width="1400" height="788" alt="General Store" data-nl-alt="Buurtwinkel"/><figcaption data-nl="Buurtwinkel">General Store</figcaption></figure>
       <figure class="wk-card" data-k="mkt"><img loading="lazy" decoding="async" src="images/MG_italian_place.jpg" width="1400" height="788" alt="Restaurant" data-nl-alt="Restaurant"/><figcaption data-nl="Restaurant">Restaurant</figcaption></figure>
       <figure class="wk-card" data-k="mkt"><img loading="lazy" decoding="async" src="images/MG_massage_studio.jpg" width="1400" height="788" alt="Massage Studio" data-nl-alt="Massagestudio"/><figcaption data-nl="Massagestudio">Massage Studio</figcaption></figure>
+      <figure class="wk-card" data-k="mkt"><img loading="lazy" decoding="async" src="images/MG_general_store.jpg" width="1400" height="788" alt="General Store" data-nl-alt="Buurtwinkel"/><figcaption data-nl="Buurtwinkel">General Store</figcaption></figure>
     </div>
     <div class="wk-foot" aria-hidden="true">
-      <div class="wk-row"><span class="wk-cap"></span><span class="wk-dots"><i></i><i></i><i></i><i></i></span></div>
+      <div class="wk-row"><span class="wk-cap"></span><span class="wk-meta"><span class="wk-count"></span><span class="wk-dots"><i></i><i></i><i></i><i></i></span></span></div>
       <div class="wk-bar"><i></i></div>
     </div>
     <a class="wk-skip" href="#about">Skip to About &#8595;</a>
@@ -1323,10 +1325,11 @@ if(ctformEl){
   var cap=sec.querySelector('.wk-cap'), bar=sec.querySelector('.wk-bar i');
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){ sec.classList.add('static'); return; }
   cards.forEach(function(c){ c.querySelector('img').loading='eager'; });  // they all come into view quickly
-  var UNIT=34, DEPTH=3, PEEK=24;              // vh of scroll per card; edges visible behind the top card
+  var UNIT=34, DEPTH=4, PEEK=26;              // vh of scroll per card; edges visible behind the top card
   var pos=[], m=0;                            // position of each card within its discipline
   cards.forEach(function(c,i){ if(i>0&&c.dataset.k!==cards[i-1].dataset.k) m=0; pos[i]=m++; });
-  var total=cards.length-.5;                  // the first card is already on the deck
+  var total=cards.length-.1;                  // first card starts on the deck; short hold on the finished stack
+  var cnt=sec.querySelector('.wk-count'), N=String(cards.length).padStart(2,'0');
   sec.style.height='calc(100vh + '+(total*UNIT)+'vh)';
   var ticking=false, current=-1;
   // One exit button that follows the scroll direction: forward to About while
@@ -1350,9 +1353,9 @@ if(ctformEl){
   // Make the card as large as the space between the title and the caption row allows
   function layout(){
     var W=stage.clientWidth, small=W<=960, st=stage.getBoundingClientRect().top;
-    PEEK=small?14:24;
+    PEEK=small?16:26;
     var headBot=Math.max(head.getBoundingClientRect().bottom,skip?skip.getBoundingClientRect().bottom:0)-st;
-    var topLim=headBot+(small?24:24)+DEPTH*PEEK;
+    var topLim=headBot+24+DEPTH*PEEK;
     var botLim=foot.getBoundingClientRect().top-st-(small?24:32);
     var cw=Math.max(200,Math.min(W-(small?28:128),(botLim-topLim)*16/9,1080));
     sec.style.setProperty('--w',cw.toFixed(0)+'px');
@@ -1364,14 +1367,17 @@ if(ctformEl){
     if(r.bottom<0||r.top>vh) return;
     var p=clamp(-r.top/(r.height-vh)), cam=p*total+.5, top=0;
     var H=stage.clientHeight;
+    // Impact: as a card lands, the deck beneath dips and springs back
+    var li=Math.min(cards.length-1,Math.max(1,Math.floor(cam))), imp=Math.sin(Math.PI*clamp((cam-li-.72)/.28));
     cards.forEach(function(c,i){
       var a=i===0?1:clamp(cam-i), e=outCubic(a);
       var d=0;                                // how many cards now lie on top of this one
       for(var j=i+1;j<cards.length;j++) d+=outCubic(clamp(cam-j));
-      var y=(1-e)*H*1.1-d*PEEK;
+      var y=(1-e)*H*1.1-d*PEEK+(i<li?imp*10:0);
+      var sc=(1-d*.05)*(1+(1-e)*.06)*(i<li?1-imp*.012:1);  // falls from slightly above the deck
       c.style.visibility=a>0&&d<DEPTH+1?'visible':'hidden';
       c.style.opacity=d>DEPTH?(DEPTH+1-d).toFixed(2):'1';
-      c.style.transform='translate(-50%,-50%) translate3d(0,'+y.toFixed(1)+'px,0) scale('+(1-d*.05).toFixed(3)+')';
+      c.style.transform='translate(-50%,-50%) translate3d(0,'+y.toFixed(1)+'px,0) scale('+sc.toFixed(3)+')';
       c.style.filter='brightness('+(1-Math.min(d,DEPTH)*.22).toFixed(2)+')';
       c.style.setProperty('--sh',(-120+240*clamp((a-.7)/.3)).toFixed(0)+'%');  // light sweep as it lands
       c.style.zIndex=String(i+1);
@@ -1383,6 +1389,7 @@ if(ctformEl){
       var k=c.dataset.k; sec.dataset.k=k;
       chs.forEach(function(ch){ ch.classList.toggle('on',ch.dataset.k===k); });
       dots.forEach(function(dt,i){ dt.classList.toggle('on',i<=pos[top]); });
+      if(cnt) cnt.textContent=String(top+1).padStart(2,'0')+' / '+N;
       clearTimeout(capT); cap.classList.add('swap');
       capT=setTimeout(function(){ cap.textContent=c.querySelector('figcaption').textContent; cap.classList.remove('swap'); },200);
     }
