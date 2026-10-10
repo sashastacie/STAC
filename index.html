@@ -193,9 +193,11 @@ section{padding:88px 64px;}
 .wk-card::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.28) 50%,transparent 65%);transform:translateX(var(--sh,-120%));pointer-events:none;}
 .wk-card.top{border-color:rgba(var(--acc),.8);box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 0 1px rgba(var(--acc),.35),0 0 60px rgba(var(--acc),.28);}
 .wk-foot{position:absolute;left:64px;right:64px;bottom:40px;z-index:5;display:grid;gap:10px;}
-.wk-row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;}
+.wk-row{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;}
 .wk-cap{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:clamp(20px,2.2vw,30px);color:#F5F8FC;display:inline-block;transition:opacity .25s,transform .25s;}
 .wk-cap.swap{opacity:0;transform:translateY(8px);}
+.wk-cap b{display:block;font-weight:600;}
+.wk-cap span{display:block;margin-top:4px;max-width:620px;min-height:2.8em;font-family:Inter,sans-serif;font-size:14px;font-weight:400;line-height:1.4;color:#A9BED3;}
 .wk-meta{display:flex;align-items:center;gap:16px;flex-shrink:0;}
 .wk-count{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:16px;letter-spacing:2px;color:#8BA7C0;font-variant-numeric:tabular-nums;}
 .wk-dots{display:flex;gap:6px;flex-shrink:0;}
@@ -214,6 +216,8 @@ section{padding:88px 64px;}
   .wk-foot{left:24px;right:24px;bottom:28px;}
   .wk-dots i{width:14px;}
   .wk-dots i.on{width:22px;}
+  .wk-cap span{font-size:13px;min-height:4.2em;}
+  .wk-row{flex-direction:column;align-items:flex-start;gap:8px;}
   .wk-skip{left:24px;right:auto;top:164px;}
 }
 /* No JavaScript, or reduced motion: a calm grid of the same work */
@@ -223,6 +227,8 @@ html:not(.js) .wk-head,.wk.static .wk-head{position:relative;left:auto;top:auto;
 html:not(.js) .wk-scene,.wk.static .wk-scene{position:relative;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;max-width:1100px;margin:0 auto;}
 html:not(.js) .wk-card,.wk.static .wk-card{position:relative;left:auto;top:auto;margin:0;width:auto;opacity:1;visibility:visible;transform:none;filter:none;align-self:start;}
 html:not(.js) .wk-card figcaption,.wk.static .wk-card figcaption{display:block;position:absolute;left:0;right:0;bottom:0;padding:20px 12px 9px;font-size:12px;color:#fff;background:linear-gradient(transparent,rgba(11,26,46,.9));}
+html:not(.js) .wk-card figcaption b,.wk.static .wk-card figcaption b{display:block;font-size:14px;}
+html:not(.js) .wk-card figcaption span,.wk.static .wk-card figcaption span{display:block;margin-top:2px;font-size:11px;line-height:1.35;color:#C9D6E3;}
 html:not(.js) .wk-chapters,html:not(.js) .wk-foot,html:not(.js) .wk-skip,.wk.static .wk-chapters,.wk.static .wk-foot,.wk.static .wk-skip{display:none;}
 
 /* ABOUT NOTE (merged assessment mention) */
@@ -631,18 +637,18 @@ html.js .rv2.in{opacity:1;transform:none;}
       <span class="wk-ch" data-k="mkt" data-nl="Marketing &amp; Groei">Marketing &amp; Growth</span>
     </div>
     <div class="wk-scene">
-      <figure class="wk-card" data-k="fin"><img loading="lazy" decoding="async" src="images/FA_strategic_finance_advisory.jpg" width="1400" height="788" alt="Strategic Financial Advisory" data-nl-alt="Strategisch Financieel Advies"/><figcaption data-nl="Strategisch Financieel Advies">Strategic Financial Advisory</figcaption></figure>
-      <figure class="wk-card" data-k="fin"><img loading="lazy" decoding="async" src="images/FA_risk_gov.jpg" width="1400" height="788" alt="Risk Management &amp; Governance" data-nl-alt="Risicobeheer &amp; Governance"/><figcaption data-nl="Risicobeheer &amp; Governance">Risk Management &amp; Governance</figcaption></figure>
-      <figure class="wk-card" data-k="fin"><img loading="lazy" decoding="async" src="images/FA_transformation_roadmap.jpg" width="1400" height="788" alt="Business Transformation" data-nl-alt="Bedrijfstransformatie"/><figcaption data-nl="Bedrijfstransformatie">Business Transformation</figcaption></figure>
-      <figure class="wk-card" data-k="fin"><img loading="lazy" decoding="async" src="images/FA_performance_intelligence.jpg" width="1400" height="790" alt="Performance Intelligence" data-nl-alt="Performance Intelligence"/><figcaption data-nl="Performance Intelligence">Performance Intelligence</figcaption></figure>
-      <figure class="wk-card" data-k="tech"><img loading="lazy" decoding="async" src="images/savings_impact_analyzer.jpg" width="1400" height="933" alt="Savings Impact Analyzer" data-nl-alt="Analysetool besparingsimpact"/><figcaption data-nl="Analysetool besparingsimpact">Savings Impact Analyzer</figcaption></figure>
-      <figure class="wk-card" data-k="tech"><img loading="lazy" decoding="async" src="images/predictive_truck_maintinance.jpg" width="1400" height="933" alt="Predictive Truck Maintenance" data-nl-alt="Voorspellend vrachtwagenonderhoud"/><figcaption data-nl="Voorspellend vrachtwagenonderhoud">Predictive Truck Maintenance</figcaption></figure>
-      <figure class="wk-card" data-k="tech"><img loading="lazy" decoding="async" src="images/road_accident_pred.jpg" width="1400" height="933" alt="Road Accident Risk Predictor" data-nl-alt="Voorspeller verkeersongevalrisico"/><figcaption data-nl="Voorspeller verkeersongevalrisico">Road Accident Risk Predictor</figcaption></figure>
-      <figure class="wk-card" data-k="tech"><img loading="lazy" decoding="async" src="images/arboreal.jpg" width="1400" height="933" alt="Arboreal" data-nl-alt="Arboreal"/><figcaption data-nl="Arboreal">Arboreal</figcaption></figure>
-      <figure class="wk-card" data-k="mkt"><img loading="lazy" decoding="async" src="images/MG_bakery.jpg" width="1400" height="788" alt="Bakery" data-nl-alt="Bakkerij"/><figcaption data-nl="Bakkerij">Bakery</figcaption></figure>
-      <figure class="wk-card" data-k="mkt"><img loading="lazy" decoding="async" src="images/MG_italian_place.jpg" width="1400" height="788" alt="Restaurant" data-nl-alt="Restaurant"/><figcaption data-nl="Restaurant">Restaurant</figcaption></figure>
-      <figure class="wk-card" data-k="mkt"><img loading="lazy" decoding="async" src="images/MG_massage_studio.jpg" width="1400" height="788" alt="Massage Studio" data-nl-alt="Massagestudio"/><figcaption data-nl="Massagestudio">Massage Studio</figcaption></figure>
-      <figure class="wk-card" data-k="mkt"><img loading="lazy" decoding="async" src="images/MG_general_store.jpg" width="1400" height="788" alt="General Store" data-nl-alt="Buurtwinkel"/><figcaption data-nl="Buurtwinkel">General Store</figcaption></figure>
+      <figure class="wk-card" data-k="fin"><img loading="lazy" decoding="async" src="images/FA_strategic_finance_advisory.jpg" width="1400" height="788" alt="Decision Intelligence" data-nl-alt="Decision Intelligence"/><figcaption data-nl="<b>Decision Intelligence</b><span>Al uw belangrijkste cijfers in één overzicht, zodat u beslist op feiten in plaats van gevoel.</span>"><b>Decision Intelligence</b><span>All your key numbers in one view, so you decide on facts instead of gut feeling.</span></figcaption></figure>
+      <figure class="wk-card" data-k="fin"><img loading="lazy" decoding="async" src="images/FA_risk_gov.jpg" width="1400" height="788" alt="Enterprise Risk Overview" data-nl-alt="Risico-overzicht"/><figcaption data-nl="<b>Risico-overzicht</b><span>Zie welke risico's uw bedrijf kunnen raken, en wat u er al aan doet.</span>"><b>Enterprise Risk Overview</b><span>See which risks could hurt your business, and what you're already doing about them.</span></figcaption></figure>
+      <figure class="wk-card" data-k="fin"><img loading="lazy" decoding="async" src="images/FA_transformation_roadmap.jpg" width="1400" height="788" alt="Transformation Roadmap" data-nl-alt="Transformatie-roadmap"/><figcaption data-nl="<b>Transformatie-roadmap</b><span>Een helder stappenplan om uw bedrijfsvoering te vernieuwen, zonder dat alles stilvalt.</span>"><b>Transformation Roadmap</b><span>A clear, step-by-step plan to change how your business runs, without bringing it to a halt.</span></figcaption></figure>
+      <figure class="wk-card" data-k="fin"><img loading="lazy" decoding="async" src="images/FA_performance_intelligence.jpg" width="1400" height="790" alt="Executive Performance Intelligence" data-nl-alt="Prestatie-inzicht voor de directie"/><figcaption data-nl="<b>Prestatie-inzicht voor de directie</b><span>Rapportages die in één oogopslag laten zien hoe u er echt voor staat: omzet, marges en cash.</span>"><b>Executive Performance Intelligence</b><span>Reporting that shows how you're really doing: revenue, margins and cash, at a glance.</span></figcaption></figure>
+      <figure class="wk-card" data-k="tech"><img loading="lazy" decoding="async" src="images/savings_impact_analyzer.jpg" width="1400" height="933" alt="Savings Impact Analyzer" data-nl-alt="Analysetool besparingsimpact"/><figcaption data-nl="<b>Analysetool besparingsimpact</b><span>Weet wat een verbetering oplevert voordat u er geld in steekt.</span>"><b>Savings Impact Analyzer</b><span>Know what an improvement will save you before you spend a cent on it.</span></figcaption></figure>
+      <figure class="wk-card" data-k="tech"><img loading="lazy" decoding="async" src="images/predictive_truck_maintinance.jpg" width="1400" height="933" alt="Predictive Truck Maintenance" data-nl-alt="Voorspellend vrachtwagenonderhoud"/><figcaption data-nl="<b>Voorspellend vrachtwagenonderhoud</b><span>Zie problemen met uw voertuigen of apparatuur aankomen, voordat ze stilvallen en geld kosten.</span>"><b>Predictive Truck Maintenance</b><span>Spot problems with your vehicles or equipment before they break down and cost you.</span></figcaption></figure>
+      <figure class="wk-card" data-k="tech"><img loading="lazy" decoding="async" src="images/trip_assistant_chatbot.jpg" width="1400" height="933" alt="AI Trip Assistant" data-nl-alt="AI-reisassistent"/><figcaption data-nl="<b>AI-reisassistent</b><span>Een chatbot die de vragen van uw klanten dag en nacht beantwoordt, op basis van uw eigen informatie.</span>"><b>AI Trip Assistant</b><span>A chatbot that answers your customers' questions day and night, using your own information.</span></figcaption></figure>
+      <figure class="wk-card" data-k="tech"><img loading="lazy" decoding="async" src="images/gen_ai.jpg" width="1400" height="933" alt="Gen-AI Storyboards" data-nl-alt="Gen-AI-storyboards"/><figcaption data-nl="<b>Gen-AI-storyboards</b><span>Maak met AI consistente beelden in uw eigen stijl voor uw campagnes, zonder complete fotoshoot.</span>"><b>Gen-AI Storyboards</b><span>Create consistent, on-brand visuals for your campaigns with AI, without a full photo shoot.</span></figcaption></figure>
+      <figure class="wk-card" data-k="mkt"><img loading="lazy" decoding="async" src="images/MG_bakery.jpg" width="1400" height="788" alt="Bakery" data-nl-alt="Bakkerij"/><figcaption data-nl="<b>Bakkerij</b><span>Wekelijkse social posts waarin uw producten er net zo goed uitzien als ze smaken.</span>"><b>Bakery</b><span>Weekly social posts that make your products look as good as they taste.</span></figcaption></figure>
+      <figure class="wk-card" data-k="mkt"><img loading="lazy" decoding="async" src="images/MG_italian_place.jpg" width="1400" height="788" alt="Restaurant" data-nl-alt="Restaurant"/><figcaption data-nl="<b>Restaurant</b><span>Meer gasten aan tafel met een feed die uw gerechten, openingstijden en verhaal laat zien.</span>"><b>Restaurant</b><span>Fill more tables with a feed that shows off your food, your hours and your story.</span></figcaption></figure>
+      <figure class="wk-card" data-k="mkt"><img loading="lazy" decoding="async" src="images/MG_massage_studio.jpg" width="1400" height="788" alt="Massage Studio" data-nl-alt="Massagestudio"/><figcaption data-nl="<b>Massagestudio</b><span>Een rustige, consistente online uitstraling die volgers omzet in boekingen.</span>"><b>Massage Studio</b><span>A calm, consistent online presence that turns followers into bookings.</span></figcaption></figure>
+      <figure class="wk-card" data-k="mkt"><img loading="lazy" decoding="async" src="images/MG_general_store.jpg" width="1400" height="788" alt="General Store" data-nl-alt="Buurtwinkel"/><figcaption data-nl="<b>Buurtwinkel</b><span>Houd uw winkel in beeld met vaste posts over producten, acties en openingstijden.</span>"><b>General Store</b><span>Keep your shop top of mind with regular posts about products, offers and opening hours.</span></figcaption></figure>
     </div>
     <div class="wk-foot" aria-hidden="true">
       <div class="wk-row"><span class="wk-cap"></span><span class="wk-meta"><span class="wk-count"></span><span class="wk-dots"><i></i><i></i><i></i><i></i></span></span></div>
@@ -1391,7 +1397,7 @@ if(ctformEl){
       dots.forEach(function(dt,i){ dt.classList.toggle('on',i<=pos[top]); });
       if(cnt) cnt.textContent=String(top+1).padStart(2,'0')+' / '+N;
       clearTimeout(capT); cap.classList.add('swap');
-      capT=setTimeout(function(){ cap.textContent=c.querySelector('figcaption').textContent; cap.classList.remove('swap'); },200);
+      capT=setTimeout(function(){ cap.innerHTML=c.querySelector('figcaption').innerHTML; cap.classList.remove('swap'); },200);
     }
     bar.style.width=(p*100).toFixed(1)+'%';
     var y=window.scrollY;
@@ -1404,6 +1410,7 @@ if(ctformEl){
   ['ben','bnl'].forEach(function(id){ var b=document.getElementById(id); if(b) b.addEventListener('click',function(){ current=-1; setSkip(dir,true); layout(); req(); }); });
   if(document.fonts&&document.fonts.ready) document.fonts.ready.then(function(){ layout(); req(); });
   setSkip('down',true);
+  cap.innerHTML=cards[0].querySelector('figcaption').innerHTML;  // so layout() measures the full caption row
   layout(); frame();
 })();
 
