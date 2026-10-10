@@ -172,30 +172,34 @@ section{padding:88px 64px;}
 .srow:nth-child(2):hover .sarr,.srow:nth-child(2):focus-visible .sarr{box-shadow:0 0 24px rgba(20,216,180,.55);}
 .srow:nth-child(3):hover .sarr,.srow:nth-child(3):focus-visible .sarr{box-shadow:0 0 24px rgba(168,85,247,.55);}
 .srow:hover .sarr-ic,.srow:focus-visible .sarr-ic{transform:translate(3px,-3px);}
-/* Work in motion: pinned stage, the camera flies forward through the projects */
-.wk{position:relative;height:560vh;padding:0;background:#0B1A2E;}
-.wk-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;perspective:900px;perspective-origin:50% 50%;}
-.wk-stage::before{content:'';position:absolute;inset:0;background:radial-gradient(60% 50% at 50% 55%,rgba(47,111,239,.12),transparent 70%);transition:background .8s;}
-.wk[data-k="tech"] .wk-stage::before{background:radial-gradient(60% 50% at 50% 55%,rgba(20,216,180,.12),transparent 70%);}
-.wk[data-k="mkt"] .wk-stage::before{background:radial-gradient(60% 50% at 50% 55%,rgba(168,85,247,.13),transparent 70%);}
+/* Work in motion: pinned stage, each project slides up onto a growing deck */
+.wk{position:relative;height:560vh;padding:0;background:#0B1A2E;--acc:47,111,239;}
+.wk[data-k="tech"]{--acc:20,216,180;}
+.wk[data-k="mkt"]{--acc:168,85,247;}
+.wk-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;}
+.wk-stage::before{content:'';position:absolute;inset:0;background:radial-gradient(55% 50% at 50% 58%,rgba(var(--acc),.16),transparent 70%);transition:background .8s;}
 .wk-head{position:absolute;left:64px;top:96px;z-index:5;}
 .wk-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:clamp(34px,4.4vw,64px);line-height:1;color:#F5F8FC;}
 .wk-chapters{position:absolute;inset:0;display:grid;grid-template-columns:minmax(0,1fr);place-items:center;pointer-events:none;}
-.wk-ch{grid-area:1/1;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:clamp(52px,10vw,170px);line-height:.9;letter-spacing:-.02em;text-align:center;padding:0 16px;opacity:0;transform:scale(.94);transition:opacity .7s ease,transform .9s cubic-bezier(.2,.8,.2,1);}
-.wk-ch[data-k="fin"]{color:rgba(47,111,239,.2);}
-.wk-ch[data-k="tech"]{color:rgba(20,216,180,.16);}
-.wk-ch[data-k="mkt"]{color:rgba(168,85,247,.2);}
-.wk-ch.on{opacity:1;transform:none;}
-.wk-scene{position:absolute;inset:0;z-index:1;transform-style:preserve-3d;}
-.wk-card{--w:min(42vw,560px);position:absolute;left:50%;top:52%;width:var(--w);border-radius:14px;overflow:hidden;background:#132540;border:1px solid rgba(255,255,255,.12);box-shadow:0 30px 70px rgba(0,0,0,.5);opacity:0;will-change:transform,opacity;}
-.wk-card img{width:100%;height:auto;display:block;}
+.wk-ch{grid-area:1/1;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:clamp(60px,13vw,230px);line-height:.9;letter-spacing:-.02em;text-align:center;padding:0 16px;opacity:0;transform:scale(1.15);filter:blur(8px);transition:opacity .7s ease,transform 1s cubic-bezier(.2,.8,.2,1),filter .8s;}
+.wk-ch[data-k="fin"]{color:rgba(47,111,239,.16);}
+.wk-ch[data-k="tech"]{color:rgba(20,216,180,.13);}
+.wk-ch[data-k="mkt"]{color:rgba(168,85,247,.16);}
+.wk-ch.on{opacity:1;transform:none;filter:none;}
+.wk-scene{position:absolute;inset:0;z-index:1;}
+.wk-card{position:absolute;left:50%;top:var(--cy,55%);width:var(--w,560px);aspect-ratio:16/9;margin:0;border-radius:16px;overflow:hidden;background:#132540;border:1px solid rgba(255,255,255,.14);box-shadow:0 30px 80px rgba(0,0,0,.55);transform-origin:50% 0;visibility:hidden;will-change:transform,filter;transition:border-color .4s,box-shadow .4s;}
+.wk-card img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
 .wk-card figcaption{display:none;}
-.wk-card.near[data-k="fin"]{border-color:rgba(47,111,239,.7);}
-.wk-card.near[data-k="tech"]{border-color:rgba(20,216,180,.7);}
-.wk-card.near[data-k="mkt"]{border-color:rgba(168,85,247,.7);}
-.wk-foot{position:absolute;left:64px;right:64px;bottom:40px;z-index:5;display:grid;grid-template-columns:1fr;align-items:end;gap:10px 20px;}
-.wk-cap{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:clamp(20px,2.2vw,30px);color:#F5F8FC;}
-.wk-bar{grid-column:1/-1;height:2px;border-radius:2px;background:rgba(255,255,255,.1);overflow:hidden;}
+.wk-card::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.28) 50%,transparent 65%);transform:translateX(var(--sh,-120%));pointer-events:none;}
+.wk-card.top{border-color:rgba(var(--acc),.8);box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 0 1px rgba(var(--acc),.35),0 0 60px rgba(var(--acc),.28);}
+.wk-foot{position:absolute;left:64px;right:64px;bottom:40px;z-index:5;display:grid;gap:10px;}
+.wk-row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;}
+.wk-cap{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:clamp(20px,2.2vw,30px);color:#F5F8FC;display:inline-block;transition:opacity .25s,transform .25s;}
+.wk-cap.swap{opacity:0;transform:translateY(8px);}
+.wk-dots{display:flex;gap:6px;flex-shrink:0;}
+.wk-dots i{width:22px;height:4px;border-radius:2px;background:rgba(255,255,255,.15);transition:background .3s,width .3s;}
+.wk-dots i.on{background:rgb(var(--acc));width:34px;}
+.wk-bar{height:2px;border-radius:2px;background:rgba(255,255,255,.1);overflow:hidden;}
 .wk-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--indigo),var(--indigo2));}
 .wk[data-k="tech"] .wk-bar i{background:linear-gradient(90deg,var(--techdk),var(--cyan));}
 .wk[data-k="mkt"] .wk-bar i{background:linear-gradient(90deg,var(--violetdk),var(--violet));}
@@ -204,10 +208,10 @@ section{padding:88px 64px;}
 .wk-skip{transition:color .2s,border-color .2s,opacity .18s ease,transform .18s ease;}
 .wk-skip.swap{opacity:0;transform:translateY(-4px);}
 @media(max-width:960px){
-  .wk{height:520vh;padding:0;}
   .wk-head{left:24px;top:84px;}
-  .wk-card{--w:min(80vw,420px);top:50%;}
   .wk-foot{left:24px;right:24px;bottom:28px;}
+  .wk-dots i{width:14px;}
+  .wk-dots i.on{width:22px;}
   .wk-skip{left:24px;right:auto;top:164px;}
 }
 /* No JavaScript, or reduced motion: a calm grid of the same work */
@@ -215,7 +219,7 @@ html:not(.js) .wk,.wk.static{height:auto;}
 html:not(.js) .wk-stage,.wk.static .wk-stage{position:relative;height:auto;overflow:visible;perspective:none;padding:96px 24px 72px;}
 html:not(.js) .wk-head,.wk.static .wk-head{position:relative;left:auto;top:auto;margin:0 auto 32px;max-width:1100px;}
 html:not(.js) .wk-scene,.wk.static .wk-scene{position:relative;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;max-width:1100px;margin:0 auto;}
-html:not(.js) .wk-card,.wk.static .wk-card{position:relative;left:auto;top:auto;margin:0;width:auto;opacity:1;transform:none;align-self:start;}
+html:not(.js) .wk-card,.wk.static .wk-card{position:relative;left:auto;top:auto;margin:0;width:auto;opacity:1;visibility:visible;transform:none;filter:none;align-self:start;}
 html:not(.js) .wk-card figcaption,.wk.static .wk-card figcaption{display:block;position:absolute;left:0;right:0;bottom:0;padding:20px 12px 9px;font-size:12px;color:#fff;background:linear-gradient(transparent,rgba(11,26,46,.9));}
 html:not(.js) .wk-chapters,html:not(.js) .wk-foot,html:not(.js) .wk-skip,.wk.static .wk-chapters,.wk.static .wk-foot,.wk.static .wk-skip{display:none;}
 
@@ -612,7 +616,7 @@ html.js .rv2.in{opacity:1;transform:none;}
 </section>
 
 <!-- ABOUT -->
-<!-- WORK IN MOTION: scroll-driven fly-through of real project work -->
+<!-- WORK IN MOTION: scroll-driven stack of real project work -->
 <section id="work" class="wk" aria-labelledby="wkTitle">
   <div class="wk-stage">
     <div class="wk-head">
@@ -628,30 +632,18 @@ html.js .rv2.in{opacity:1;transform:none;}
       <figure class="wk-card" data-k="fin"><img loading="lazy" decoding="async" src="images/FA_strategic_finance_advisory.jpg" width="1400" height="788" alt="Strategic Financial Advisory" data-nl-alt="Strategisch Financieel Advies"/><figcaption data-nl="Strategisch Financieel Advies">Strategic Financial Advisory</figcaption></figure>
       <figure class="wk-card" data-k="fin"><img loading="lazy" decoding="async" src="images/FA_virtual_cfo.jpg" width="1400" height="788" alt="Virtual CFO Services" data-nl-alt="Virtuele CFO-diensten"/><figcaption data-nl="Virtuele CFO-diensten">Virtual CFO Services</figcaption></figure>
       <figure class="wk-card" data-k="fin"><img loading="lazy" decoding="async" src="images/FA_risk_gov.jpg" width="1400" height="788" alt="Risk Management &amp; Governance" data-nl-alt="Risicobeheer &amp; Governance"/><figcaption data-nl="Risicobeheer &amp; Governance">Risk Management &amp; Governance</figcaption></figure>
-      <figure class="wk-card" data-k="fin"><img loading="lazy" decoding="async" src="images/FA_regulatory_compliance.jpg" width="1400" height="788" alt="Regulatory Compliance Advisory" data-nl-alt="Advies Regelgeving &amp; Compliance"/><figcaption data-nl="Advies Regelgeving &amp; Compliance">Regulatory Compliance Advisory</figcaption></figure>
       <figure class="wk-card" data-k="fin"><img loading="lazy" decoding="async" src="images/FA_transformation_roadmap.jpg" width="1400" height="788" alt="Business Transformation" data-nl-alt="Bedrijfstransformatie"/><figcaption data-nl="Bedrijfstransformatie">Business Transformation</figcaption></figure>
-      <figure class="wk-card" data-k="fin"><img loading="lazy" decoding="async" src="images/FA_performance_intelligence.jpg" width="1400" height="790" alt="Performance Intelligence" data-nl-alt="Performance Intelligence"/><figcaption data-nl="Performance Intelligence">Performance Intelligence</figcaption></figure>
-      <figure class="wk-card" data-k="tech"><img loading="lazy" decoding="async" src="images/predictive_truck_maintinance.jpg" width="1400" height="933" alt="Predictive Truck Maintenance" data-nl-alt="Voorspellend vrachtwagenonderhoud"/><figcaption data-nl="Voorspellend vrachtwagenonderhoud">Predictive Truck Maintenance</figcaption></figure>
       <figure class="wk-card" data-k="tech"><img loading="lazy" decoding="async" src="images/savings_impact_analyzer.jpg" width="1400" height="933" alt="Savings Impact Analyzer" data-nl-alt="Analysetool besparingsimpact"/><figcaption data-nl="Analysetool besparingsimpact">Savings Impact Analyzer</figcaption></figure>
-      <figure class="wk-card" data-k="tech"><img loading="lazy" decoding="async" src="images/sense_ai.jpg" width="1400" height="933" alt="SenseAI" data-nl-alt="SenseAI"/><figcaption data-nl="SenseAI">SenseAI</figcaption></figure>
-      <figure class="wk-card" data-k="tech"><img loading="lazy" decoding="async" src="images/gen_ai.jpg" width="1400" height="933" alt="Gen-AI Storyboards" data-nl-alt="Gen-AI-storyboards"/><figcaption data-nl="Gen-AI-storyboards">Gen-AI Storyboards</figcaption></figure>
+      <figure class="wk-card" data-k="tech"><img loading="lazy" decoding="async" src="images/predictive_truck_maintinance.jpg" width="1400" height="933" alt="Predictive Truck Maintenance" data-nl-alt="Voorspellend vrachtwagenonderhoud"/><figcaption data-nl="Voorspellend vrachtwagenonderhoud">Predictive Truck Maintenance</figcaption></figure>
       <figure class="wk-card" data-k="tech"><img loading="lazy" decoding="async" src="images/road_accident_pred.jpg" width="1400" height="933" alt="Road Accident Risk Predictor" data-nl-alt="Voorspeller verkeersongevalrisico"/><figcaption data-nl="Voorspeller verkeersongevalrisico">Road Accident Risk Predictor</figcaption></figure>
-      <figure class="wk-card" data-k="tech"><img loading="lazy" decoding="async" src="images/football_player_insights.jpg" width="1400" height="933" alt="Football Player Insights" data-nl-alt="Spelersinzichten voetbal"/><figcaption data-nl="Spelersinzichten voetbal">Football Player Insights</figcaption></figure>
-      <figure class="wk-card" data-k="tech"><img loading="lazy" decoding="async" src="images/epl_analytics.jpg" width="1400" height="933" alt="EPL Match &amp; Player Analytics" data-nl-alt="Wedstrijd- &amp; spelersanalyse Premier League"/><figcaption data-nl="Wedstrijd- &amp; spelersanalyse Premier League">EPL Match &amp; Player Analytics</figcaption></figure>
-      <figure class="wk-card" data-k="tech"><img loading="lazy" decoding="async" src="images/trip_assistant_chatbot.jpg" width="1400" height="933" alt="AI Trip Assistant Chatbot" data-nl-alt="AI-chatbot als reisassistent"/><figcaption data-nl="AI-chatbot als reisassistent">AI Trip Assistant Chatbot</figcaption></figure>
       <figure class="wk-card" data-k="tech"><img loading="lazy" decoding="async" src="images/arboreal.jpg" width="1400" height="933" alt="Arboreal" data-nl-alt="Arboreal"/><figcaption data-nl="Arboreal">Arboreal</figcaption></figure>
-      <figure class="wk-card" data-k="tech"><img loading="lazy" decoding="async" src="images/root_segmentation.jpg" width="1400" height="933" alt="Root Segmentation &amp; RL Robot Control" data-nl-alt="Wortelsegmentatie &amp; RL-robotbesturing"/><figcaption data-nl="Wortelsegmentatie &amp; RL-robotbesturing">Root Segmentation &amp; RL Robot Control</figcaption></figure>
-      <figure class="wk-card" data-k="tech"><img loading="lazy" decoding="async" src="images/sdg_6_powerbi.jpg" width="1400" height="933" alt="SDG-6 Water &amp; Sanitation" data-nl-alt="SDG-6 Water &amp; Sanitatie"/><figcaption data-nl="SDG-6 Water &amp; Sanitatie">SDG-6 Water &amp; Sanitation</figcaption></figure>
-      <figure class="wk-card" data-k="tech"><img loading="lazy" decoding="async" src="images/sme_genai_willingness.jpg" width="1400" height="933" alt="SME GenAI Willingness Study" data-nl-alt="Onderzoek GenAI-bereidheid mkb"/><figcaption data-nl="Onderzoek GenAI-bereidheid mkb">SME GenAI Willingness Study</figcaption></figure>
       <figure class="wk-card" data-k="mkt"><img loading="lazy" decoding="async" src="images/MG_bakery.jpg" width="1400" height="788" alt="Bakery" data-nl-alt="Bakkerij"/><figcaption data-nl="Bakkerij">Bakery</figcaption></figure>
       <figure class="wk-card" data-k="mkt"><img loading="lazy" decoding="async" src="images/MG_general_store.jpg" width="1400" height="788" alt="General Store" data-nl-alt="Buurtwinkel"/><figcaption data-nl="Buurtwinkel">General Store</figcaption></figure>
       <figure class="wk-card" data-k="mkt"><img loading="lazy" decoding="async" src="images/MG_italian_place.jpg" width="1400" height="788" alt="Restaurant" data-nl-alt="Restaurant"/><figcaption data-nl="Restaurant">Restaurant</figcaption></figure>
       <figure class="wk-card" data-k="mkt"><img loading="lazy" decoding="async" src="images/MG_massage_studio.jpg" width="1400" height="788" alt="Massage Studio" data-nl-alt="Massagestudio"/><figcaption data-nl="Massagestudio">Massage Studio</figcaption></figure>
-      <figure class="wk-card" data-k="mkt"><img loading="lazy" decoding="async" src="images/MG_client_exchange.jpg" width="1400" height="788" alt="Client Exchange" data-nl-alt="Klantcontact"/><figcaption data-nl="Klantcontact">Client Exchange</figcaption></figure>
-      <figure class="wk-card" data-k="mkt"><img loading="lazy" decoding="async" src="images/MG_content_planning.jpg" width="1400" height="1050" alt="Content Planning" data-nl-alt="Contentplanning"/><figcaption data-nl="Contentplanning">Content Planning</figcaption></figure>
     </div>
     <div class="wk-foot" aria-hidden="true">
-      <span class="wk-cap"></span>
+      <div class="wk-row"><span class="wk-cap"></span><span class="wk-dots"><i></i><i></i><i></i><i></i></span></div>
       <div class="wk-bar"><i></i></div>
     </div>
     <a class="wk-skip" href="#about">Skip to About &#8595;</a>
@@ -1320,20 +1312,26 @@ if(ctformEl){
   });
 }
 
-// WORK IN MOTION: scroll position drives a camera flying forward through the
-// project cards, which sit on a golden-angle spiral receding into depth
+// WORK IN MOTION: scroll position stacks the project cards into a deck. Each
+// one slides up and lands on top; the ones beneath step back, shrink and dim,
+// with their top edges still showing.
 (function(){
   var sec=document.getElementById('work'); if(!sec) return;
   var cards=[].slice.call(sec.querySelectorAll('.wk-card'));
   var chs=[].slice.call(sec.querySelectorAll('.wk-ch'));
+  var dots=[].slice.call(sec.querySelectorAll('.wk-dots i'));
   var cap=sec.querySelector('.wk-cap'), bar=sec.querySelector('.wk-bar i');
-  var n=cards.length, GAP=420, LEAD=700, FAR=2800;
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){ sec.classList.add('static'); return; }
   cards.forEach(function(c){ c.querySelector('img').loading='eager'; });  // they all come into view quickly
+  var UNIT=34, DEPTH=3, PEEK=24;              // vh of scroll per card; edges visible behind the top card
+  var pos=[], m=0;                            // position of each card within its discipline
+  cards.forEach(function(c,i){ if(i>0&&c.dataset.k!==cards[i-1].dataset.k) m=0; pos[i]=m++; });
+  var total=cards.length-.5;                  // the first card is already on the deck
+  sec.style.height='calc(100vh + '+(total*UNIT)+'vh)';
   var ticking=false, current=-1;
   // One exit button that follows the scroll direction: forward to About while
   // scrolling down, back to the service cards while scrolling up.
-  var skip=sec.querySelector('.wk-skip'), lastY=window.scrollY, dir='down', swapT=0;
+  var skip=sec.querySelector('.wk-skip'), lastY=window.scrollY, dir='down', swapT=0, capT=0;
   var SKIP={
     en:{down:['#about','Skip to About ↓'],up:['#services','↑ Back to Services']},
     nl:{down:['#about','Door naar Over ons ↓'],up:['#services','↑ Terug naar Diensten']}
@@ -1346,55 +1344,47 @@ if(ctformEl){
     clearTimeout(swapT); skip.classList.add('swap');
     swapT=setTimeout(function(){ skip.setAttribute('href',t[0]); skip.textContent=t[1]; skip.classList.remove('swap'); },180);
   }
-  var stage=sec.querySelector('.wk-stage'), nav=document.getElementById('nav'), head=sec.querySelector('.wk-head');
-  var P=900;                                  // matches .wk-stage perspective
+  var stage=sec.querySelector('.wk-stage'), head=sec.querySelector('.wk-head'), foot=sec.querySelector('.wk-foot');
+  function clamp(v){ return v<0?0:v>1?1:v; }
+  function outCubic(v){ return 1-Math.pow(1-v,3); }
+  // Make the card as large as the space between the title and the caption row allows
+  function layout(){
+    var W=stage.clientWidth, small=W<=960, st=stage.getBoundingClientRect().top;
+    PEEK=small?14:24;
+    var headBot=Math.max(head.getBoundingClientRect().bottom,skip?skip.getBoundingClientRect().bottom:0)-st;
+    var topLim=headBot+(small?24:24)+DEPTH*PEEK;
+    var botLim=foot.getBoundingClientRect().top-st-(small?24:32);
+    var cw=Math.max(200,Math.min(W-(small?28:128),(botLim-topLim)*16/9,1080));
+    sec.style.setProperty('--w',cw.toFixed(0)+'px');
+    sec.style.setProperty('--cy',((topLim+botLim)/2).toFixed(0)+'px');
+  }
   function frame(){
     ticking=false;
     var r=sec.getBoundingClientRect(), vh=window.innerHeight;
     if(r.bottom<0||r.top>vh) return;
-    var p=Math.min(1,Math.max(0,-r.top/(r.height-vh)));
-    var cam=p*((n-1)*GAP+LEAD+250);
-    var W=stage.clientWidth, H=stage.clientHeight, M=W<=960?14:28;
-    // Safe area: below the nav, above the caption row
-    var topLim=(nav?nav.offsetHeight:64)+M, botLim=H-(W<=960?74:88);
-    // Fly below the title and exit button so they're never covered; on very
-    // short screens there's no room, so cards may pass behind them instead.
-    var st=stage.getBoundingClientRect().top;
-    var headBot=Math.max(head.getBoundingClientRect().bottom,skip?skip.getBoundingClientRect().bottom:0)-st+12;
-    if(botLim-headBot>=H*.45) topLim=Math.max(topLim,headBot);
-    var R=W<=960?W*.16:Math.min(W*.2,300);
-    var best=-1, bestZ=-Infinity;
+    var p=clamp(-r.top/(r.height-vh)), cam=p*total+.5, top=0;
+    var H=stage.clientHeight;
     cards.forEach(function(c,i){
-      var w=c.offsetWidth, h=c.offsetHeight;
-      var dy0=H*.52-H/2;                      // card anchor vs. vanishing point
-      if(W<=960) dy0=0;
-      // Largest on-screen scale at which the whole card still fits
-      var smax=Math.min((W-2*M)/w,(botLim-topLim)/h);
-      var zGone=P-P/smax, zFull=P-P/(smax*.82);
-      var z=cam-i*GAP-LEAD;                   // 0 = at the screen plane
-      var s=P/(P-Math.min(z,zGone));          // on-screen scale
-      var a=i*2.39996;                        // golden angle spreads them evenly
-      var x=Math.cos(a)*R*(1+Math.max(0,z)/500), y=Math.sin(a)*R*.55*(1+Math.max(0,z)/500);
-      // Keep the projected card inside the safe area
-      var hw=w*s/2, hh=h*s/2;
-      var xMax=Math.max(0,(W/2-M-hw)/s);
-      x=Math.max(-xMax,Math.min(xMax,x));
-      var yLo=(topLim+hh-H/2)/s-dy0, yHi=(botLim-hh-H/2)/s-dy0;
-      y=yLo<=yHi?Math.max(yLo,Math.min(yHi,y)):((topLim+botLim)/2-H/2)/s-dy0;
-      var o=z<-FAR?0:z<-FAR+900?(z+FAR)/900:z<zFull?1:z<zGone?1-(z-zFull)/(zGone-zFull):0;
-      c.style.opacity=o.toFixed(3);
-      c.style.visibility=o>0?'visible':'hidden';
-      c.style.transform='translate(-50%,-50%) translate3d('+x.toFixed(1)+'px,'+y.toFixed(1)+'px,'+Math.min(z,zGone).toFixed(1)+'px)';
-      c.style.zIndex=String(1000+Math.round(z));
-      if(z<=zFull&&z>bestZ){ bestZ=z; best=i; }
+      var a=i===0?1:clamp(cam-i), e=outCubic(a);
+      var d=0;                                // how many cards now lie on top of this one
+      for(var j=i+1;j<cards.length;j++) d+=outCubic(clamp(cam-j));
+      var y=(1-e)*H*1.1-d*PEEK;
+      c.style.visibility=a>0&&d<DEPTH+1?'visible':'hidden';
+      c.style.opacity=d>DEPTH?(DEPTH+1-d).toFixed(2):'1';
+      c.style.transform='translate(-50%,-50%) translate3d(0,'+y.toFixed(1)+'px,0) scale('+(1-d*.05).toFixed(3)+')';
+      c.style.filter='brightness('+(1-Math.min(d,DEPTH)*.22).toFixed(2)+')';
+      c.style.setProperty('--sh',(-120+240*clamp((a-.7)/.3)).toFixed(0)+'%');  // light sweep as it lands
+      c.style.zIndex=String(i+1);
+      if(a>.5) top=i;
     });
-    if(best<0) best=0;
-    if(best!==current){
-      if(cards[current]) cards[current].classList.remove('near');
-      current=best; var c=cards[best]; c.classList.add('near');
+    if(top!==current){
+      if(cards[current]) cards[current].classList.remove('top');
+      current=top; var c=cards[top]; c.classList.add('top');
       var k=c.dataset.k; sec.dataset.k=k;
       chs.forEach(function(ch){ ch.classList.toggle('on',ch.dataset.k===k); });
-      cap.textContent=c.querySelector('figcaption').textContent;
+      dots.forEach(function(dt,i){ dt.classList.toggle('on',i<=pos[top]); });
+      clearTimeout(capT); cap.classList.add('swap');
+      capT=setTimeout(function(){ cap.textContent=c.querySelector('figcaption').textContent; cap.classList.remove('swap'); },200);
     }
     bar.style.width=(p*100).toFixed(1)+'%';
     var y=window.scrollY;
@@ -1402,12 +1392,12 @@ if(ctformEl){
   }
   function req(){ if(!ticking){ ticking=true; requestAnimationFrame(frame); } }
   window.addEventListener('scroll',req,{passive:true});
-  window.addEventListener('resize',req);
+  window.addEventListener('resize',function(){ layout(); req(); });
   // Captions follow the EN/NL switch.
-  ['ben','bnl'].forEach(function(id){ var b=document.getElementById(id); if(b) b.addEventListener('click',function(){ current=-1; setSkip(dir,true); req(); }); });
-  cards.forEach(function(c){ var im=c.querySelector('img'); if(!im.complete) im.addEventListener('load',req); });
+  ['ben','bnl'].forEach(function(id){ var b=document.getElementById(id); if(b) b.addEventListener('click',function(){ current=-1; setSkip(dir,true); layout(); req(); }); });
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(function(){ layout(); req(); });
   setSkip('down',true);
-  frame();
+  layout(); frame();
 })();
 
 // FEATURED PROJECTS PANELS (all three pillars, mutually exclusive)
