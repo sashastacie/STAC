@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="assets/stac-chat.css"/>
 <script src="assets/stac-chat-data.js" defer></script>
 <script src="assets/stac-chat.js" defer></script>
+<script src="assets/stac-carousel.js" defer></script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <meta name="description" content="AI tools, dashboards and automations built to run inside your business, not sit in a strategy deck. AI &amp; Technology by STAC."/>
@@ -286,11 +287,6 @@ html.js .rv2.in{opacity:1;transform:none;}
 .fp-filter-btn{padding:9px 20px;border-radius:24px;border:1.5px solid var(--border);background:#fff;color:var(--navy);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap;font-family:'Inter',sans-serif;}
 .fp-filter-btn:hover{border-color:var(--teal);}
 .fp-filter-btn.active{background:var(--navy);border-color:var(--navy);color:#fff;}
-.fp-info-dot{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;margin-left:6px;border-radius:50%;border:1px solid currentColor;font-family:'Inter',sans-serif;font-style:italic;font-size:9px;font-weight:700;line-height:1;opacity:.5;position:relative;cursor:help;vertical-align:2px;}
-.fp-info-dot:hover,.fp-info-dot:focus,.fp-info-dot.show{opacity:1;outline:none;}
-.fp-info-dot::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 9px);left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;font-style:normal;font-size:11px;font-weight:500;letter-spacing:.2px;padding:7px 11px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s;box-shadow:0 10px 26px rgba(11,26,46,.28);z-index:20;}
-.fp-info-dot::before{content:'';position:absolute;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--navy);opacity:0;pointer-events:none;transition:opacity .15s;z-index:20;}
-.fp-info-dot:hover::after,.fp-info-dot:hover::before,.fp-info-dot:focus::after,.fp-info-dot:focus::before,.fp-info-dot.show::after,.fp-info-dot.show::before{opacity:1;}
 .fp-card3{transition:transform .4s ease,opacity .4s ease,box-shadow .4s ease;opacity:.65;}
 .fp-card3.is-center{opacity:1;transform:translateY(-16px) scale(1.07);box-shadow:0 32px 64px rgba(11,26,46,.26);z-index:2;position:relative;}
 
@@ -469,15 +465,15 @@ html.js .rv2.in{opacity:1;transform:none;}
 
     <div class="fp-filters rv">
     <button class="fp-filter-btn active" data-filter="all" data-nl="Alle">All</button>
-    <button class="fp-filter-btn" data-filter="ml">ML<span class="fp-info-dot" tabindex="0" data-tip="Machine Learning" data-nl-tip="Machinaal leren" aria-label="Machine Learning" data-nl-aria="Machinaal leren">i</span></button>
-    <button class="fp-filter-btn" data-filter="genai">GenAI<span class="fp-info-dot" tabindex="0" data-tip="Generative AI" data-nl-tip="Generatieve AI" aria-label="Generative AI" data-nl-aria="Generatieve AI">i</span></button>
-    <button class="fp-filter-btn" data-filter="analytics">Analytics/BI<span class="fp-info-dot" tabindex="0" data-tip="Analytics & Business Intelligence" data-nl-tip="Analyse &amp; business intelligence" aria-label="Analytics and Business Intelligence" data-nl-aria="Analyse en business intelligence">i</span></button>
-    <button class="fp-filter-btn" data-filter="xai">XAI<span class="fp-info-dot" tabindex="0" data-tip="Explainable AI" data-nl-tip="Verklaarbare AI" aria-label="Explainable AI" data-nl-aria="Verklaarbare AI">i</span></button>
-    <button class="fp-filter-btn" data-filter="nlp">NLP<span class="fp-info-dot" tabindex="0" data-tip="Natural Language Processing" data-nl-tip="Natuurlijke taalverwerking" aria-label="Natural Language Processing" data-nl-aria="Natuurlijke taalverwerking">i</span></button>
+    <button class="fp-filter-btn" data-filter="ml">ML</button>
+    <button class="fp-filter-btn" data-filter="genai">GenAI</button>
+    <button class="fp-filter-btn" data-filter="analytics">Analytics/BI</button>
+    <button class="fp-filter-btn" data-filter="xai">XAI</button>
+    <button class="fp-filter-btn" data-filter="nlp">NLP</button>
     <button class="fp-filter-btn" data-filter="timeseries" data-nl="Tijdreeksen">Time-Series</button>
     <button class="fp-filter-btn" data-filter="sports" data-nl="Sport">Sports</button>
-    <button class="fp-filter-btn" data-filter="cv">CV<span class="fp-info-dot" tabindex="0" data-tip="Computer Vision" data-nl-tip="Computervisie" aria-label="Computer Vision" data-nl-aria="Computervisie">i</span></button>
-    <button class="fp-filter-btn" data-filter="rl">RL<span class="fp-info-dot" tabindex="0" data-tip="Reinforcement Learning" data-nl-tip="Reinforcement learning" aria-label="Reinforcement Learning" data-nl-aria="Reinforcement learning">i</span></button>
+    <button class="fp-filter-btn" data-filter="cv">CV</button>
+    <button class="fp-filter-btn" data-filter="rl">RL</button>
     <button class="fp-filter-btn" data-filter="robotics" data-nl="Robotica">Robotics</button>
     <button class="fp-filter-btn" data-filter="research" data-nl="Onderzoek">Research</button>
     <button class="fp-filter-btn" data-filter="app">App</button>
@@ -654,93 +650,6 @@ document.querySelectorAll('a,.svc-card,.fp-arrow3,.fp-card3,.fp-filter-btn,.lb')
 });
 const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.08});
 document.querySelectorAll('.rv,.rv2').forEach(el=>obs.observe(el));
-</script>
-
-<script>
-(function(){
-  var viewport = document.getElementById('fp3Viewport');
-  var track = document.getElementById('fpTrack3');
-  var allCards = Array.prototype.slice.call(document.querySelectorAll('#fpTrack3 .fp-card3'));
-  var wrap = document.getElementById('fpCarousel3');
-  var prevBtn = document.getElementById('fp3Prev');
-  var nextBtn = document.getElementById('fp3Next');
-  var filterBtns = document.querySelectorAll('.fp-filter-btn');
-  if(!track||!wrap||!viewport||!allCards.length) return;
-  var idx = 0, timer;
-  function visibleCards(){
-    return allCards.filter(function(c){ return c.style.display !== 'none'; });
-  }
-  function cardStep(){
-    var vc = visibleCards();
-    if(!vc.length) return 0;
-    var r = vc[0].getBoundingClientRect();
-    var style = getComputedStyle(vc[0]);
-    return r.width + parseFloat(style.marginRight || 0);
-  }
-  function visibleCount(){
-    var s = cardStep();
-    return s ? Math.max(1, Math.round(viewport.clientWidth / s)) : 1;
-  }
-  function render(){
-    var vc = visibleCards();
-    allCards.forEach(function(c){ c.classList.remove('is-center'); });
-    if(!vc.length) return;
-    var vcount = visibleCount();
-    var half = Math.floor(vcount/2);
-    var maxStart = Math.max(0, vc.length - vcount);
-    var start = Math.max(0, Math.min(idx - half, maxStart));
-    track.style.transform = 'translateX(-' + (start*cardStep()) + 'px)';
-    if(vcount >= 3 && vc[idx]) vc[idx].classList.add('is-center');
-  }
-  function go(n){
-    var vc = visibleCards();
-    var mx = vc.length - 1;
-    if(mx < 0) return;
-    if(n > mx) n = 0;
-    if(n < 0) n = mx;
-    idx = n;
-    render();
-  }
-  function next(){ go(idx+1); }
-  function prev(){ go(idx-1); }
-  function restart(){ clearInterval(timer); timer = setInterval(next, 5000); }
-  function applyFilter(tag){
-    allCards.forEach(function(c){
-      var tags = (c.getAttribute('data-tags') || '').split(',');
-      var show = (tag === 'all') || tags.indexOf(tag) !== -1;
-      c.style.display = show ? '' : 'none';
-    });
-    idx = 0;
-    render();
-    restart();
-  }
-  filterBtns.forEach(function(btn){
-    btn.addEventListener('click', function(){
-      filterBtns.forEach(function(b){ b.classList.remove('active'); });
-      btn.classList.add('active');
-      applyFilter(btn.getAttribute('data-filter'));
-    });
-  });
-  document.querySelectorAll('.fp-info-dot').forEach(function(dot){
-    dot.addEventListener('click', function(e){
-      e.preventDefault();
-      e.stopPropagation();
-      var wasOpen = dot.classList.contains('show');
-      document.querySelectorAll('.fp-info-dot.show').forEach(function(d){ d.classList.remove('show'); });
-      if(!wasOpen) dot.classList.add('show');
-    });
-  });
-  document.addEventListener('click', function(){
-    document.querySelectorAll('.fp-info-dot.show').forEach(function(d){ d.classList.remove('show'); });
-  });
-  if(nextBtn) nextBtn.addEventListener('click', function(){ next(); restart(); });
-  if(prevBtn) prevBtn.addEventListener('click', function(){ prev(); restart(); });
-  wrap.addEventListener('mouseenter', function(){ clearInterval(timer); });
-  wrap.addEventListener('mouseleave', restart);
-  window.addEventListener('resize', render);
-  render();
-  restart();
-})();
 </script>
 
 <script>
